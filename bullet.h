@@ -1,0 +1,277 @@
+typedef struct sbullet *pbullet;
+typedef struct sbullet {
+  Sint32 x,y;
+  Sint32 dx,dy;
+  int lifetime;
+  char good;
+  Uint16 color;
+  pbullet next;
+} tbullet;
+
+pbullet firstBullet = NULL;
+
+void deleteAllBullets()
+{
+  while (firstBullet!=NULL)
+  {
+    pbullet temp=firstBullet->next;
+    free(firstBullet);
+    firstBullet=temp;
+  }
+}
+
+void newBullet(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy, int lifetime,char good,Uint16 color)
+{
+  if (good==1)
+  {
+    if (ballcount==1 || (ballcount==2 && ballsize[1]<=(1<<(ACCURACY-5))))
+      return;
+    removesnow(2);
+  }
+  if (good==1)
+    Mix_PlayChannel(-1,shot_chunk,0);
+  pbullet bullet=(pbullet)malloc(sizeof(tbullet));
+  bullet->x=x;
+  bullet->y=y;
+  bullet->dx=dx;
+  bullet->dy=dy;
+  bullet->lifetime=lifetime;
+  bullet->good=good;
+  bullet->color=color;
+  bullet->next=firstBullet;
+  firstBullet=bullet;  
+}
+
+void calcBullet()
+{
+  pbullet before=NULL;
+  pbullet bullet=firstBullet;
+  while (bullet!=NULL)
+  {
+    bullet->x+=bullet->dx;
+    bullet->y+=bullet->dy;
+    bullet->lifetime--;
+    if (bullet->lifetime<0)
+    {
+      if (before==NULL)
+        firstBullet=bullet->next;
+      else
+        before->next=bullet->next;
+      if (bullet->good)
+        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,getRGB(255,255,255));
+      else
+        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,getRGB(0,0,0));
+      free(bullet);
+      bullet=before;
+    }
+    before=bullet;
+    if (bullet!=NULL)
+      bullet=bullet->next;
+  }
+  
+}
+
+void drawBullet(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy)
+{
+  Sint32 minx=-dx;
+  Sint32 maxx=+dx;
+  Sint32 miny=-dy;
+  Sint32 maxy=+dy;  
+  pbullet bullet=firstBullet;
+  while (bullet!=NULL)
+  {
+    if (bullet->x-x < minx ||
+        bullet->x-x > maxx ||
+        y-bullet->y < miny ||
+        y-bullet->y > maxy)
+    {
+     bullet=bullet->next;
+     continue; 
+    }    
+    engineEllipse(bullet->x-x,y-bullet->y,0,3<<(ACCURACY-3),3<<(ACCURACY-3),bullet->color);
+    bullet=bullet->next;
+  }  
+}
+
+void bulletEnemyInteraction()
+{
+  pbullet bbefore=NULL;
+  pbullet bullet=firstBullet;
+  while (bullet!=NULL)
+  {
+    if (!bullet->good)
+    {
+      bbefore=bullet;
+      bullet=bullet->next;
+      continue;
+    }
+    penemy ebefore=NULL;
+    penemy enemy=level->firstenemy;
+    while (enemy!=NULL)
+    {
+      //Distance
+      if ( bullet->x >= enemy->x-enemy->symbol->measures[2] &&
+           bullet->x <= enemy->x+enemy->symbol->measures[2] &&
+           bullet->y >= enemy->y-enemy->symbol->measures[3] &&
+           bullet->y <= enemy->y+enemy->symbol->measures[3] ) //Hit
+      {
+        if (bbefore==NULL)
+          firstBullet=bullet->next;
+        else
+          bbefore->next=bullet->next;
+        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,getRGB(255,255,255));
+        free(bullet);
+        bullet=bbefore;
+        newexplosion(PARTICLES,enemy->x,enemy->y,0,1024,enemy->symbol->color);
+        enemy->health--;
+        if (enemy->health<=0)
+        {
+          enemyKilled++;
+          if (ebefore==NULL)
+            level->firstenemy=enemy->next;
+          else
+            ebefore->next=enemy->next;
+          free(enemy);
+          enemy=ebefore;
+        }
+        break;
+      }
+      ebefore=enemy;
+      if (enemy!=NULL)
+        enemy=enemy->next;
+    }
+    bbefore=bullet;
+    if (bullet!=NULL)
+      bullet=bullet->next;
+  }
+}
+
+void bulletEnvironmentInteraction()
+{
+  pbullet bbefore=NULL;
+  pbullet bullet=firstBullet;
+  while (bullet!=NULL)
+  {
+    Sint32 bx =((bullet->x>>(ACCURACY))+1)>>1;
+    Sint32 by =((bullet->y>>(ACCURACY))+1)>>1;
+    if (bx>=0 && bx<level->width && by>=0 && by<level->height &&
+        level->symbollist[level->layer[1][bx+by*level->width]]!=NULL &&
+        level->symbollist[level->layer[1][bx+by*level->width]]->form>0)
+    {
+      if (bbefore==NULL)
+        firstBullet=bullet->next;
+      else
+        bbefore->next=bullet->next;
+      if (bullet->good)
+        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,getRGB(255,255,255));
+      else
+        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,getRGB(0,0,0));
+      free(bullet);
+      bullet=bbefore;
+    }
+    bbefore=bullet;
+    if (bullet!=NULL)
+      bullet=bullet->next;
+  }
+}
+
+void bulletEnemy()
+{
+  int sum=0;
+  int i;
+  for (i=3-ballcount;i<3;i++)
+    sum+=ballsize[i]*2;
+  Sint32 dx,dy,dl;
+  penemy enemy = level->firstenemy;
+  while (enemy!=NULL)
+  {
+    if (enemy->lastshot>0)
+      enemy->lastshot--;
+    else
+    if (enemy->x >= x-(40<<ACCURACY) && enemy->x <= x+(40<<ACCURACY) &&
+        enemy->y >= y-(40<<ACCURACY) && enemy->y <= y+(40<<ACCURACY))
+      switch (enemy->weapon)
+      {
+        case 1: //just like the snowmans weapon
+          newBullet(enemy->x,enemy->y,(enemy->dx>=0)?(1<<(ACCURACY-5)):(-1<<(ACCURACY-5)),0,1000,0,getRGB(0,0,0));
+          enemy->lastshot=enemy->shotfq;
+        break;
+        case 2: //With targeting
+          dx=x-enemy->x;
+          dy=y-(sum>>1)-enemy->y;
+          dl=fpsqrt((dx>>HALF_ACCURACY)*(dx>>HALF_ACCURACY)+(dy>>HALF_ACCURACY)*(dy>>HALF_ACCURACY));
+          if (dl!=0)
+          {
+            dx=((dx<<HALF_ACCURACY)/dl)<<HALF_ACCURACY;
+            dy=((dy<<HALF_ACCURACY)/dl)<<HALF_ACCURACY;
+            dx=dx>>5;
+            dy=dy>>5;
+          }
+          newBullet(enemy->x,enemy->y,dx,dy,1000,0,getRGB(0,0,0));
+          enemy->lastshot=enemy->shotfq;
+        break;
+        
+      }
+    enemy=enemy->next;
+  }
+}
+
+void bulletPlayerInteraction()
+{
+  if (damaged)
+    return;  
+  int sum=0;
+  int i;
+  for (i=3-ballcount;i<3;i++)
+    sum+=ballsize[i]*2;
+  biggest=2;
+  if (ballcount>2)
+  {
+    if (ballsize[0]>ballsize[2] && ballsize[0]>ballsize[1])
+      biggest=0;
+    if (ballsize[1]>ballsize[2] && ballsize[1]>ballsize[0])
+      biggest=1;
+  }
+  else
+  if (ballcount>1)
+  {
+    if (ballsize[1]>ballsize[2])
+      biggest=1;
+  }  
+  pbullet bbefore=NULL;
+  pbullet bullet=firstBullet;
+  while (bullet!=NULL)
+  {
+    if (bullet->good)
+    {
+      bbefore=bullet;
+      bullet=bullet->next;
+      continue;
+    }
+    //Distance
+    if ( bullet->x >= x-ballsize[biggest] &&
+         bullet->x <= x+ballsize[biggest] &&
+         bullet->y >= y-sum &&
+         bullet->y <= y      ) //Hit
+    {
+      if (bbefore==NULL)
+        firstBullet=bullet->next;
+      else
+        bbefore->next=bullet->next;
+      newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,getRGB(0,0,0));
+      free(bullet);
+      bullet=bbefore;
+      
+      damaged=MY_PI>>(ACCURACY-8);
+      if (removesnow(3))
+      {
+        fade2=1024;
+        Mix_PlayChannel(-1,negative_chunk,0);
+        return;
+      }
+    }
+    bbefore=bullet;
+    if (bullet!=NULL)
+      bullet=bullet->next;
+  }
+}
