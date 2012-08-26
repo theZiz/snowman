@@ -4,7 +4,7 @@ char removesnow(int count)
     return 1;
   if (ballcount==2)
   {
-    ballsize[1]-=count<<(ACCURACY-5);
+    ballsize[1]-=count<<(SP_ACCURACY-5);
     gotchasmall=500;
     valuesmall=-count;    
     if (ballsize[1]==0)
@@ -15,12 +15,12 @@ char removesnow(int count)
   }
   if (ballcount==3)
   {
-    ballsize[0]-=count<<(ACCURACY-5);
+    ballsize[0]-=count<<(SP_ACCURACY-5);
     if (ballsize[0]<0)
     {
       ballcount--;
       gotchabig=500;
-      valuebig=-count-(ballsize[0]>>(ACCURACY-5));
+      valuebig=-count-(ballsize[0]>>(SP_ACCURACY-5));
       ballsize[1]+=ballsize[0];
       ballsize[0]=0; 
       gotchasmall=500;
@@ -39,9 +39,9 @@ char addonesnow()
 {
   if (ballcount==3)
   {
-    if (ballsize[0]>=(13<<(ACCURACY-4)))
+    if (ballsize[0]>=(13<<(SP_ACCURACY-4)))
       return 0;
-    ballsize[0]+=(1<<(ACCURACY-5));
+    ballsize[0]+=(1<<(SP_ACCURACY-5));
     gotchabig=500;
     valuebig=1;
     Mix_PlayChannel(-1,hu_chunk,0);
@@ -49,8 +49,8 @@ char addonesnow()
   }
   if (ballcount==1)
   {
-    //ballsize[2]+=(1<<(ACCURACY-5));
-    //if (ballsize[2]>=(7<<(ACCURACY-4)))
+    //ballsize[2]+=(1<<(SP_ACCURACY-5));
+    //if (ballsize[2]>=(7<<(SP_ACCURACY-4)))
     {
       ballsize[1]=0;
       ballcount++;
@@ -58,10 +58,10 @@ char addonesnow()
   }
   if (ballcount==2)
   {
-    ballsize[1]+=(1<<(ACCURACY-5));
+    ballsize[1]+=(1<<(SP_ACCURACY-5));
     gotchasmall=500;
     valuesmall=1;
-    if (ballsize[1]>=(9<<(ACCURACY-4)))
+    if (ballsize[1]>=(9<<(SP_ACCURACY-4)))
     {
       ballsize[0]=0;
       ballcount++;
@@ -77,11 +77,11 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
 {
   Sint32* modellViewMatrix=engineGetModellViewMatrix();
   int i;
-  int red=((mycos(damaged*(1<<(ACCURACY-6)))*127)>>ACCURACY)+128;
+  int red=((mycos(damaged*(1<<(SP_ACCURACY-6)))*127)>>SP_ACCURACY)+128;
   for (i=3-ballcount;i<3;i++)
   {
     y+=ballsize[i];
-    Sint32 r=ballsize[i]+(1<<(ACCURACY-5));
+    Sint32 r=ballsize[i]+(1<<(SP_ACCURACY-5));
     //engineEllipse(x,y,z,r,r,getRGB(255,255,255));
     Sint32 matrix[16];    
     memcpy(matrix,modellViewMatrix,64);
@@ -89,13 +89,13 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
     modellViewMatrix[13]+=y;
     modellViewMatrix[14]+=z;    
     if (i==0)
-      engineRotate(0,0,1<<ACCURACY,angle);
+      engineRotate(0,0,1<<SP_ACCURACY,angle);
     if (i==1)
     {
       if (ballcount==3)
-        engineRotate(0,0,-1<<ACCURACY,angle);
+        engineRotate(0,0,-1<<SP_ACCURACY,angle);
       else
-        engineRotate(0,0, 1<<ACCURACY,angle);
+        engineRotate(0,0, 1<<SP_ACCURACY,angle);
     }
     drawMeshXYZS(0,0,0,r,sphere,getRGB(255,red,red));
     memcpy(modellViewMatrix,matrix,64);
@@ -104,12 +104,12 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
       if (right)
       {
         drawMeshXYZS(x,y,z,r,sphere_nose,getRGB(255,127,0));
-        engineEllipse(x+(1<<(ACCURACY-3)),y+(1<<(ACCURACY-2)),z+r,1<<(ACCURACY-2),1<<(ACCURACY-2),getRGB(0,0,0));
+        engineEllipse(x+(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),getRGB(0,0,0));
       }
       else
       {
         drawMeshXYZS(x,y,z,-r,sphere_nose,getRGB(255,127,0));
-        engineEllipse(x-(1<<(ACCURACY-3)),y+(1<<(ACCURACY-2)),z+r,1<<(ACCURACY-2),1<<(ACCURACY-2),getRGB(0,0,0));
+        engineEllipse(x-(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),getRGB(0,0,0));
       }
     }
     y+=ballsize[i];
@@ -124,28 +124,28 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
     memcpy(matrix,modellViewMatrix,64);
     modellViewMatrix[12]+=x;
     modellViewMatrix[13]+=y-(sum>>1);
-    modellViewMatrix[14]+=z+(1<<ACCURACY);    
+    modellViewMatrix[14]+=z+(1<<SP_ACCURACY);    
     if (right)
     {
-      engineRotate(0,0, 1<<ACCURACY, MY_PI>>2);
+      engineRotate(0,0, 1<<SP_ACCURACY, MY_PI>>2);
       if (in_hit>192)
-        engineRotate(0<<ACCURACY,0<<ACCURACY,-1<<ACCURACY,((288-in_hit)*MY_PI)>>7);
+        engineRotate(0<<SP_ACCURACY,0<<SP_ACCURACY,-1<<SP_ACCURACY,((288-in_hit)*MY_PI)>>7);
       else
-        engineRotate(0<<ACCURACY,0<<ACCURACY,-1<<ACCURACY,(in_hit*MY_PI)>>8);
+        engineRotate(0<<SP_ACCURACY,0<<SP_ACCURACY,-1<<SP_ACCURACY,(in_hit*MY_PI)>>8);
     }
     else
     {
-      engineRotate(0,0, 1<<ACCURACY, 7*MY_PI>>2);
+      engineRotate(0,0, 1<<SP_ACCURACY, 7*MY_PI>>2);
       if (in_hit>192)
-        engineRotate(0<<ACCURACY,0<<ACCURACY, 1<<ACCURACY,((288-in_hit)*MY_PI)>>7);
+        engineRotate(0<<SP_ACCURACY,0<<SP_ACCURACY, 1<<SP_ACCURACY,((288-in_hit)*MY_PI)>>7);
       else
-        engineRotate(0<<ACCURACY,0<<ACCURACY, 1<<ACCURACY,(in_hit*MY_PI)>>8);
+        engineRotate(0<<SP_ACCURACY,0<<SP_ACCURACY, 1<<SP_ACCURACY,(in_hit*MY_PI)>>8);
     }
     
     if (in_hit>192)
-      drawMeshXYZS(0,(288-in_hit)<<(ACCURACY-8),0,(1<<ACCURACY),broom,getRGB(86,22,0));
+      drawMeshXYZS(0,(288-in_hit)<<(SP_ACCURACY-8),0,(1<<SP_ACCURACY),broom,getRGB(86,22,0));
     else
-      drawMeshXYZS(0,(    in_hit)<<(ACCURACY-7),0,(1<<ACCURACY),broom,getRGB(86,22,0));
+      drawMeshXYZS(0,(    in_hit)<<(SP_ACCURACY-7),0,(1<<SP_ACCURACY),broom,getRGB(86,22,0));
     memcpy(modellViewMatrix,matrix,64);
   }
 }
@@ -166,18 +166,18 @@ char testX(Sint32 x,Sint32 ox)
     if (ballsize[1]>ballsize[2])
       biggest=1;
   }
-  bx =((x>>(ACCURACY))+1)>>1;
-  bxl=(((x-ballsize[biggest])>>(ACCURACY))+1)>>1;
-  bxr=(((x+ballsize[biggest])>>(ACCURACY))+1)>>1;
-  by =((y>>(ACCURACY))+1)>>1;
+  bx =((x>>(SP_ACCURACY))+1)>>1;
+  bxl=(((x-ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
+  bxr=(((x+ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
+  by =((y>>(SP_ACCURACY))+1)>>1;
   byb=by;
-  if (((2*by-1)<<ACCURACY)!=y)
+  if (((2*by-1)<<SP_ACCURACY)!=y)
     byb+=1;
   int sum=0;
   int i;
   for (i=3-ballcount;i<3;i++)
     sum+=ballsize[i]*2;
-  byt =((((y-sum)>>(ACCURACY))+1)>>1);
+  byt =((((y-sum)>>(SP_ACCURACY))+1)>>1);
   bym =(byt + byb)>>1;
 
   //printf("b: %i m: %i t: %i xl: %i x: %i xr: %i\n",byb,bym,byt,bxl,bx,bxr);
@@ -275,16 +275,16 @@ char testX2(Sint32 x,Sint32 ox)
   int i;
   for (i=3-ballcount;i<3;i++)
     sum+=ballsize[i]*2;
-  bx =((x>>(ACCURACY))+1)>>1;
-  bxl=(((x-ballsize[biggest])>>(ACCURACY))+1)>>1;
-  bxr=(((x+ballsize[biggest])>>(ACCURACY))+1)>>1;
-  /*by =((y>>(ACCURACY))+1)>>1;
+  bx =((x>>(SP_ACCURACY))+1)>>1;
+  bxl=(((x-ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
+  bxr=(((x+ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
+  /*by =((y>>(SP_ACCURACY))+1)>>1;
   byb=by;
-  if (((2*by-1)<<ACCURACY)!=y)
+  if (((2*by-1)<<SP_ACCURACY)!=y)
     byb+=1;
-  byt =((((y-sum)>>(ACCURACY))+1)>>1);
+  byt =((((y-sum)>>(SP_ACCURACY))+1)>>1);
   bym =(byt + byb)>>1;*/
-  bym = (((y-sum/2)>>ACCURACY)+1)/2;
+  bym = (((y-sum/2)>>SP_ACCURACY)+1)/2;
   //printf("b: %i m: %i t: %i xl: %i x: %i xr: %i\n",byb,bym,byt,bxl,bx,bxr);
   //Solid Block on the left?
   if (bxl>=0 && bxl<level->width)
@@ -323,7 +323,7 @@ char fattest(Sint32 *x,Sint32 ox)
     while (i==1)
     {
       i=testX2((*x),ox);
-      (*x)+=(1<<(ACCURACY-4));
+      (*x)+=(1<<(SP_ACCURACY-4));
       printf("Left\n");
     }
     return 1;
@@ -333,7 +333,7 @@ char fattest(Sint32 *x,Sint32 ox)
     while (i==2)
     {
       i=testX2((*x),ox);
-      (*x)-=(1<<(ACCURACY-4));
+      (*x)-=(1<<(SP_ACCURACY-4));
       printf("Right\n");
     }
     return 1;
@@ -372,7 +372,7 @@ void playerEnemyInteraction()
          y-sum               <= enemy->y+enemy->symbol->measures[3] &&
          y                   >= enemy->y-enemy->symbol->measures[3] ) //Hit
     {
-      damaged=MY_PI>>(ACCURACY-8);
+      damaged=MY_PI>>(SP_ACCURACY-8);
       if (removesnow(3))
       {
         fade2=1024;
@@ -393,19 +393,19 @@ void broomEnemyInteraction(char right)
     sum+=ballsize[i]*2;
   Sint32 broomx=x;
   if (right)
-    broomx+=+(2<<ACCURACY);
+    broomx+=+(2<<SP_ACCURACY);
   else
-    broomx-=+(2<<ACCURACY);
-  Sint32 broomy=y-(sum>>1)+(1<<ACCURACY);
+    broomx-=+(2<<SP_ACCURACY);
+  Sint32 broomy=y-(sum>>1)+(1<<SP_ACCURACY);
   penemy ebefore=NULL;
   penemy enemy=level->firstenemy;
   while (enemy!=NULL)
   {
     //Distance
-    if ( broomx >= enemy->x-enemy->symbol->measures[2]-(1<<ACCURACY) &&
-         broomx <= enemy->x+enemy->symbol->measures[2]+(1<<ACCURACY) &&
-         broomy >= enemy->y-enemy->symbol->measures[3]-(1<<ACCURACY) &&
-         broomy <= enemy->y+enemy->symbol->measures[3]+(1<<ACCURACY) ) //Hit
+    if ( broomx >= enemy->x-enemy->symbol->measures[2]-(1<<SP_ACCURACY) &&
+         broomx <= enemy->x+enemy->symbol->measures[2]+(1<<SP_ACCURACY) &&
+         broomy >= enemy->y-enemy->symbol->measures[3]-(1<<SP_ACCURACY) &&
+         broomy <= enemy->y+enemy->symbol->measures[3]+(1<<SP_ACCURACY) ) //Hit
     {
       //newexplosion(PARTICLES,broomx,broomy,0,1024,getRGB(86,22,0));
       enemy->health-=2;

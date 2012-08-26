@@ -2,7 +2,7 @@ typedef struct ssymbol *psymbol;
 typedef struct ssymbol {
   char symbol;
   char objectfile[256];
-  pmesh mesh;
+  spModelPointer mesh;
   int meshmask; //1 badcoin
   Uint16 color;
   char form; //0 none, 1 quad
@@ -121,7 +121,7 @@ Sint32 getFixedPoint(char* string)
     }
     number+=number*pow(10.0,sign*exponent);
   }
-  return (Sint32)(sign*number*ACCURACY_FACTOR);
+  return (Sint32)(sign*number*SP_ACCURACY_FACTOR);
 }
 
 
@@ -206,7 +206,7 @@ plevel loadlevel(char* filename)
   level->havetokill=0;
   level->backgroundcolor=0;
   sprintf(level->failback,"./levels/menu.slvl");
-//  level->startzoom=1<<ACCURACY;
+//  level->startzoom=1<<SP_ACCURACY;
   while (firstsign(readnextline(file,buffer,1024))!='[')
   {
     if (firstsign(buffer)=='#' || firstsign(buffer)==0) //comments and free lines
@@ -256,7 +256,7 @@ plevel loadlevel(char* filename)
   printf("backgroundcolor: %i\n",level->backgroundcolor);
   printf("     havetokill: %i\n",level->havetokill);
   printf("       failback: %s\n",level->failback);
-//  printf("startzoom: %i+%i/%i\n",level->startzoom>>ACCURACY,level->startzoom-((level->startzoom>>ACCURACY)<<ACCURACY),1<<ACCURACY);
+//  printf("startzoom: %i+%i/%i\n",level->startzoom>>SP_ACCURACY,level->startzoom-((level->startzoom>>SP_ACCURACY)<<SP_ACCURACY),1<<SP_ACCURACY);
   psymbol lastsymbol=NULL;
   //symbols
   if (strcmp_firstsign("[symbols]",buffer)==0)
@@ -371,10 +371,10 @@ plevel loadlevel(char* filename)
     newsymbol->measures[2] = getFixedPoint(value);
         pos2 = getNextWord(pos2,word,value,1024,',',0);
     newsymbol->measures[3] = getFixedPoint(value);
-    printf("  Measures: (%i+%i/%i, %i+%i/%i, %i+%i/%i, %i+%i/%i)\n",newsymbol->measures[0]>>ACCURACY,newsymbol->measures[0]-((newsymbol->measures[0]>>ACCURACY)<<ACCURACY),1<<ACCURACY
-                                                                   ,newsymbol->measures[1]>>ACCURACY,newsymbol->measures[1]-((newsymbol->measures[1]>>ACCURACY)<<ACCURACY),1<<ACCURACY
-                                                                   ,newsymbol->measures[2]>>ACCURACY,newsymbol->measures[2]-((newsymbol->measures[2]>>ACCURACY)<<ACCURACY),1<<ACCURACY
-                                                                   ,newsymbol->measures[3]>>ACCURACY,newsymbol->measures[3]-((newsymbol->measures[3]>>ACCURACY)<<ACCURACY),1<<ACCURACY);
+    printf("  Measures: (%i+%i/%i, %i+%i/%i, %i+%i/%i, %i+%i/%i)\n",newsymbol->measures[0]>>SP_ACCURACY,newsymbol->measures[0]-((newsymbol->measures[0]>>SP_ACCURACY)<<SP_ACCURACY),1<<SP_ACCURACY
+                                                                   ,newsymbol->measures[1]>>SP_ACCURACY,newsymbol->measures[1]-((newsymbol->measures[1]>>SP_ACCURACY)<<SP_ACCURACY),1<<SP_ACCURACY
+                                                                   ,newsymbol->measures[2]>>SP_ACCURACY,newsymbol->measures[2]-((newsymbol->measures[2]>>SP_ACCURACY)<<SP_ACCURACY),1<<SP_ACCURACY
+                                                                   ,newsymbol->measures[3]>>SP_ACCURACY,newsymbol->measures[3]-((newsymbol->measures[3]>>SP_ACCURACY)<<SP_ACCURACY),1<<SP_ACCURACY);
     //Reading function
     if ((newsymbol->meshmask & 2)==2)
     {
@@ -596,10 +596,10 @@ plevel loadlevel(char* filename)
       lastenemy=newenemy;
       if ((level->symbollist[level->layer[1][i]]->functionmask & 256) == 256) //waywalker
       {
-        newenemy->dx = (rand()%2==0 ? -1:1)<<(ACCURACY-7);
+        newenemy->dx = (rand()%2==0 ? -1:1)<<(SP_ACCURACY-7);
         newenemy->dy = 0;
-        newenemy-> x = (i%level->width  )<<(ACCURACY+1);
-        newenemy-> y = ((i/level->width*2+1)<<(ACCURACY))-newenemy->symbol->measures[3];
+        newenemy-> x = (i%level->width  )<<(SP_ACCURACY+1);
+        newenemy-> y = ((i/level->width*2+1)<<(SP_ACCURACY))-newenemy->symbol->measures[3];
       }
       level->layer[1][i]=' ';
     }

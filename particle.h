@@ -34,7 +34,7 @@ void newexplosion(int count,Sint32 x,Sint32 y,Sint32 z,Sint32 intensity,Uint16 c
   int i;
   for (i=0;i<count;i++)
   {
-    newparticle(x,y,z,rand()%intensity-intensity/2,2*(rand()%intensity-intensity/2),rand()%intensity-intensity/2,1<<ACCURACY,1<<ACCURACY,256,0,color);
+    newparticle(x,y,z,rand()%intensity-intensity/2,2*(rand()%intensity-intensity/2),rand()%intensity-intensity/2,1<<SP_ACCURACY,1<<SP_ACCURACY,256,0,color);
   }
 }
 
@@ -47,9 +47,9 @@ void calcparticle()
     switch (particle->kind)
     {
       case 0:
-        particle->dy+=1<<(ACCURACY-14);
-        particle->w-=1<<(ACCURACY-8);
-        particle->h-=1<<(ACCURACY-8);
+        particle->dy+=1<<(SP_ACCURACY-14);
+        particle->w-=1<<(SP_ACCURACY-8);
+        particle->h-=1<<(SP_ACCURACY-8);
       break;
     }
     particle->x+=particle->dx;

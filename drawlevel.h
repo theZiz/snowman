@@ -7,15 +7,15 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
   Sint32 maxy=+dy;
   for (x=0;x<level->width;x++)
   {
-    if ((( 2*x)<<ACCURACY)-mx < minx)
+    if ((( 2*x)<<SP_ACCURACY)-mx < minx)
       continue;
-    if ((( 2*x)<<ACCURACY)-mx > maxx)
+    if ((( 2*x)<<SP_ACCURACY)-mx > maxx)
       continue;
     for (y=0;y<level->height;y++)
     {
-      if (((-2*y)<<ACCURACY)+my < miny)
+      if (((-2*y)<<SP_ACCURACY)+my < miny)
         continue;
-      if (((-2*y)<<ACCURACY)+my > maxy)
+      if (((-2*y)<<SP_ACCURACY)+my > maxy)
         continue;
       for (l=0;l<3;l++)
       {
@@ -25,25 +25,25 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
           if (now->mesh!=NULL)
           {
             if ((now->functionmask & 2)!=2 || now->needed_level<=levelcount)
-              drawMeshXYZ(((2*x)<<ACCURACY)-mx,((-2*y)<<ACCURACY)+my,(l-1)<<ACCURACY,now->mesh,now->color);
+              drawMeshXYZ(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<SP_ACCURACY,now->mesh,now->color);
           }
           else
           if ((now->functionmask & 1) == 1)
           {
-            int c=abs(mysin(w)>>(ACCURACY-7))+127;
+            int c=abs(mysin(w)>>(SP_ACCURACY-7))+127;
             if (c>255)
               c=255;
-            engineEllipse(((2*x)<<ACCURACY)-mx,((-2*y)<<ACCURACY)+my,(l-1)<<(ACCURACY+1),
-                          mysin(w)*3/4,/*3<<(ACCURACY-2),*/3<<(ACCURACY-2),
+            engineEllipse(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),
+                          mysin(w)*3/4,/*3<<(SP_ACCURACY-2),*/3<<(SP_ACCURACY-2),
                           getRGB(c,c,c)/*level->symbollist[level->layer[l][x+y*level->width]]->color*/);
           }
           else
           if ((now->meshmask & 2) == 2)
-            engineDrawTextMXMY(((2*x)<<ACCURACY)-mx,((-2*y)<<ACCURACY)+my,(l-1)<<(ACCURACY+1),now->function);
+            engineDrawTextMXMY(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),now->function);
           now=now->next;
         }
-          /*engineEllipse(((2*x)<<ACCURACY)-mx,((-2*y)<<ACCURACY)+my,(l-1)<<(ACCURACY+1),
-                        1<<ACCURACY,1<<ACCURACY,
+          /*engineEllipse(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),
+                        1<<SP_ACCURACY,1<<SP_ACCURACY,
                         level->symbollist[level->layer[l][x+y*level->width]]->color);*/
       }
     }
@@ -53,10 +53,10 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 void drawclouds(Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 {
   int i;
-  Sint32 minx=-dx-(20<<ACCURACY);
-  Sint32 maxx=+dx+(20<<ACCURACY);
-  Sint32 miny=-dy-(20<<ACCURACY);
-  Sint32 maxy=+dy+(20<<ACCURACY);
+  Sint32 minx=-dx-(20<<SP_ACCURACY);
+  Sint32 maxx=+dx+(20<<SP_ACCURACY);
+  Sint32 miny=-dy-(20<<SP_ACCURACY);
+  Sint32 maxy=+dy+(20<<SP_ACCURACY);
   for (i=0;i<cloudcount;i++)
   {
     if (cloudx[i]-mx < minx)

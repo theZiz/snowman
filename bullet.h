@@ -24,7 +24,7 @@ void newBullet(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy, int lifetime,char good,Uin
 {
   if (good==1)
   {
-    if (ballcount==1 || (ballcount==2 && ballsize[1]<=(1<<(ACCURACY-5))))
+    if (ballcount==1 || (ballcount==2 && ballsize[1]<=(1<<(SP_ACCURACY-5))))
       return;
     removesnow(2);
   }
@@ -88,7 +88,7 @@ void drawBullet(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy)
      bullet=bullet->next;
      continue; 
     }    
-    engineEllipse(bullet->x-x,y-bullet->y,0,3<<(ACCURACY-3),3<<(ACCURACY-3),bullet->color);
+    engineEllipse(bullet->x-x,y-bullet->y,0,3<<(SP_ACCURACY-3),3<<(SP_ACCURACY-3),bullet->color);
     bullet=bullet->next;
   }  
 }
@@ -152,8 +152,8 @@ void bulletEnvironmentInteraction()
   pbullet bullet=firstBullet;
   while (bullet!=NULL)
   {
-    Sint32 bx =((bullet->x>>(ACCURACY))+1)>>1;
-    Sint32 by =((bullet->y>>(ACCURACY))+1)>>1;
+    Sint32 bx =((bullet->x>>(SP_ACCURACY))+1)>>1;
+    Sint32 by =((bullet->y>>(SP_ACCURACY))+1)>>1;
     if (bx>=0 && bx<level->width && by>=0 && by<level->height &&
         level->symbollist[level->layer[1][bx+by*level->width]]!=NULL &&
         level->symbollist[level->layer[1][bx+by*level->width]]->form>0)
@@ -188,22 +188,22 @@ void bulletEnemy()
     if (enemy->lastshot>0)
       enemy->lastshot--;
     else
-    if (enemy->x >= x-(40<<ACCURACY) && enemy->x <= x+(40<<ACCURACY) &&
-        enemy->y >= y-(40<<ACCURACY) && enemy->y <= y+(40<<ACCURACY))
+    if (enemy->x >= x-(40<<SP_ACCURACY) && enemy->x <= x+(40<<SP_ACCURACY) &&
+        enemy->y >= y-(40<<SP_ACCURACY) && enemy->y <= y+(40<<SP_ACCURACY))
       switch (enemy->weapon)
       {
         case 1: //just like the snowmans weapon
-          newBullet(enemy->x,enemy->y,(enemy->dx>=0)?(1<<(ACCURACY-5)):(-1<<(ACCURACY-5)),0,1000,0,getRGB(0,0,0));
+          newBullet(enemy->x,enemy->y,(enemy->dx>=0)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,0,getRGB(0,0,0));
           enemy->lastshot=enemy->shotfq;
         break;
         case 2: //With targeting
           dx=x-enemy->x;
           dy=y-(sum>>1)-enemy->y;
-          dl=fpsqrt((dx>>HALF_ACCURACY)*(dx>>HALF_ACCURACY)+(dy>>HALF_ACCURACY)*(dy>>HALF_ACCURACY));
+          dl=fpsqrt((dx>>HALF_SP_ACCURACY)*(dx>>HALF_SP_ACCURACY)+(dy>>HALF_SP_ACCURACY)*(dy>>HALF_SP_ACCURACY));
           if (dl!=0)
           {
-            dx=((dx<<HALF_ACCURACY)/dl)<<HALF_ACCURACY;
-            dy=((dy<<HALF_ACCURACY)/dl)<<HALF_ACCURACY;
+            dx=((dx<<HALF_SP_ACCURACY)/dl)<<HALF_SP_ACCURACY;
+            dy=((dy<<HALF_SP_ACCURACY)/dl)<<HALF_SP_ACCURACY;
             dx=dx>>5;
             dy=dy>>5;
           }
@@ -262,7 +262,7 @@ void bulletPlayerInteraction()
       free(bullet);
       bullet=bbefore;
       
-      damaged=MY_PI>>(ACCURACY-8);
+      damaged=MY_PI>>(SP_ACCURACY-8);
       if (removesnow(3))
       {
         fade2=1024;

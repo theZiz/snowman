@@ -1,19 +1,42 @@
 #include <SDL/SDL_mixer.h>
-#include "../3dengine/3dengine.h"
-#include "../3dengine/meshloader.h"
+#include <sparrow3d.h>
+
+
+void resize( Uint16 w, Uint16 h )
+{
+	//Setup of the new/resized window
+	spSetPerspective( 50.0, ( float )spGetWindowSurface()->w / ( float )spGetWindowSurface()->h, 0.1, 100 );
+
+	//Font Loading
+	/*if ( font )
+		spFontDelete( font );
+	font = spFontLoad( "./font/StayPuft.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY );
+	spFontAdd( font, SP_FONT_GROUP_ASCII, 0 ); //whole ASCII
+	spFontAdd( font, "äüöÄÜÖßẞ", 0 ); //German stuff (same like spFontAdd( font, SP_FONT_GROUP_GERMAN, 0 ); )
+	spFontAddBorder( font, 65535 );
+	spFontAddButton( font, 'A', SP_BUTTON_A_NAME, 65535, spGetRGB( 64, 64, 64 ) );
+	spFontAddButton( font, 'B', SP_BUTTON_B_NAME, 65535, spGetRGB( 64, 64, 64 ) );
+	spFontAddButton( font, 'X', SP_BUTTON_X_NAME, 65535, spGetRGB( 64, 64, 64 ) );
+	spFontAddButton( font, 'Y', SP_BUTTON_Y_NAME, 65535, spGetRGB( 64, 64, 64 ) );
+	spFontAddButton( font, 'L', SP_BUTTON_L_NAME, 65535, spGetRGB( 64, 64, 64 ) );
+	spFontAddButton( font, 'R', SP_BUTTON_R_NAME, 65535, spGetRGB( 64, 64, 64 ) );
+	spFontAddButton( font, 'S', SP_BUTTON_START_NAME, 65535, spGetRGB( 64, 64, 64 ) );
+	spFontAddButton( font, 'E', SP_BUTTON_SELECT_NAME, 65535, spGetRGB( 64, 64, 64 ) );*/
+}
 
 #include "intro.h"
-#include "level.h"
-#include "particle.h"
+//#include "level.h"
+//#include "particle.h"
 
 #define PARTICLES 16
 
-pmesh sphere;
-pmesh sphere_nose;
-pmesh cloud;
-pmesh broom;
+spModelPointer sphere;
+spModelPointer sphere_nose;
+spModelPointer cloud;
+spModelPointer broom;
+SDL_Surface* screen;
 
-Sint32 w=0;
+/*Sint32 w=0;
 Sint32 x,y;
 Sint32 camerax,cameray;
 int ballcount;
@@ -66,11 +89,11 @@ int levelcount;
 
 char pausemode;
 
-#include "enemy.h"
-#include "drawlevel.h"
-#include "drawcharacter.h"
-#include "bullet.h"
-#include "ballbullet.h"
+//#include "enemy.h"
+//#include "drawlevel.h"
+//#include "drawcharacter.h"
+//#include "bullet.h"
+//#include "ballbullet.h"
 
 void init_game(plevel level,char complete)
 {
@@ -84,18 +107,18 @@ void init_game(plevel level,char complete)
   deleteAllBullets();
   gotchasmall=0;
   gotchabig=0;
-  x=level->startx<<(ACCURACY+1);
+  x=level->startx<<(SP_ACCURACY+1);
   camerax=x;
-  y=level->starty<<(ACCURACY+1);
+  y=level->starty<<(SP_ACCURACY+1);
   cameray=y;
-  y+=1<<ACCURACY;
+  y+=1<<SP_ACCURACY;
   speedup=0;
   if (complete)
   {
     ballcount=1; 
-    ballsize[0]=0;//13<<(ACCURACY-4);
-    ballsize[1]=0;//9<<(ACCURACY-4);
-    ballsize[2]=7<<(ACCURACY-4);
+    ballsize[0]=0;//13<<(SP_ACCURACY-4);
+    ballsize[1]=0;//9<<(SP_ACCURACY-4);
+    ballsize[2]=7<<(SP_ACCURACY-4);
   }
   cloudcount=level->width*level->height/200;
   if (cloudcount>16)
@@ -103,10 +126,10 @@ void init_game(plevel level,char complete)
   int i;
   for (i=0;i<cloudcount;i++)
   {
-    cloudx[i]=(rand()%(2*level->width+40)-20)<<ACCURACY;
-    cloudy[i]=(rand()%(2*level->height+40)-20)<<ACCURACY;
-    cloudz[i]=-(rand()%20+10)<<ACCURACY;
-    clouds[i]=1<<ACCURACY;
+    cloudx[i]=(rand()%(2*level->width+40)-20)<<SP_ACCURACY;
+    cloudy[i]=(rand()%(2*level->height+40)-20)<<SP_ACCURACY;
+    cloudz[i]=-(rand()%20+10)<<SP_ACCURACY;
+    clouds[i]=1<<SP_ACCURACY;
   }
   facedir=1;
 }
@@ -118,22 +141,22 @@ void draw_game(void)
   engineClearScreen(level->backgroundcolor);
   setModellViewMatrixIdentity();
 
-  modellViewMatrix[14]=-25<<ACCURACY;  
+  modellViewMatrix[14]=-25<<SP_ACCURACY;  
 
-  /*#ifdef PANDORA
-    Sint32 dx=25<<ACCURACY;
-    Sint32 dy=15<<ACCURACY;
-  #else*/
-    Sint32 dy=16<<ACCURACY;
+  //#ifdef PANDORA
+  //  Sint32 dx=25<<SP_ACCURACY;
+  //  Sint32 dy=15<<SP_ACCURACY;
+  //#else
+    Sint32 dy=16<<SP_ACCURACY;
     Sint32 dx=dy*engineGetWindowX()/engineGetWindowY();
   //#endif
-  drawclouds(camerax,cameray-(4<<ACCURACY),dx,dy);
-  drawlevel(level,camerax,cameray-(4<<ACCURACY),dx,dy);
-  drawcharacter(x-camerax,cameray-y-(4<<ACCURACY),0,facedir);
-  drawenemies(camerax,cameray-(4<<ACCURACY),dx,dy);
-  drawBullet(camerax,cameray-(4<<ACCURACY),dx,dy);
-  drawBallBullet(camerax,cameray-(4<<ACCURACY));
-  drawparticle(camerax,cameray-(4<<ACCURACY),0,dx,dy);
+  drawclouds(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
+  drawlevel(level,camerax,cameray-(4<<SP_ACCURACY),dx,dy);
+  drawcharacter(x-camerax,cameray-y-(4<<SP_ACCURACY),0,facedir);
+  drawenemies(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
+  drawBullet(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
+  drawBallBullet(camerax,cameray-(4<<SP_ACCURACY));
+  drawparticle(camerax,cameray-(4<<SP_ACCURACY),0,dx,dy);
 
 
   engineDrawList();
@@ -148,7 +171,7 @@ void draw_game(void)
 
   sprintf(buffer,"%i",engineGetFps());
   drawtext(engineGetSurface(SURFACE_SURFACE),0,0,buffer,engineGetSurface(SURFACE_KEYMAP));
-  sprintf(buffer,"Small Belly: %i/18     Big Belly: %i/26",ballsize[1]>>(ACCURACY-5),ballsize[0]>>(ACCURACY-5));
+  sprintf(buffer,"Small Belly: %i/18     Big Belly: %i/26",ballsize[1]>>(SP_ACCURACY-5),ballsize[0]>>(SP_ACCURACY-5));
   if (ballsize[1]<=0)
     drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,engineGetWindowY()-(engineGetSurface(SURFACE_KEYMAP_RED)->h>>4),buffer,engineGetSurface(SURFACE_KEYMAP_RED));
   else
@@ -345,7 +368,7 @@ int calc_game(Uint32 steps)
       int i;
       for (i=3-ballcount;i<3;i++)
         sum+=ballsize[i]*2;
-      newBullet(x,y-(sum>>1),(facedir)?(1<<(ACCURACY-5)):(-1<<(ACCURACY-5)),0,1000,1,getRGB(255,255,255));
+      newBullet(x,y-(sum>>1),(facedir)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,1,getRGB(255,255,255));
     }
     calcBallBullet();
     if (engineInput->button[BUTTON_X])
@@ -491,16 +514,16 @@ int calc_game(Uint32 steps)
     {
       if (engineGetAxis(0)==-1)
       {
-        x-=2<<(ACCURACY-7);
-        angle+=2<<(ACCURACY-8);
+        x-=2<<(SP_ACCURACY-7);
+        angle+=2<<(SP_ACCURACY-8);
         if (angle>=2*MY_PI)
           angle-=2*MY_PI;
         facedir=0;
       }
       if (engineGetAxis(0)== 1)
       {
-        x+=2<<(ACCURACY-7);
-        angle-=2<<(ACCURACY-8);
+        x+=2<<(SP_ACCURACY-7);
+        angle-=2<<(SP_ACCURACY-8);
         if (angle<0)
           angle+=2*MY_PI;
         facedir=1;
@@ -527,9 +550,9 @@ int calc_game(Uint32 steps)
       if (ballsize[1]>ballsize[2])
         biggest=1;
     }
-    bx =((x>>(ACCURACY))+1)>>1;
-    bxl=(((x-ballsize[biggest])>>(ACCURACY))+1)>>1;
-    bxr=(((x+ballsize[biggest])>>(ACCURACY))+1)>>1;
+    bx =((x>>(SP_ACCURACY))+1)>>1;
+    bxl=(((x-ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
+    bxr=(((x+ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
 
     if (by>level->height) //Fuck, I am dead...
     {
@@ -546,7 +569,7 @@ int calc_game(Uint32 steps)
       int i;
       for (i=3-ballcount;i<3;i++)
         sum+=ballsize[i]*2;
-      byt =((((y-sum)>>(ACCURACY))+1)>>1);
+      byt =((((y-sum)>>(SP_ACCURACY))+1)>>1);
       if (!(bxr<0 || bxl>=level->width || byt<0 ||
           ((level->symbollist[level->layer[1][bxl+byt*level->width]]       == NULL ||
             level->symbollist[level->layer[1][bxl+byt*level->width]]->form <= 0) &&
@@ -555,9 +578,9 @@ int calc_game(Uint32 steps)
         speedup=0;
       else
       {
-        speedup+=1<<(ACCURACY-13);
+        speedup+=1<<(SP_ACCURACY-13);
         y+=speedup;
-        by=((y>>(ACCURACY))+1)>>1;
+        by=((y>>(SP_ACCURACY))+1)>>1;
       }
     }
     else //gravitation?
@@ -567,15 +590,15 @@ int calc_game(Uint32 steps)
         (bxr>=level->width || (level->symbollist[level->layer[1][bxr+by*level->width]]       == NULL ||
                                level->symbollist[level->layer[1][bxr+by*level->width]]->form <= 0))  ))
     {
-      speedup+=1<<(ACCURACY-13);
+      speedup+=1<<(SP_ACCURACY-13);
       y+=speedup;
-      by=((y>>(ACCURACY))+1)>>1;
+      by=((y>>(SP_ACCURACY))+1)>>1;
     }
     else
     {
       speedup=0;
-      y=(by-1)<<(ACCURACY+1);
-      y+=1<<ACCURACY;
+      y=(by-1)<<(SP_ACCURACY+1);
+      y+=1<<SP_ACCURACY;
     }    
     if (damaged>0)
       damaged--;
@@ -598,19 +621,19 @@ int calc_game(Uint32 steps)
       if (ballsize[1]>ballsize[2])
         biggest=1;
     }
-    int bxl=(((x-ballsize[biggest])>>(ACCURACY))+1)>>1;
-    int bxr=(((x+ballsize[biggest])>>(ACCURACY))+1)>>1;
-    int by =((y>>(ACCURACY))+1)>>1;
+    int bxl=(((x-ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
+    int bxr=(((x+ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
+    int by =((y>>(SP_ACCURACY))+1)>>1;
     if (by>=0 && by<level->height && !(bxr<0 || bxl>=level->width ||
         ((level->symbollist[level->layer[1][bxl+by*level->width]]       == NULL ||
           level->symbollist[level->layer[1][bxl+by*level->width]]->form <= 0) &&
          (level->symbollist[level->layer[1][bxr+by*level->width]]       == NULL ||
           level->symbollist[level->layer[1][bxr+by*level->width]]->form <= 0)))) //opposite of gravitaion conditions
-    if (ballsize[1]>(0<<(ACCURACY-5)))
+    if (ballsize[1]>(0<<(SP_ACCURACY-5)))
     {
       removesnow(1);
       newexplosion(PARTICLES,x,y,0,1024,getRGB(255,255,255));      
-      speedup=-23<<(ACCURACY-9);
+      speedup=-23<<(SP_ACCURACY-9);
       Mix_PlayChannel(-1,jump_chunk,0);
     }
     //engineInput->button[BUTTON_Y]=0;
@@ -621,12 +644,12 @@ int calc_game(Uint32 steps)
   int i;
   for (i=0;i<cloudcount;i++)
   {
-    cloudx[i]-=steps*(1<<(ACCURACY-9));
-    if (cloudx[i]<(-50<<ACCURACY))
+    cloudx[i]-=steps*(1<<(SP_ACCURACY-9));
+    if (cloudx[i]<(-50<<SP_ACCURACY))
     {
-      cloudx[i]+=(2*level->width+100)<<ACCURACY;
-      cloudy[i]=(rand()%(2*level->height+40)-20)<<ACCURACY;
-      cloudz[i]=-(rand()%20+10)<<ACCURACY;
+      cloudx[i]+=(2*level->width+100)<<SP_ACCURACY;
+      cloudy[i]=(rand()%(2*level->height+40)-20)<<SP_ACCURACY;
+      cloudz[i]=-(rand()%20+10)<<SP_ACCURACY;
     }
   }
 
@@ -699,18 +722,25 @@ void quit_snowman()
   freeMesh(sphere_nose);
   freeMesh(cloud);
   freeMesh(broom);
-}
+}*/
 
 int main(int argc, char **argv)
 {
-  initEngine();
-  init_snowman();
+	spSetDefaultWindowSize( 640, 480 ); //Creates a 640x480 window at PC instead of 320x240
+	spInitCore();
+
+	//Setup
+	screen = spCreateDefaultWindow();
+	spSelectRenderTarget(screen);
+	resize( screen->w, screen->h );
+  
+  //init_snowman();
   intro();
-  level=loadlevel("./levels/menu.slvl");
+  /*level=loadlevel("./levels/menu.slvl");
   init_game(level,1);
   engineLoop(draw_game,calc_game,10); //max 100 fps, wenn kein vsync vorhanden
   freeLevel(level);
-  quit_snowman();
-  quitEngine(); 
+  quit_snowman();*/
+  spQuitCore();
   return 0;
 }
