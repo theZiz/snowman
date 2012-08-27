@@ -40,7 +40,7 @@ void resize( Uint16 w, Uint16 h )
 spModelPointer sphere;
 spModelPointer sphere_nose_left;
 spModelPointer sphere_nose_right;
-spModelPointer cloud;
+//spModelPointer cloud;
 spModelPointer broom;
 
 Sint32 w=0;
@@ -696,7 +696,7 @@ void init_snowman()
   for (i = 0; i < sphere_nose_left->pointCount; i++)
 		sphere_nose_left->point[i].x = -sphere_nose_left->point[i].x;
   sphere_nose_right=spMeshLoadObjSize("./data/sphere_head.obj",NULL,spGetRGB(255,200,0),1<<SP_ACCURACY-1);
-  cloud=spMeshLoadObj("./data/cloud.obj",NULL,65535);
+  //cloud=spMeshLoadObj("./data/cloud.obj",NULL,65535);
   broom=spMeshLoadObj("./data/broom.obj",NULL,spGetRGB(86,22,0));
   fade=0;
   fade2=0;
@@ -727,7 +727,7 @@ void quit_snowman()
   spMeshDelete(sphere);
   spMeshDelete(sphere_nose_left);
   spMeshDelete(sphere_nose_right);
-  spMeshDelete(cloud);
+  //spMeshDelete(cloud);
   spMeshDelete(broom);
 }
 
