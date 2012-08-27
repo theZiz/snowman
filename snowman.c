@@ -1,6 +1,8 @@
 #include <SDL/SDL_mixer.h>
 #include <sparrow3d.h>
 
+spFontPointer font = NULL;
+SDL_Surface* screen;
 
 void resize( Uint16 w, Uint16 h )
 {
@@ -8,20 +10,12 @@ void resize( Uint16 w, Uint16 h )
 	spSetPerspective( 50.0, ( float )spGetWindowSurface()->w / ( float )spGetWindowSurface()->h, 0.1, 100 );
 
 	//Font Loading
-	/*if ( font )
+	if ( font )
 		spFontDelete( font );
-	font = spFontLoad( "./font/StayPuft.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY );
-	spFontAdd( font, SP_FONT_GROUP_ASCII, 0 ); //whole ASCII
-	spFontAdd( font, "äüöÄÜÖßẞ", 0 ); //German stuff (same like spFontAdd( font, SP_FONT_GROUP_GERMAN, 0 ); )
-	spFontAddBorder( font, 65535 );
-	spFontAddButton( font, 'A', SP_BUTTON_A_NAME, 65535, spGetRGB( 64, 64, 64 ) );
-	spFontAddButton( font, 'B', SP_BUTTON_B_NAME, 65535, spGetRGB( 64, 64, 64 ) );
-	spFontAddButton( font, 'X', SP_BUTTON_X_NAME, 65535, spGetRGB( 64, 64, 64 ) );
-	spFontAddButton( font, 'Y', SP_BUTTON_Y_NAME, 65535, spGetRGB( 64, 64, 64 ) );
-	spFontAddButton( font, 'L', SP_BUTTON_L_NAME, 65535, spGetRGB( 64, 64, 64 ) );
-	spFontAddButton( font, 'R', SP_BUTTON_R_NAME, 65535, spGetRGB( 64, 64, 64 ) );
-	spFontAddButton( font, 'S', SP_BUTTON_START_NAME, 65535, spGetRGB( 64, 64, 64 ) );
-	spFontAddButton( font, 'E', SP_BUTTON_SELECT_NAME, 65535, spGetRGB( 64, 64, 64 ) );*/
+	font = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY );
+	spFontAdd( font, SP_FONT_GROUP_ASCII, 65535 ); //whole ASCII
+	spFontAddBorder( font, spGetRGB(192,192,192) );
+	spFontAddBorder( font, spGetRGB(127,127,127) );
 }
 
 #include "intro.h"
@@ -34,7 +28,6 @@ spModelPointer sphere;
 spModelPointer sphere_nose;
 spModelPointer cloud;
 spModelPointer broom;
-SDL_Surface* screen;
 
 /*Sint32 w=0;
 Sint32 x,y;
@@ -726,14 +719,13 @@ void quit_snowman()
 
 int main(int argc, char **argv)
 {
-	spSetDefaultWindowSize( 640, 480 ); //Creates a 640x480 window at PC instead of 320x240
+	//spSetDefaultWindowSize( 640, 480 ); //Creates a 640x480 window at PC instead of 320x240
 	spInitCore();
 
 	//Setup
 	screen = spCreateDefaultWindow();
 	spSelectRenderTarget(screen);
-	resize( screen->w, screen->h );
-  
+	resize( screen->w, screen->h );  
   //init_snowman();
   intro();
   /*level=loadlevel("./levels/menu.slvl");

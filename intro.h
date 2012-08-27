@@ -14,6 +14,9 @@ void draw_intro(void)
   drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,(((intro_pos-3800)*(engineGetWindowY()>>6))>>7),"but the enemies are still there.",engineGetSurface(SURFACE_KEYMAP));
   drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,(((intro_pos-3000)*(engineGetWindowY()>>6))>>7),"You are the last (snow)man.",engineGetSurface(SURFACE_KEYMAP));
   drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,(((intro_pos-2200)*(engineGetWindowY()>>6))>>7),"Bring it to an end.",engineGetSurface(SURFACE_KEYMAP));*/
+  char buffer[256];
+	sprintf( buffer, "Snowman is a game about... snowmen!\nfps: %i", spGetFPS() );
+	spFontDrawMiddle( screen->w/2, 1, -1, buffer, font );
   spFlip();
 }
 
@@ -31,5 +34,7 @@ int calc_intro(Uint32 steps)
 
 void intro()
 {
+	spSetZTest(0);
+	spSetZSet(0);
   spLoop(draw_intro,calc_intro,10,resize,NULL);
 }
