@@ -135,6 +135,7 @@ void draw_game(void)
   Sint32* modellViewMatrix=spGetMatrix();  
   
   spClearTarget(level->backgroundcolor);
+  spResetZBuffer();
   spIdentity();
 
   modellViewMatrix[14]=-25<<SP_ACCURACY;  
@@ -648,7 +649,7 @@ int calc_game(Uint32 steps)
   }
 
   //Door
-  if (engineInput->axis[1]==1)
+  if (engineInput->axis[1]==-1)
     if (bx>=0 && bx<level->width)
       if (byb>0 && level->symbollist[level->layer[1][bx+(byb-1)*level->width]]       != NULL &&
                   (level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->functionmask & 2) == 2)
@@ -693,7 +694,10 @@ void init_snowman()
   jump_chunk=spSoundLoad("./sounds/shot.wav");
   positive_chunk=spSoundLoad("./sounds/positive.wav");
   hu_chunk=spSoundLoad("./sounds/hu.wav");
-  negative_chunk=spSoundLoad("./sounds/negative.wav");  
+  negative_chunk=spSoundLoad("./sounds/negative.wav");
+  spSetZTest(1);
+  spSetZSet(1);
+  spSetLight(1);
 }
 
 void quit_snowman()
@@ -719,8 +723,8 @@ int main(int argc, char **argv)
 	screen = spCreateDefaultWindow();
 	spSelectRenderTarget(screen);
 	resize( screen->w, screen->h );  
-  init_snowman();
   intro();
+  init_snowman();
   level=loadlevel("./levels/menu.slvl");
   init_game(level,1);
   spLoop(draw_game,calc_game,10,resize,NULL);
