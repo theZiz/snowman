@@ -68,63 +68,6 @@ char firstsign(char* string)
   return string[pos];
 }
 
-Sint32 getFixedPoint(char* string)
-{
-  int pos=0;
-  while (string[pos]==' ')
-    pos++;
-  float sign=1.0;
-  float number=0;
-  if (string[pos]=='-')
-  {
-    sign=-1.0;
-    pos++;
-  }
-  else
-  if (string[pos]=='+')
-    pos++;
-  while (string[pos]>='0' && string[pos]<='9')
-  {
-    number=number*10.0+(float)(string[pos]-'0');
-    pos++;
-  }
-  if (string[pos]=='.')
-  {
-    pos++;
-    float comma=0.0;
-    float dividend=1.0;
-    while (string[pos]>='0' && string[pos]<='9')
-    {
-      comma=comma*10.0+(float)(string[pos]-'0');
-      dividend*=10.0;
-      pos++;
-    }
-    number+=comma/dividend;
-  }
-  if (string[pos]=='e')
-  {
-    pos++;
-    float sign=1.0;
-    if (string[pos]=='-')
-    {
-      sign=-1.0;
-      pos++;
-    }
-    else
-    if (string[pos]=='+')
-      pos++;
-    float exponent=0.0;
-    while (string[pos]>='0' && string[pos]<='9')
-    {
-      exponent=exponent*10.0+(float)(string[pos]-'0');
-      pos++;
-    }
-    number+=number*pow(10.0,sign*exponent);
-  }
-  return (Sint32)(sign*number*SP_ACCURACY_FACTOR);
-}
-
-
 int strcmp_firstsign(char *first,char* second)
 {
   while (first[0]==' ')
@@ -159,7 +102,7 @@ void freeLevel(plevel level)
       {
         psymbol temp=level->symbollist[i]->next;
         if (level->symbollist[i]->mesh!=NULL)
-          freeMesh(level->symbollist[i]->mesh);
+          spMeshDelete(level->symbollist[i]->mesh);
         free(level->symbollist[i]);
         level->symbollist[i]=temp;
       }
@@ -246,7 +189,7 @@ plevel loadlevel(char* filename)
       int g = atoi(word);
           pos2 = getNextWord(pos2,value,word,1024,',',')');
       int b = atoi(word);
-      level->backgroundcolor=getRGB(r,g,b);
+      level->backgroundcolor=spGetRGB(r,g,b);
     }
   }
   printf("          width: %i\n",level->width);
@@ -316,6 +259,20 @@ plevel loadlevel(char* filename)
     //Reading Objectfile
     pos = getNextWord(pos,buffer,word,1024,' ',' ');
     sprintf(newsymbol->objectfile,"%s",word);
+    
+    //Reading Color
+    pos = getNextWord(pos,buffer,word,1024,'(',')');
+    char value[1024];
+    int pos2 = getNextWord(0,word,value,1024,' ',',');
+    int r = atoi(value);
+        pos2 = getNextWord(pos2,word,value,1024,',',',');
+    int g = atoi(value);
+        pos2 = getNextWord(pos2,word,value,1024,',',0);
+    int b = atoi(value);
+    newsymbol->color=spGetRGB(r,g,b);
+    printf("  Color: r:%i g:%i b:%i\n",r,g,b);
+		
+		//Loading object file with the color
     if (strcmp("none",newsymbol->objectfile)==0)
     {
       printf("  No Objectfille\n");
@@ -338,21 +295,9 @@ plevel loadlevel(char* filename)
     else
     {
       printf("  Loading Mesh %s...",newsymbol->objectfile);
-      newsymbol->mesh=loadMesh(newsymbol->objectfile);
+      newsymbol->mesh=spMeshLoadObj(newsymbol->objectfile,NULL,newsymbol->color);
       printf(" done\n");
     }
-    
-    //Reading Color
-    pos = getNextWord(pos,buffer,word,1024,'(',')');
-    char value[1024];
-    int pos2 = getNextWord(0,word,value,1024,' ',',');
-    int r = atoi(value);
-        pos2 = getNextWord(pos2,word,value,1024,',',',');
-    int g = atoi(value);
-        pos2 = getNextWord(pos2,word,value,1024,',',0);
-    int b = atoi(value);
-    newsymbol->color=getRGB(r,g,b);
-    printf("  Color: r:%i g:%i b:%i\n",r,g,b);
 
     //Reading Form
     newsymbol->form=0;
@@ -364,13 +309,13 @@ plevel loadlevel(char* filename)
     //Reading Measures
     pos = getNextWord(pos,buffer,word,1024,'(',')');
         pos2 = getNextWord(0,word,value,1024,' ',',');
-    newsymbol->measures[0] = getFixedPoint(value);
+    newsymbol->measures[0] = spAtof(value);
         pos2 = getNextWord(pos2,word,value,1024,',',',');
-    newsymbol->measures[1] = getFixedPoint(value);
+    newsymbol->measures[1] = spAtof(value);
         pos2 = getNextWord(pos2,word,value,1024,',',',');
-    newsymbol->measures[2] = getFixedPoint(value);
+    newsymbol->measures[2] = spAtof(value);
         pos2 = getNextWord(pos2,word,value,1024,',',0);
-    newsymbol->measures[3] = getFixedPoint(value);
+    newsymbol->measures[3] = spAtof(value);
     printf("  Measures: (%i+%i/%i, %i+%i/%i, %i+%i/%i, %i+%i/%i)\n",newsymbol->measures[0]>>SP_ACCURACY,newsymbol->measures[0]-((newsymbol->measures[0]>>SP_ACCURACY)<<SP_ACCURACY),1<<SP_ACCURACY
                                                                    ,newsymbol->measures[1]>>SP_ACCURACY,newsymbol->measures[1]-((newsymbol->measures[1]>>SP_ACCURACY)<<SP_ACCURACY),1<<SP_ACCURACY
                                                                    ,newsymbol->measures[2]>>SP_ACCURACY,newsymbol->measures[2]-((newsymbol->measures[2]>>SP_ACCURACY)<<SP_ACCURACY),1<<SP_ACCURACY

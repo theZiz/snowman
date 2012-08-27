@@ -19,7 +19,7 @@ void resize( Uint16 w, Uint16 h )
 }
 
 #include "intro.h"
-//#include "level.h"
+#include "level.h"
 //#include "particle.h"
 
 #define PARTICLES 16
@@ -29,7 +29,7 @@ spModelPointer sphere_nose;
 spModelPointer cloud;
 spModelPointer broom;
 
-/*Sint32 w=0;
+Sint32 w=0;
 Sint32 x,y;
 Sint32 camerax,cameray;
 int ballcount;
@@ -66,12 +66,12 @@ int enemyKilled;
 
 plevel level = NULL;
 
-Mix_Chunk *shot_chunk;
-Mix_Chunk *jump_chunk;
-Mix_Chunk *ballshot_chunk;
-Mix_Chunk *positive_chunk;
-Mix_Chunk *negative_chunk;
-Mix_Chunk *hu_chunk;
+spSound shot_chunk;
+spSound jump_chunk;
+spSound ballshot_chunk;
+spSound positive_chunk;
+spSound negative_chunk;
+spSound hu_chunk;
 char broom_exist;
 
 int volume;
@@ -88,7 +88,7 @@ char pausemode;
 //#include "bullet.h"
 //#include "ballbullet.h"
 
-void init_game(plevel level,char complete)
+/*void init_game(plevel level,char complete)
 {
   angle=0;
   resetallparticle();
@@ -728,8 +728,8 @@ int main(int argc, char **argv)
 	resize( screen->w, screen->h );  
   //init_snowman();
   intro();
-  /*level=loadlevel("./levels/menu.slvl");
-  init_game(level,1);
+  level=loadlevel("./levels/menu.slvl");
+  /*init_game(level,1);
   engineLoop(draw_game,calc_game,10); //max 100 fps, wenn kein vsync vorhanden
   freeLevel(level);
   quit_snowman();*/
