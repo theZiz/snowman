@@ -25,21 +25,25 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
           if (now->mesh!=NULL)
           {
             if ((now->functionmask & 2)!=2 || now->needed_level<=levelcount)
-              drawMeshXYZ(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<SP_ACCURACY,now->mesh,now->color);
+              spMesh3DwithPos(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<SP_ACCURACY,now->mesh,0);
           }
           else
           if ((now->functionmask & 1) == 1)
           {
-            int c=abs(mysin(w)>>(SP_ACCURACY-7))+127;
+            int c=abs(spSin(w)>>(SP_ACCURACY-7))+127;
             if (c>255)
               c=255;
-            engineEllipse(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),
-                          mysin(w)*3/4,/*3<<(SP_ACCURACY-2),*/3<<(SP_ACCURACY-2),
-                          getRGB(c,c,c)/*level->symbollist[level->layer[l][x+y*level->width]]->color*/);
+            spEllipse3D(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),
+                          spSin(w)*3/4,/*3<<(SP_ACCURACY-2),*/3<<(SP_ACCURACY-2),
+                          spGetRGB(c,c,c)/*level->symbollist[level->layer[l][x+y*level->width]]->color*/);
           }
           else
           if ((now->meshmask & 2) == 2)
-            engineDrawTextMXMY(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),now->function);
+          {
+						Sint32 tx,ty,tz;
+						spProjectPoint3D(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),&tx,&ty,&tz,1);
+            spFontDrawMiddle(tx,ty,tz,now->function,font);
+          }
           now=now->next;
         }
           /*engineEllipse(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),
@@ -67,6 +71,6 @@ void drawclouds(Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
       continue;
     if (-cloudy[i]+my > maxy)
       continue;
-    drawMeshXYZ(cloudx[i]-mx,-cloudy[i]+my,cloudz[i],cloud,65535);
+    spMesh3DwithPos(cloudx[i]-mx,-cloudy[i]+my,cloudz[i],cloud,0);
   }
 }

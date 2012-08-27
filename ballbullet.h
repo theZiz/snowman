@@ -108,7 +108,7 @@ void calcBallBullet()
     Sint32 c=ballBulletSize>>(SP_ACCURACY-4);
     int i;
     for (i=0;i<c;i++)
-      newBullet(ballbullet.x,ballbullet.y,mycos((2*MY_PI*i)/c)>>5,mysin((2*MY_PI*i)/c)>>5,1000,2,ballbullet.color);
+      newBullet(ballbullet.x,ballbullet.y,spCos((2*MY_PI*i)/c)>>5,spSin((2*MY_PI*i)/c)>>5,1000,2,ballbullet.color);
     ballBulletExists=0;
   }
 }

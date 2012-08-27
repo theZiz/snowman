@@ -77,7 +77,7 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
 {
   Sint32* modellViewMatrix=engineGetModellViewMatrix();
   int i;
-  int red=((mycos(damaged*(1<<(SP_ACCURACY-6)))*127)>>SP_ACCURACY)+128;
+  int red=((spCos(damaged*(1<<(SP_ACCURACY-6)))*127)>>SP_ACCURACY)+128;
   for (i=3-ballcount;i<3;i++)
   {
     y+=ballsize[i];

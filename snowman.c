@@ -82,8 +82,8 @@ int levelcount;
 
 char pausemode;
 
-//#include "enemy.h"
-//#include "drawlevel.h"
+#include "enemy.h"
+#include "drawlevel.h"
 //#include "drawcharacter.h"
 //#include "bullet.h"
 //#include "ballbullet.h"

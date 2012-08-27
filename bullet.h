@@ -199,11 +199,11 @@ void bulletEnemy()
         case 2: //With targeting
           dx=x-enemy->x;
           dy=y-(sum>>1)-enemy->y;
-          dl=fpsqrt((dx>>HALF_SP_ACCURACY)*(dx>>HALF_SP_ACCURACY)+(dy>>HALF_SP_ACCURACY)*(dy>>HALF_SP_ACCURACY));
+          dl=fpsqrt((dx>>SP_HALF_ACCURACY)*(dx>>SP_HALF_ACCURACY)+(dy>>SP_HALF_ACCURACY)*(dy>>SP_HALF_ACCURACY));
           if (dl!=0)
           {
-            dx=((dx<<HALF_SP_ACCURACY)/dl)<<HALF_SP_ACCURACY;
-            dy=((dy<<HALF_SP_ACCURACY)/dl)<<HALF_SP_ACCURACY;
+            dx=((dx<<SP_HALF_ACCURACY)/dl)<<SP_HALF_ACCURACY;
+            dy=((dy<<SP_HALF_ACCURACY)/dl)<<SP_HALF_ACCURACY;
             dx=dx>>5;
             dy=dy>>5;
           }
