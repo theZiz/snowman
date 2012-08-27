@@ -58,9 +58,9 @@ void calcBullet()
       else
         before->next=bullet->next;
       if (bullet->good)
-        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,getRGB(255,255,255));
+        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,spGetRGB(255,255,255));
       else
-        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,getRGB(0,0,0));
+        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,spGetRGB(0,0,0));
       free(bullet);
       bullet=before;
     }
@@ -88,7 +88,7 @@ void drawBullet(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy)
      bullet=bullet->next;
      continue; 
     }    
-    engineEllipse(bullet->x-x,y-bullet->y,0,3<<(SP_ACCURACY-3),3<<(SP_ACCURACY-3),bullet->color);
+    spEllipse(bullet->x-x,y-bullet->y,0,3<<(SP_ACCURACY-3),3<<(SP_ACCURACY-3),bullet->color);
     bullet=bullet->next;
   }  
 }
@@ -119,7 +119,7 @@ void bulletEnemyInteraction()
           firstBullet=bullet->next;
         else
           bbefore->next=bullet->next;
-        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,getRGB(255,255,255));
+        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,spGetRGB(255,255,255));
         free(bullet);
         bullet=bbefore;
         newexplosion(PARTICLES,enemy->x,enemy->y,0,1024,enemy->symbol->color);
@@ -163,9 +163,9 @@ void bulletEnvironmentInteraction()
       else
         bbefore->next=bullet->next;
       if (bullet->good)
-        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,getRGB(255,255,255));
+        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,spGetRGB(255,255,255));
       else
-        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,getRGB(0,0,0));
+        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,spGetRGB(0,0,0));
       free(bullet);
       bullet=bbefore;
     }
@@ -193,13 +193,13 @@ void bulletEnemy()
       switch (enemy->weapon)
       {
         case 1: //just like the snowmans weapon
-          newBullet(enemy->x,enemy->y,(enemy->dx>=0)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,0,getRGB(0,0,0));
+          newBullet(enemy->x,enemy->y,(enemy->dx>=0)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,0,spGetRGB(0,0,0));
           enemy->lastshot=enemy->shotfq;
         break;
         case 2: //With targeting
           dx=x-enemy->x;
           dy=y-(sum>>1)-enemy->y;
-          dl=fpsqrt((dx>>SP_HALF_ACCURACY)*(dx>>SP_HALF_ACCURACY)+(dy>>SP_HALF_ACCURACY)*(dy>>SP_HALF_ACCURACY));
+          dl=spSqrt((dx>>SP_HALF_ACCURACY)*(dx>>SP_HALF_ACCURACY)+(dy>>SP_HALF_ACCURACY)*(dy>>SP_HALF_ACCURACY));
           if (dl!=0)
           {
             dx=((dx<<SP_HALF_ACCURACY)/dl)<<SP_HALF_ACCURACY;
@@ -207,7 +207,7 @@ void bulletEnemy()
             dx=dx>>5;
             dy=dy>>5;
           }
-          newBullet(enemy->x,enemy->y,dx,dy,1000,0,getRGB(0,0,0));
+          newBullet(enemy->x,enemy->y,dx,dy,1000,0,spGetRGB(0,0,0));
           enemy->lastshot=enemy->shotfq;
         break;
         
@@ -258,7 +258,7 @@ void bulletPlayerInteraction()
         firstBullet=bullet->next;
       else
         bbefore->next=bullet->next;
-      newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,getRGB(0,0,0));
+      newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,spGetRGB(0,0,0));
       free(bullet);
       bullet=bbefore;
       
