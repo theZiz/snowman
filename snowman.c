@@ -20,7 +20,7 @@ void resize( Uint16 w, Uint16 h )
 
 #include "intro.h"
 #include "level.h"
-//#include "particle.h"
+#include "particle.h"
 
 #define PARTICLES 16
 

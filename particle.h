@@ -89,7 +89,7 @@ void drawparticle(Sint32 x,Sint32 y,Sint32 z,Sint32 dx,Sint32 dy)
       switch (particle->kind)
       {
         case 0:
-          engineEllipse(particle->x-x,y-particle->y,particle->z-z,particle->w>>1,particle->h>>1,particle->color);
+          spEllipse(particle->x-x,y-particle->y,particle->z-z,particle->w>>1,particle->h>>1,particle->color);
         break;
       }
     }
