@@ -11,7 +11,7 @@ void fireBallBullet()
   ballBulletSize=ballsize[0];
   ballsize[0]=0;
   ballBulletExists=1;
-  ballbullet.color=getRGB(255,255,255);
+  ballbullet.color=spGetRGB(255,255,255);
   ballbullet.dx=(facedir)?(1<<(SP_ACCURACY-7)):(-1<<(SP_ACCURACY-7));
   ballbullet.dy=0;
   ballbullet.lifetime=2000;
@@ -24,8 +24,12 @@ void drawBallBullet(Sint32 x,Sint32 y)
 {
   if (!ballBulletExists)
     return;
-  //engineEllipse(bullet->x-x,y-bullet->y,0,3<<(SP_ACCURACY-3),3<<(SP_ACCURACY-3),bullet->color);
-  drawMeshXYZS(ballbullet.x-x,y-ballbullet.y,0,ballBulletSize,sphere,ballbullet.color);
+  //spEllipse(bullet->x-x,y-bullet->y,0,3<<(SP_ACCURACY-3),3<<(SP_ACCURACY-3),bullet->color);
+  Sint32 matrix[16];
+  memcpy( matrix, spGetMatrix(), 16 * sizeof( Sint32 ) ); //glPush()
+  spScale(ballBulletSize,ballBulletSize,ballBulletSize);
+  spMesh3DwithPos(ballbullet.x-x,y-ballbullet.y,0,sphere,ballbullet.color);
+  memcpy( spGetMatrix(), matrix, 16 * sizeof( Sint32 ) ); //glPop()
 }
 
 void calcBallBullet()
@@ -48,7 +52,7 @@ void calcBallBullet()
          ballbullet.y+ballBulletSize >= enemy->y-enemy->symbol->measures[3] &&
          ballbullet.y-ballBulletSize <= enemy->y+enemy->symbol->measures[3] ) //Hit
     {
-      newexplosion(PARTICLES,ballbullet.x,ballbullet.y,0,1024,getRGB(255,255,255));
+      newexplosion(PARTICLES,ballbullet.x,ballbullet.y,0,1024,spGetRGB(255,255,255));
       ballBulletSize-=1<<(SP_ACCURACY-5);
       if (ballBulletSize<=0)
         ballBulletExists=0;

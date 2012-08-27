@@ -86,7 +86,7 @@ char pausemode;
 #include "drawlevel.h"
 #include "drawcharacter.h"
 #include "bullet.h"
-//#include "ballbullet.h"
+#include "ballbullet.h"
 
 /*void init_game(plevel level,char complete)
 {

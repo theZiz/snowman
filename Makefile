@@ -108,7 +108,7 @@ all: snowman
 targets:
 	@echo "gp2x, open2x (like gp2x, but dynamic compiled => smaller), wiz caanoo, dingux, pandora, maemo5, maemo6"
 
-snowman: ballbullet.h bullet_new.h drawlevel.h intro.h  particle.h bullet.h drawcharacter.h enemy.h level.h ballbullet.c snowman.c
+snowman: ballbullet.h bullet_new.h drawlevel.h intro.h  particle.h bullet.h drawcharacter.h enemy.h level.h snowman.c
 	$(CPP) $(CFLAGS) snowman.c $(SDL) $(INCLUDE) $(SDL_INCLUDE) $(SPARROW_INCLUDE) $(LIB) $(SDL_LIB) $(SPARROW_LIB) $(STATIC) $(DYNAMIC) -o $(BUILD_PATH)snowman
 
 clean:
