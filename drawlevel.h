@@ -34,7 +34,7 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
             if (c>255)
               c=255;
             spEllipse3D(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),
-                          spSin(w)*3/4,/*3<<(SP_ACCURACY-2),*/3<<(SP_ACCURACY-2),
+                          abs(spSin(w)*3/4),/*3<<(SP_ACCURACY-2),*/3<<(SP_ACCURACY-2),
                           spGetRGB(c,c,c)/*level->symbollist[level->layer[l][x+y*level->width]]->color*/);
           }
           else

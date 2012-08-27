@@ -16,9 +16,19 @@ void resize( Uint16 w, Uint16 h )
 	font = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY );
 	spFontAdd( font, SP_FONT_GROUP_ASCII, 65535 ); //whole ASCII
 	spFontAddBorder( font, spGetRGB(192,192,192) );
-	spFontAddBorder( font, spGetRGB(127,127,127) );
-	font_red = font;
-	font_green = font;
+	spFontAddBorder( font, spGetRGB(128,128,128) );
+	if ( font_red )
+		spFontDelete( font_red );
+	font_red = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY );
+	spFontAdd( font_red, SP_FONT_GROUP_ASCII, spGetRGB(255,128,128) ); //whole ASCII
+	spFontAddBorder( font_red, spGetRGB(192,96,96) );
+	spFontAddBorder( font_red, spGetRGB(128,64,64) );
+	if ( font_green )
+		spFontDelete( font_green );
+	font_green = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY );
+	spFontAdd( font_green, SP_FONT_GROUP_ASCII, spGetRGB(128,255,128) ); //whole ASCII
+	spFontAddBorder( font_green, spGetRGB(96,192,96) );
+	spFontAddBorder( font_green, spGetRGB(64,128,64) );
 }
 
 #include "intro.h"
@@ -28,7 +38,8 @@ void resize( Uint16 w, Uint16 h )
 #define PARTICLES 16
 
 spModelPointer sphere;
-spModelPointer sphere_nose;
+spModelPointer sphere_nose_left;
+spModelPointer sphere_nose_right;
 spModelPointer cloud;
 spModelPointer broom;
 
@@ -679,7 +690,12 @@ void init_snowman()
   volumefactor=128<<4;
   loadlevelcount();
   sphere=spMeshLoadObj("./data/sphere.obj",NULL,65535);
-  sphere_nose=spMeshLoadObj("./data/sphere_head.obj",NULL,spGetRGB(255,200,0));
+  sphere_nose_left=spMeshLoadObjSize("./data/sphere_head.obj",NULL,spGetRGB(255,200,0),1<<SP_ACCURACY-1);
+  //mirror X
+  int i;
+  for (i = 0; i < sphere_nose_left->pointCount; i++)
+		sphere_nose_left->point[i].x = -sphere_nose_left->point[i].x;
+  sphere_nose_right=spMeshLoadObjSize("./data/sphere_head.obj",NULL,spGetRGB(255,200,0),1<<SP_ACCURACY-1);
   cloud=spMeshLoadObj("./data/cloud.obj",NULL,65535);
   broom=spMeshLoadObj("./data/broom.obj",NULL,spGetRGB(86,22,0));
   fade=0;
@@ -709,7 +725,8 @@ void quit_snowman()
   spSoundDelete(hu_chunk);
   spSoundQuit();
   spMeshDelete(sphere);
-  spMeshDelete(sphere_nose);
+  spMeshDelete(sphere_nose_left);
+  spMeshDelete(sphere_nose_right);
   spMeshDelete(cloud);
   spMeshDelete(broom);
 }

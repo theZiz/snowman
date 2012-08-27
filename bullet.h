@@ -88,7 +88,7 @@ void drawBullet(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy)
      bullet=bullet->next;
      continue; 
     }    
-    spEllipse(bullet->x-x,y-bullet->y,0,3<<(SP_ACCURACY-3),3<<(SP_ACCURACY-3),bullet->color);
+    spEllipse3D(bullet->x-x,y-bullet->y,0,3<<(SP_ACCURACY-3),3<<(SP_ACCURACY-3),bullet->color);
     bullet=bullet->next;
   }  
 }

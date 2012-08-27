@@ -104,15 +104,13 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
     {
       if (right)
       {
-				spScale(r,r,r);
-        spMesh3DwithPos(x,y,z,sphere_nose,0);
-        spEllipse(x+(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),spGetRGB(0,0,0));
+        spMesh3DwithPos(x,y,z,sphere_nose_right,0);
+        spEllipse3D(x+(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),spGetRGB(0,0,0));
       }
       else
       {
-				spScale(-r,-r,-r);
-        spMesh3DwithPos(x,y,z,sphere_nose,0);
-        spEllipse(x-(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),spGetRGB(0,0,0));
+        spMesh3DwithPos(x,y,z,sphere_nose_left,0);
+        spEllipse3D(x-(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),spGetRGB(0,0,0));
       }
     }
     y+=ballsize[i];
