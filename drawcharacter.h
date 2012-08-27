@@ -98,20 +98,20 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
         spRotateZ(angle);
     }
     spScale(r,r,r);
-    spMesh3DwithPos(0,0,0,sphere,spGetRGB(255,red,red));
+    spMesh3DwithPos(0,0,0,sphere,0);
     memcpy(modellViewMatrix,matrix,64);
     if (i==2)
     {
       if (right)
       {
 				spScale(r,r,r);
-        spMesh3DwithPos(x,y,z,sphere_nose,spGetRGB(255,127,0));
+        spMesh3DwithPos(x,y,z,sphere_nose,0);
         spEllipse(x+(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),spGetRGB(0,0,0));
       }
       else
       {
 				spScale(-r,-r,-r);
-        spMesh3DwithPos(x,y,z,sphere_nose,spGetRGB(255,127,0));
+        spMesh3DwithPos(x,y,z,sphere_nose,0);
         spEllipse(x-(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),spGetRGB(0,0,0));
       }
     }
@@ -146,9 +146,9 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
     }
     
     if (in_hit>192)
-      spMesh3DwithPos(0,(288-in_hit)<<(SP_ACCURACY-8),0,broom,spGetRGB(86,22,0));
+      spMesh3DwithPos(0,(288-in_hit)<<(SP_ACCURACY-8),0,broom,0);
     else
-      spMesh3DwithPos(0,(    in_hit)<<(SP_ACCURACY-7),0,broom,spGetRGB(86,22,0));
+      spMesh3DwithPos(0,(    in_hit)<<(SP_ACCURACY-7),0,broom,0);
     memcpy(modellViewMatrix,matrix,64);
   }
 }

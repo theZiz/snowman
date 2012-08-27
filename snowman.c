@@ -681,7 +681,7 @@ void init_snowman()
   sphere=spMeshLoadObj("./data/sphere.obj",NULL,65535);
   sphere_nose=spMeshLoadObj("./data/sphere_head.obj",NULL,spGetRGB(255,200,0));
   cloud=spMeshLoadObj("./data/cloud.obj",NULL,65535);
-  broom=spMeshLoadObj("./data/broom.obj",NULL,spGetRGB(128,128,0));
+  broom=spMeshLoadObj("./data/broom.obj",NULL,spGetRGB(86,22,0));
   fade=0;
   fade2=0;
 	spSoundInit();

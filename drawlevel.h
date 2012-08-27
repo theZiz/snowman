@@ -42,7 +42,7 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
           {
 						Sint32 tx,ty,tz;
 						spProjectPoint3D(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),&tx,&ty,&tz,1);
-            spFontDrawMiddle(tx,ty,tz,now->function,font);
+            spFontDrawMiddle(tx,ty-font->maxheight/2,tz,now->function,font);
           }
           now=now->next;
         }
@@ -56,7 +56,7 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 
 void drawclouds(Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 {
-  int i;
+	/*int i;
   Sint32 minx=-dx-(20<<SP_ACCURACY);
   Sint32 maxx=+dx+(20<<SP_ACCURACY);
   Sint32 miny=-dy-(20<<SP_ACCURACY);
@@ -72,5 +72,5 @@ void drawclouds(Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
     if (-cloudy[i]+my > maxy)
       continue;
     spMesh3DwithPos(cloudx[i]-mx,-cloudy[i]+my,cloudz[i],cloud,0);
-  }
+  }*/
 }

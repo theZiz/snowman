@@ -24,8 +24,8 @@ void drawenemies(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy)
     if ((enemy->symbol->meshmask & 1) == 1) //badcoin
     {
       int c=abs(spSin(w*4)>>(SP_ACCURACY-7))+127;
-                  if (c>255)
-      c=255;
+      if (c>255)
+				c=255;
       int r=( enemy->symbol->color>>11     )*8;
       int g=((enemy->symbol->color>>5) & 63)*4;
       int b=( enemy->symbol->color     & 31)*8;
@@ -33,12 +33,9 @@ void drawenemies(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy)
                     spGetRGB((r*c)>>8,(g*c)>>8,(b*c)>>8));
       Sint32 to=enemy->x-x-enemy->symbol->measures[2]+(2*enemy->symbol->measures[2])*enemy->health/enemy->maxhealth;
       spQuad3D(enemy->x-x-enemy->symbol->measures[2],y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,
-             enemy->x-x-enemy->symbol->measures[2],y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
-                                                    to,y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
-                                                    to,y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,enemy->symbol->color);
-      /*char buffer[16];
-      sprintf(buffer,"%i",enemy->health);
-      engineDrawTextMXMY(enemy->x-x,y-enemy->y,1<<(SP_ACCURACY-5),buffer);*/
+               enemy->x-x-enemy->symbol->measures[2],y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
+                                                  to,y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
+                                                  to,y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,enemy->symbol->color);
     }
     enemy=enemy->next; 
   }
