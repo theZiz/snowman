@@ -66,12 +66,12 @@ int enemyKilled;
 
 plevel level = NULL;
 
-spSound shot_chunk;
-spSound jump_chunk;
-spSound ballshot_chunk;
-spSound positive_chunk;
-spSound negative_chunk;
-spSound hu_chunk;
+spSound* shot_chunk;
+spSound* jump_chunk;
+spSound* ballshot_chunk;
+spSound* positive_chunk;
+spSound* negative_chunk;
+spSound* hu_chunk;
 char broom_exist;
 
 int volume;
@@ -84,7 +84,7 @@ char pausemode;
 
 #include "enemy.h"
 #include "drawlevel.h"
-//#include "drawcharacter.h"
+#include "drawcharacter.h"
 //#include "bullet.h"
 //#include "ballbullet.h"
 
@@ -332,7 +332,7 @@ int calc_game(Uint32 steps)
       gotchabig=0;
   }
   
-  w+=(steps*256)%(2*MY_PI);
+  w+=(steps*256)%(2*SP_PI);
   //Time based movement
   int step;
   for (step=0;step<steps;step++)
@@ -509,8 +509,8 @@ int calc_game(Uint32 steps)
       {
         x-=2<<(SP_ACCURACY-7);
         angle+=2<<(SP_ACCURACY-8);
-        if (angle>=2*MY_PI)
-          angle-=2*MY_PI;
+        if (angle>=2*SP_PI)
+          angle-=2*SP_PI;
         facedir=0;
       }
       if (engineGetAxis(0)== 1)
@@ -518,7 +518,7 @@ int calc_game(Uint32 steps)
         x+=2<<(SP_ACCURACY-7);
         angle-=2<<(SP_ACCURACY-8);
         if (angle<0)
-          angle+=2*MY_PI;
+          angle+=2*SP_PI;
         facedir=1;
       }
       //Hm, where am I?

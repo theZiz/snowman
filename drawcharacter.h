@@ -44,7 +44,7 @@ char addonesnow()
     ballsize[0]+=(1<<(SP_ACCURACY-5));
     gotchabig=500;
     valuebig=1;
-    Mix_PlayChannel(-1,hu_chunk,0);
+    spSoundPlay(hu_chunk,-1,0,0,0);
     return 1;
   }
   if (ballcount==1)
@@ -66,7 +66,7 @@ char addonesnow()
       ballsize[0]=0;
       ballcount++;
     }
-    Mix_PlayChannel(-1,hu_chunk,0);
+    spSoundPlay(hu_chunk,-1,0,0,0);
     return 1;
   }
   return 0;
@@ -75,41 +75,44 @@ char addonesnow()
 
 void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
 {
-  Sint32* modellViewMatrix=engineGetModellViewMatrix();
+  Sint32* modellViewMatrix=spGetMatrix();
   int i;
   int red=((spCos(damaged*(1<<(SP_ACCURACY-6)))*127)>>SP_ACCURACY)+128;
   for (i=3-ballcount;i<3;i++)
   {
     y+=ballsize[i];
     Sint32 r=ballsize[i]+(1<<(SP_ACCURACY-5));
-    //engineEllipse(x,y,z,r,r,getRGB(255,255,255));
+    //spEllipse(x,y,z,r,r,spGetRGB(255,255,255));
     Sint32 matrix[16];    
     memcpy(matrix,modellViewMatrix,64);
     modellViewMatrix[12]+=x;
     modellViewMatrix[13]+=y;
     modellViewMatrix[14]+=z;    
     if (i==0)
-      engineRotate(0,0,1<<SP_ACCURACY,angle);
+      spRotateZ(angle);
     if (i==1)
     {
       if (ballcount==3)
-        engineRotate(0,0,-1<<SP_ACCURACY,angle);
+        spRotateZ(-angle);
       else
-        engineRotate(0,0, 1<<SP_ACCURACY,angle);
+        spRotateZ(angle);
     }
-    drawMeshXYZS(0,0,0,r,sphere,getRGB(255,red,red));
+    spScale(r,r,r);
+    spMesh3DwithPos(0,0,0,sphere,spGetRGB(255,red,red));
     memcpy(modellViewMatrix,matrix,64);
     if (i==2)
     {
       if (right)
       {
-        drawMeshXYZS(x,y,z,r,sphere_nose,getRGB(255,127,0));
-        engineEllipse(x+(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),getRGB(0,0,0));
+				spScale(r,r,r);
+        spMesh3DwithPos(x,y,z,sphere_nose,spGetRGB(255,127,0));
+        spEllipse(x+(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),spGetRGB(0,0,0));
       }
       else
       {
-        drawMeshXYZS(x,y,z,-r,sphere_nose,getRGB(255,127,0));
-        engineEllipse(x-(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),getRGB(0,0,0));
+				spScale(-r,-r,-r);
+        spMesh3DwithPos(x,y,z,sphere_nose,spGetRGB(255,127,0));
+        spEllipse(x-(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),spGetRGB(0,0,0));
       }
     }
     y+=ballsize[i];
@@ -127,25 +130,25 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
     modellViewMatrix[14]+=z+(1<<SP_ACCURACY);    
     if (right)
     {
-      engineRotate(0,0, 1<<SP_ACCURACY, MY_PI>>2);
+      spRotateZ( SP_PI>>2);
       if (in_hit>192)
-        engineRotate(0<<SP_ACCURACY,0<<SP_ACCURACY,-1<<SP_ACCURACY,((288-in_hit)*MY_PI)>>7);
+        spRotateZ(-((288-in_hit)*SP_PI)>>7);
       else
-        engineRotate(0<<SP_ACCURACY,0<<SP_ACCURACY,-1<<SP_ACCURACY,(in_hit*MY_PI)>>8);
+        spRotateZ(-(in_hit*SP_PI)>>8);
     }
     else
     {
-      engineRotate(0,0, 1<<SP_ACCURACY, 7*MY_PI>>2);
+      spRotateZ( 7*SP_PI>>2);
       if (in_hit>192)
-        engineRotate(0<<SP_ACCURACY,0<<SP_ACCURACY, 1<<SP_ACCURACY,((288-in_hit)*MY_PI)>>7);
+        spRotateZ(((288-in_hit)*SP_PI)>>7);
       else
-        engineRotate(0<<SP_ACCURACY,0<<SP_ACCURACY, 1<<SP_ACCURACY,(in_hit*MY_PI)>>8);
+        spRotateZ((in_hit*SP_PI)>>8);
     }
     
     if (in_hit>192)
-      drawMeshXYZS(0,(288-in_hit)<<(SP_ACCURACY-8),0,(1<<SP_ACCURACY),broom,getRGB(86,22,0));
+      spMesh3DwithPos(0,(288-in_hit)<<(SP_ACCURACY-8),0,broom,spGetRGB(86,22,0));
     else
-      drawMeshXYZS(0,(    in_hit)<<(SP_ACCURACY-7),0,(1<<SP_ACCURACY),broom,getRGB(86,22,0));
+      spMesh3DwithPos(0,(    in_hit)<<(SP_ACCURACY-7),0,broom,spGetRGB(86,22,0));
     memcpy(modellViewMatrix,matrix,64);
   }
 }
@@ -372,11 +375,11 @@ void playerEnemyInteraction()
          y-sum               <= enemy->y+enemy->symbol->measures[3] &&
          y                   >= enemy->y-enemy->symbol->measures[3] ) //Hit
     {
-      damaged=MY_PI>>(SP_ACCURACY-8);
+      damaged=SP_PI>>(SP_ACCURACY-8);
       if (removesnow(3))
       {
         fade2=1024;
-        Mix_PlayChannel(-1,negative_chunk,0);
+        spSoundPlay(negative_chunk,-1,0,0,0);
         return;
       }
       return;
@@ -407,7 +410,7 @@ void broomEnemyInteraction(char right)
          broomy >= enemy->y-enemy->symbol->measures[3]-(1<<SP_ACCURACY) &&
          broomy <= enemy->y+enemy->symbol->measures[3]+(1<<SP_ACCURACY) ) //Hit
     {
-      //newexplosion(PARTICLES,broomx,broomy,0,1024,getRGB(86,22,0));
+      //newexplosion(PARTICLES,broomx,broomy,0,1024,spGetRGB(86,22,0));
       enemy->health-=2;
       newexplosion(2*PARTICLES,enemy->x,enemy->y,0,1024,enemy->symbol->color);
       if (enemy->health<=0)

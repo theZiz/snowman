@@ -262,7 +262,7 @@ void bulletPlayerInteraction()
       free(bullet);
       bullet=bbefore;
       
-      damaged=MY_PI>>(SP_ACCURACY-8);
+      damaged=SP_PI>>(SP_ACCURACY-8);
       if (removesnow(3))
       {
         fade2=1024;
