@@ -1,7 +1,8 @@
-#include <SDL/SDL_mixer.h>
 #include <sparrow3d.h>
 
 spFontPointer font = NULL;
+spFontPointer font_red = NULL;
+spFontPointer font_green = NULL;
 SDL_Surface* screen;
 
 void resize( Uint16 w, Uint16 h )
@@ -16,6 +17,8 @@ void resize( Uint16 w, Uint16 h )
 	spFontAdd( font, SP_FONT_GROUP_ASCII, 65535 ); //whole ASCII
 	spFontAddBorder( font, spGetRGB(192,192,192) );
 	spFontAddBorder( font, spGetRGB(127,127,127) );
+	font_red = font;
+	font_green = font;
 }
 
 #include "intro.h"
@@ -88,7 +91,7 @@ char pausemode;
 #include "bullet.h"
 #include "ballbullet.h"
 
-/*void init_game(plevel level,char complete)
+void init_game(plevel level,char complete)
 {
   angle=0;
   resetallparticle();
@@ -129,10 +132,10 @@ char pausemode;
 
 void draw_game(void)
 {
-  Sint32* modellViewMatrix=engineGetModellViewMatrix();  
+  Sint32* modellViewMatrix=spGetMatrix();  
   
-  engineClearScreen(level->backgroundcolor);
-  setModellViewMatrixIdentity();
+  spClearTarget(level->backgroundcolor);
+  spIdentity();
 
   modellViewMatrix[14]=-25<<SP_ACCURACY;  
 
@@ -141,7 +144,7 @@ void draw_game(void)
   //  Sint32 dy=15<<SP_ACCURACY;
   //#else
     Sint32 dy=16<<SP_ACCURACY;
-    Sint32 dx=dy*engineGetWindowX()/engineGetWindowY();
+    Sint32 dx=dy*screen->w/screen->h;
   //#endif
   drawclouds(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
   drawlevel(level,camerax,cameray-(4<<SP_ACCURACY),dx,dy);
@@ -152,30 +155,28 @@ void draw_game(void)
   drawparticle(camerax,cameray-(4<<SP_ACCURACY),0,dx,dy);
 
 
-  engineDrawList();
-
   char buffer[64];
   sprintf(buffer,"Killed %i/%i (Objective: %i)",enemyKilled,level->enemycount,level->havetokill);
   if (enemyKilled<level->havetokill)
-    drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,engineGetSurface(SURFACE_KEYMAP_RED)->h>>4,buffer,engineGetSurface(SURFACE_KEYMAP_RED));
+    spFontDrawMiddle(screen->w>>1,1,-1,buffer,font_red);
   else
-    drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,engineGetSurface(SURFACE_KEYMAP_GREEN)->h>>4,buffer,engineGetSurface(SURFACE_KEYMAP_GREEN));
+    spFontDrawMiddle(screen->w>>1,1,-1,buffer,font_green);
 
 
-  sprintf(buffer,"%i",engineGetFps());
-  drawtext(engineGetSurface(SURFACE_SURFACE),0,0,buffer,engineGetSurface(SURFACE_KEYMAP));
+  sprintf(buffer,"%i",spGetFPS());
+  spFontDraw(0,0,-1,buffer,font);
   sprintf(buffer,"Small Belly: %i/18     Big Belly: %i/26",ballsize[1]>>(SP_ACCURACY-5),ballsize[0]>>(SP_ACCURACY-5));
   if (ballsize[1]<=0)
-    drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,engineGetWindowY()-(engineGetSurface(SURFACE_KEYMAP_RED)->h>>4),buffer,engineGetSurface(SURFACE_KEYMAP_RED));
+    spFontDrawMiddle(screen->w>>1,screen->h-font_red->maxheight,-1,buffer,font_red);
   else
-    drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,engineGetWindowY()-(engineGetSurface(SURFACE_KEYMAP)->h>>4),buffer,engineGetSurface(SURFACE_KEYMAP));
-  if (gotchasmall)
+    spFontDrawMiddle(screen->w>>1,screen->h-font_green->maxheight,-1,buffer,font_green);
+  /*if (gotchasmall)
   {
     if (valuesmall>=0)
       sprintf(buffer,"            +%i                       ",valuesmall);
     else
       sprintf(buffer,"            %i                       ",valuesmall);
-    drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,engineGetWindowY()-5*(engineGetSurface(SURFACE_KEYMAP)->h>>5),buffer,engineGetSurface(SURFACE_KEYMAP));
+    spFontDrawMiddle(screen->w>>1,screen->h-5*(engineGetSurface(SURFACE_KEYMAP)->h>>5),buffer,engineGetSurface(SURFACE_KEYMAP));
   }
   if (gotchabig)
   {
@@ -183,9 +184,9 @@ void draw_game(void)
       sprintf(buffer,"                                +%i   ",valuebig);
     else
       sprintf(buffer,"                                %i   ",valuebig);
-    drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,engineGetWindowY()-5*(engineGetSurface(SURFACE_KEYMAP)->h>>5),buffer,engineGetSurface(SURFACE_KEYMAP));
-  }
-  if (fade)
+    spFontDrawMiddle(screen->w>>1,screen->h-5*(engineGetSurface(SURFACE_KEYMAP)->h>>5),buffer,engineGetSurface(SURFACE_KEYMAP));
+  }*/
+  /*if (fade)
   {
     if (fade>512)
       engineAddWhiteLayer((1024-fade)>>1);
@@ -198,55 +199,55 @@ void draw_game(void)
       engineAddBlackLayer((1024-fade2)>>1);
     else
       engineAddBlackLayer(      fade2 >>1);
-  }
+  }*/
   if (pausemode)
   {
-    engineAddBlackLayer(192);
-    drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,(engineGetWindowY()>>1)-4*(engineGetSurface(SURFACE_KEYMAP)->h>>5),"Press "BUTTON_START_NAME" to unpause",engineGetSurface(SURFACE_KEYMAP));
-    drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,(engineGetWindowY()>>1)+0*(engineGetSurface(SURFACE_KEYMAP)->h>>5),"Press "BUTTON_SELECT_NAME" to return to submenu",engineGetSurface(SURFACE_KEYMAP));
-    drawtextMXMY(engineGetSurface(SURFACE_SURFACE),engineGetWindowX()>>1,(engineGetWindowY()>>1)+4*(engineGetSurface(SURFACE_KEYMAP)->h>>5),"Press "BUTTON_A_NAME","BUTTON_B_NAME","BUTTON_X_NAME" and "BUTTON_Y_NAME" to quit",engineGetSurface(SURFACE_KEYMAP));
+    //engineAddBlackLayer(192);
+    spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight,-1,"Press "SP_BUTTON_START_NAME" to unpause",font);
+    spFontDrawMiddle(screen->w>>1,(screen->h>>1)                ,-1,"Press "SP_BUTTON_SELECT_NAME" to return to submenu",font);
+    spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight,-1,"Press "SP_BUTTON_A_NAME","SP_BUTTON_B_NAME","SP_BUTTON_X_NAME" and "SP_BUTTON_Y_NAME" to quit",font);
   }
-  engineFlip();
+  spFlip();
 }
 
 int calc_game(Uint32 steps)
 {
-  pEngineInput engineInput = engineGetInput();
-  if (engineInput->button[BUTTON_VOLMINUS])
+  PspInput engineInput = spGetInput();
+  if (engineInput->button[SP_BUTTON_VOLMINUS])
   {
     volume-=steps;
     if (volume<0)
       volume=0;
-    Mix_Volume(-1,volume>>4);
-    Mix_VolumeMusic(((volumefactor*volume)/(128<<4))>>5);
+    spSoundSetVolume(volume>>4);
+    spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
     savelevelcount();
   }
-  if (engineInput->button[BUTTON_VOLPLUS])
+  if (engineInput->button[SP_BUTTON_VOLPLUS])
   {
     volume+=steps;
     if (volume>(128<<4))
       volume=128<<4;
-    Mix_Volume(-1,volume>>4);
-    Mix_VolumeMusic(((volumefactor*volume)/(128<<4))>>5);
+    spSoundSetVolume(volume>>4);
+    spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
     savelevelcount();
   }
-  if (engineInput->button[BUTTON_L])
+  if (engineInput->button[SP_BUTTON_L])
   {
     volumefactor-=steps;
     if (volumefactor<0)
       volumefactor=0;
-    Mix_VolumeMusic(((volumefactor*volume)/(128<<4))>>5);
+    spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
     savelevelcount();
   }
-  if (engineInput->button[BUTTON_R])
+  if (engineInput->button[SP_BUTTON_R])
   {
     volumefactor+=steps;
     if (volumefactor>(128<<4))
       volumefactor=128<<4;
-    Mix_VolumeMusic(((volumefactor*volume)/(128<<4))>>5);
+    spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
     savelevelcount();
   }
-  if (engineGetMuteKey())
+  /*if (engineGetMuteKey())
   {
     printf("teenage MUTEnt ninja turtles\n");
     if (volumefactor>0)
@@ -256,26 +257,26 @@ int calc_game(Uint32 steps)
     Mix_VolumeMusic(((volumefactor*volume)/(128<<4))>>5);
     savelevelcount();
     engineSetMuteKey(0);
-  }
-  if (engineInput->button[BUTTON_START])
+  }*/
+  if (engineInput->button[SP_BUTTON_START])
   {
-    engineInput->button[BUTTON_START]=0;
+    engineInput->button[SP_BUTTON_START]=0;
     pausemode=1-pausemode;
   }
   if (pausemode)
   {
-    if (engineInput->button[BUTTON_SELECT])
+    if (engineInput->button[SP_BUTTON_SELECT])
     {
-      engineInput->button[BUTTON_SELECT]=0;
+      engineInput->button[SP_BUTTON_SELECT]=0;
       fade2=1024;
       pausemode=0;
     }
-    if (engineInput->button[BUTTON_A] && engineInput->button[BUTTON_B] && engineInput->button[BUTTON_X] && engineInput->button[BUTTON_Y])
+    if (engineInput->button[SP_BUTTON_A] && engineInput->button[SP_BUTTON_B] && engineInput->button[SP_BUTTON_X] && engineInput->button[SP_BUTTON_Y])
     {
-      engineInput->button[BUTTON_A]=0;
-      engineInput->button[BUTTON_B]=0;
-      engineInput->button[BUTTON_X]=0;
-      engineInput->button[BUTTON_Y]=0;
+      engineInput->button[SP_BUTTON_A]=0;
+      engineInput->button[SP_BUTTON_B]=0;
+      engineInput->button[SP_BUTTON_X]=0;
+      engineInput->button[SP_BUTTON_Y]=0;
       return 1;
     }
     return 0; 
@@ -354,28 +355,28 @@ int calc_game(Uint32 steps)
     
     //Bullets
     calcBullet();
-    if (engineInput->button[BUTTON_A])
+    if (engineInput->button[SP_BUTTON_A])
     {
-      engineInput->button[BUTTON_A]=0;
+      engineInput->button[SP_BUTTON_A]=0;
       int sum=0;
       int i;
       for (i=3-ballcount;i<3;i++)
         sum+=ballsize[i]*2;
-      newBullet(x,y-(sum>>1),(facedir)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,1,getRGB(255,255,255));
+      newBullet(x,y-(sum>>1),(facedir)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,1,spGetRGB(255,255,255));
     }
     calcBallBullet();
-    if (engineInput->button[BUTTON_X])
+    if (engineInput->button[SP_BUTTON_X])
     {
-      engineInput->button[BUTTON_X]=0;
+      engineInput->button[SP_BUTTON_X]=0;
       fireBallBullet();
     }
     bulletEnemyInteraction();
     bulletPlayerInteraction();
     bulletEnvironmentInteraction();
 
-    if (broom_exist && in_hit<=0 && engineInput->button[BUTTON_B])
+    if (broom_exist && in_hit<=0 && engineInput->button[SP_BUTTON_B])
     {
-      //engineInput->button[BUTTON_B]=0;
+      //engineInput->button[SP_BUTTON_B]=0;
       in_hit=288;
     }
     if (in_hit==192)
@@ -403,7 +404,7 @@ int calc_game(Uint32 steps)
          {
            level->layer[1][bxl+(byb-1)*level->width]=' ';
            broom_exist=1;
-           Mix_PlayChannel(-1,positive_chunk,0);
+           spSoundPlay(positive_chunk,-1,0,0,0);
          }
        }
        if (byt>=0 && level->symbollist[level->layer[1][bxl+(byt)*level->width]]       != NULL)
@@ -421,7 +422,7 @@ int calc_game(Uint32 steps)
          {
            level->layer[1][bxl+(byt)*level->width]=' ';
            broom_exist=1;
-           Mix_PlayChannel(-1,positive_chunk,0);
+           spSoundPlay(positive_chunk,-1,0,0,0);
          }
        }
        if (bym>=0 && level->symbollist[level->layer[1][bxl+(bym)*level->width]]       != NULL)
@@ -439,7 +440,7 @@ int calc_game(Uint32 steps)
          {
            level->layer[1][bxl+(bym)*level->width]=' ';
            broom_exist=1;
-           Mix_PlayChannel(-1,positive_chunk,0);
+           spSoundPlay(positive_chunk,-1,0,0,0);
          }
        }
     }
@@ -461,7 +462,7 @@ int calc_game(Uint32 steps)
          {
            level->layer[1][bxr+(byb-1)*level->width]=' ';
            broom_exist=1;
-           Mix_PlayChannel(-1,positive_chunk,0);
+           spSoundPlay(positive_chunk,-1,0,0,0);
          }
        }
        if (byt>=0 && level->symbollist[level->layer[1][bxr+(byt)*level->width]]       != NULL)
@@ -479,7 +480,7 @@ int calc_game(Uint32 steps)
          {
            level->layer[1][bxr+(byt)*level->width]=' ';
            broom_exist=1;
-           Mix_PlayChannel(-1,positive_chunk,0);
+           spSoundPlay(positive_chunk,-1,0,0,0);
          }
        }
        if (bym>=0 && level->symbollist[level->layer[1][bxr+(bym)*level->width]]       != NULL)
@@ -497,7 +498,7 @@ int calc_game(Uint32 steps)
          {
            level->layer[1][bxr+(bym)*level->width]=' ';
            broom_exist=1;
-           Mix_PlayChannel(-1,positive_chunk,0);
+           spSoundPlay(positive_chunk,-1,0,0,0);
          }
        }
     }
@@ -505,7 +506,7 @@ int calc_game(Uint32 steps)
     //  Player
     if (!tofat)
     {
-      if (engineGetAxis(0)==-1)
+      if (engineInput->axis[0]==-1)
       {
         x-=2<<(SP_ACCURACY-7);
         angle+=2<<(SP_ACCURACY-8);
@@ -513,7 +514,7 @@ int calc_game(Uint32 steps)
           angle-=2*SP_PI;
         facedir=0;
       }
-      if (engineGetAxis(0)== 1)
+      if (engineInput->axis[0]== 1)
       {
         x+=2<<(SP_ACCURACY-7);
         angle-=2<<(SP_ACCURACY-8);
@@ -550,7 +551,7 @@ int calc_game(Uint32 steps)
     if (by>level->height) //Fuck, I am dead...
     {
       fade2=1024;
-      Mix_PlayChannel(-1,negative_chunk,0);
+      spSoundPlay(negative_chunk,-1,0,0,0);
       return 0;
     }
     //printf("bx: %i by-1: %i byt: %i \"%c\"   \"%c\"\n",bx,by-1,byt,level->layer[1][bx+byt*level->width],level->layer[1][bx+(by-1)*level->width]);
@@ -598,7 +599,7 @@ int calc_game(Uint32 steps)
     playerEnemyInteraction();
   }
   //Jump
-  if (engineInput->button[BUTTON_Y])
+  if (engineInput->button[SP_BUTTON_Y])
   {
     int biggest=2;
     if (ballcount>2)
@@ -625,11 +626,11 @@ int calc_game(Uint32 steps)
     if (ballsize[1]>(0<<(SP_ACCURACY-5)))
     {
       removesnow(1);
-      newexplosion(PARTICLES,x,y,0,1024,getRGB(255,255,255));      
+      newexplosion(PARTICLES,x,y,0,1024,spGetRGB(255,255,255));      
       speedup=-23<<(SP_ACCURACY-9);
-      Mix_PlayChannel(-1,jump_chunk,0);
+      spSoundPlay(jump_chunk,-1,0,0,0);
     }
-    //engineInput->button[BUTTON_Y]=0;
+    //engineInput->button[SP_BUTTON_Y]=0;
   }
   
   
@@ -647,7 +648,7 @@ int calc_game(Uint32 steps)
   }
 
   //Door
-  if (engineGetAxis(1)==1)
+  if (engineInput->axis[1]==1)
     if (bx>=0 && bx<level->width)
       if (byb>0 && level->symbollist[level->layer[1][bx+(byb-1)*level->width]]       != NULL &&
                   (level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->functionmask & 2) == 2)
@@ -669,8 +670,6 @@ int calc_game(Uint32 steps)
   return 0; 
 }
 
-Mix_Music *snd_menumusic;
-
 void init_snowman()
 {
   levelcount=10;
@@ -678,44 +677,38 @@ void init_snowman()
   volume=128<<4;
   volumefactor=128<<4;
   loadlevelcount();
-  sphere=loadMesh("./data/sphere.obj");
-  sphere_nose=loadMesh("./data/sphere_head.obj");
-  cloud=loadMesh("./data/cloud.obj");
-  broom=loadMesh("./data/broom.obj");
+  sphere=spMeshLoadObj("./data/sphere.obj",NULL,65535);
+  sphere_nose=spMeshLoadObj("./data/sphere_head.obj",NULL,spGetRGB(255,200,0));
+  cloud=spMeshLoadObj("./data/cloud.obj",NULL,65535);
+  broom=spMeshLoadObj("./data/broom.obj",NULL,spGetRGB(128,128,0));
   fade=0;
   fade2=0;
-  #ifdef F100
-  if (Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 256))
-  #else
-  if (Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 2048))
-  #endif
-    printf("Unable to open audio!\n");
-  Mix_Volume(-1,volume>>4);  
-  Mix_VolumeMusic(((volumefactor*volume)/(128<<4))>>5);
-  snd_menumusic=Mix_LoadMUS("./sounds/Cold Funk.ogg");
-  Mix_PlayMusic(snd_menumusic, -1);
-  shot_chunk=Mix_LoadWAV("./sounds/plop.wav");
-  ballshot_chunk=Mix_LoadWAV("./sounds/plop2.wav");
-  jump_chunk=Mix_LoadWAV("./sounds/shot.wav");
-  positive_chunk=Mix_LoadWAV("./sounds/positive.wav");
-  hu_chunk=Mix_LoadWAV("./sounds/hu.wav");
-  negative_chunk=Mix_LoadWAV("./sounds/negative.wav");  
+	spSoundInit();
+  spSoundSetVolume(volume>>4);  
+  spSoundSetVolume(((volumefactor*volume)/(128<<4))>>5);
+  spSoundSetMusic("./sounds/Cold Funk.ogg");
+  spSoundPlayMusic(0, -1);
+  shot_chunk=spSoundLoad("./sounds/plop.wav");
+  ballshot_chunk=spSoundLoad("./sounds/plop2.wav");
+  jump_chunk=spSoundLoad("./sounds/shot.wav");
+  positive_chunk=spSoundLoad("./sounds/positive.wav");
+  hu_chunk=spSoundLoad("./sounds/hu.wav");
+  negative_chunk=spSoundLoad("./sounds/negative.wav");  
 }
 
 void quit_snowman()
 {
-  Mix_FreeMusic(snd_menumusic);
-  Mix_FreeChunk(shot_chunk);
-  Mix_FreeChunk(ballshot_chunk);
-  Mix_FreeChunk(jump_chunk);
-  Mix_FreeChunk(negative_chunk);
-  Mix_FreeChunk(hu_chunk);
-  Mix_CloseAudio();
-  freeMesh(sphere);
-  freeMesh(sphere_nose);
-  freeMesh(cloud);
-  freeMesh(broom);
-}*/
+  spSoundDelete(shot_chunk);
+  spSoundDelete(ballshot_chunk);
+  spSoundDelete(jump_chunk);
+  spSoundDelete(negative_chunk);
+  spSoundDelete(hu_chunk);
+  spSoundQuit();
+  spMeshDelete(sphere);
+  spMeshDelete(sphere_nose);
+  spMeshDelete(cloud);
+  spMeshDelete(broom);
+}
 
 int main(int argc, char **argv)
 {
@@ -726,13 +719,13 @@ int main(int argc, char **argv)
 	screen = spCreateDefaultWindow();
 	spSelectRenderTarget(screen);
 	resize( screen->w, screen->h );  
-  //init_snowman();
+  init_snowman();
   intro();
   level=loadlevel("./levels/menu.slvl");
-  /*init_game(level,1);
-  engineLoop(draw_game,calc_game,10); //max 100 fps, wenn kein vsync vorhanden
+  init_game(level,1);
+  spLoop(draw_game,calc_game,10,resize,NULL);
   freeLevel(level);
-  quit_snowman();*/
+  quit_snowman();
   spQuitCore();
   return 0;
 }
