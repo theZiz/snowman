@@ -85,9 +85,7 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
     //spEllipse(x,y,z,r,r,spGetRGB(255,255,255));
     Sint32 matrix[16];    
     memcpy(matrix,modellViewMatrix,64);
-    modellViewMatrix[12]+=x;
-    modellViewMatrix[13]+=y;
-    modellViewMatrix[14]+=z;    
+    spTranslate(x,y,z);
     if (i==0)
       spRotateZ(angle);
     if (i==1)
@@ -97,22 +95,27 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
       else
         spRotateZ(angle);
     }
-    spScale(r,r,r);
-    spMesh3DwithPos(0,0,0,sphere,0);
-    memcpy(modellViewMatrix,matrix,64);
-    if (i==2)
+    switch (i)
     {
-      if (right)
-      {
-        spMesh3DwithPos(x,y,z,sphere_nose_right,0);
-        spEllipse3D(x+(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),spGetRGB(0,0,0));
-      }
-      else
-      {
-        spMesh3DwithPos(x,y,z,sphere_nose_left,0);
-        spEllipse3D(x-(1<<(SP_ACCURACY-3)),y+(1<<(SP_ACCURACY-2)),z+r,1<<(SP_ACCURACY-2),1<<(SP_ACCURACY-2),spGetRGB(0,0,0));
-      }
-    }
+      case 0:case 1:
+				spBindTexture(sphere);
+				spQuadTex3D(-r, r,0, 0, 0,
+										-r,-r,0, 0,63,
+										 r,-r,0,63,63,
+										 r, r,0,63, 0,spGetRGB(255,red,red));
+				break;
+      case 2:
+				if (right)
+					spBindTexture(sphere_right);
+				else
+					spBindTexture(sphere_left);
+				spQuadTex3D(-r*2, r,0,  0, 0,
+										-r*2,-r,0,  0,63,
+										 r*2,-r,0,127,63,
+										 r*2, r,0,127, 0,spGetRGB(255,red,red));
+				break;
+		}
+    memcpy(modellViewMatrix,matrix,64);
     y+=ballsize[i];
   }
   if (broom_exist)

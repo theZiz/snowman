@@ -38,7 +38,9 @@ void resize( Uint16 w, Uint16 h )
 
 #define PARTICLES 16
 
-spModelPointer sphere;
+SDL_Surface* sphere;
+SDL_Surface* sphere_left;
+SDL_Surface* sphere_right;
 spModelPointer sphere_nose_left;
 spModelPointer sphere_nose_right;
 //spModelPointer cloud;
@@ -172,7 +174,9 @@ void draw_game(void)
 	spSetZSet(0);
 	spSetZTest(0);
   drawBullet(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
+  spSetAlphaTest(1);
   drawBallBullet(camerax,cameray-(4<<SP_ACCURACY));
+  spSetAlphaTest(0);
   drawparticle(camerax,cameray-(4<<SP_ACCURACY),0,dx,dy);
   spSetAlphaTest(1);
 
@@ -699,7 +703,9 @@ void init_snowman()
   volume=128<<4;
   volumefactor=128<<4;
   loadlevelcount();
-  sphere=spMeshLoadObj("./data/sphere.obj",NULL,65535);
+  sphere=spLoadSurface("./data/sphere.png");
+  sphere_left=spLoadSurface("./data/sphere_left.png");
+  sphere_right=spLoadSurface("./data/sphere_right.png");
   sphere_nose_left=spMeshLoadObjSize("./data/sphere_head.obj",NULL,spGetRGB(255,200,0),1<<SP_ACCURACY-1);
   //mirror X
   int i;
@@ -722,6 +728,8 @@ void init_snowman()
   hu_chunk=spSoundLoad("./sounds/hu.wav");
   negative_chunk=spSoundLoad("./sounds/negative.wav");
   spSetLight(1);
+  spSetAmbientLightColor(1 << SP_ACCURACY-1,1 << SP_ACCURACY-1,1 << SP_ACCURACY-1);
+  spSetLightColor(1,1 << SP_ACCURACY,1 << SP_ACCURACY,1 << SP_ACCURACY);
 }
 
 void quit_snowman()
@@ -732,7 +740,9 @@ void quit_snowman()
   spSoundDelete(negative_chunk);
   spSoundDelete(hu_chunk);
   spSoundQuit();
-  spMeshDelete(sphere);
+  spDeleteSurface(sphere);
+  spDeleteSurface(sphere_left);
+  spDeleteSurface(sphere_right);
   spMeshDelete(sphere_nose_left);
   spMeshDelete(sphere_nose_right);
   //spMeshDelete(cloud);

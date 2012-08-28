@@ -27,8 +27,12 @@ void drawBallBullet(Sint32 x,Sint32 y)
   //spEllipse(bullet->x-x,y-bullet->y,0,3<<(SP_ACCURACY-3),3<<(SP_ACCURACY-3),bullet->color);
   Sint32 matrix[16];
   memcpy( matrix, spGetMatrix(), 16 * sizeof( Sint32 ) ); //glPush()
-  spScale(ballBulletSize,ballBulletSize,ballBulletSize);
-  spMesh3DwithPos(ballbullet.x-x,y-ballbullet.y,0,sphere,ballbullet.color);
+  spTranslate(ballbullet.x-x,y-ballbullet.y,0);
+	spBindTexture(sphere);
+	spQuadTex3D(-ballBulletSize, ballBulletSize,0, 0, 0,
+							-ballBulletSize,-ballBulletSize,0, 0,63,
+							 ballBulletSize,-ballBulletSize,0,63,63,
+							 ballBulletSize, ballBulletSize,0,63, 0,ballbullet.color);
   memcpy( spGetMatrix(), matrix, 16 * sizeof( Sint32 ) ); //glPop()
 }
 
