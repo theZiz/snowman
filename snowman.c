@@ -38,9 +38,12 @@ void resize( Uint16 w, Uint16 h )
 
 #define PARTICLES 16
 
+int show_snow = 1;
+
 SDL_Surface* sphere;
 SDL_Surface* sphere_left;
 SDL_Surface* sphere_right;
+SDL_Surface* flake;
 spModelPointer sphere_nose_left;
 spModelPointer sphere_nose_right;
 //spModelPointer cloud;
@@ -706,6 +709,7 @@ void init_snowman()
   sphere=spLoadSurface("./data/sphere.png");
   sphere_left=spLoadSurface("./data/sphere_left.png");
   sphere_right=spLoadSurface("./data/sphere_right.png");
+  flake=spLoadSurface("./data/snowflake.png");
   sphere_nose_left=spMeshLoadObjSize("./data/sphere_head.obj",NULL,spGetRGB(255,200,0),1<<SP_ACCURACY-1);
   //mirror X
   int i;
@@ -743,6 +747,7 @@ void quit_snowman()
   spDeleteSurface(sphere);
   spDeleteSurface(sphere_left);
   spDeleteSurface(sphere_right);
+  spDeleteSurface(flake);
   spMeshDelete(sphere_nose_left);
   spMeshDelete(sphere_nose_right);
   //spMeshDelete(cloud);
