@@ -42,7 +42,9 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
           {
 						Sint32 tx,ty,tz;
 						spProjectPoint3D(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),&tx,&ty,&tz,1);
+						spSetAlphaTest(1);
             spFontDrawMiddle(tx,ty-font->maxheight/2,tz,now->function,font);
+            spSetAlphaTest(0);
           }
           now=now->next;
         }

@@ -1,3 +1,4 @@
+#include <string.h>
 #include <sparrow3d.h>
 
 spFontPointer font = NULL;
@@ -158,13 +159,22 @@ void draw_game(void)
     Sint32 dy=16<<SP_ACCURACY;
     Sint32 dx=dy*screen->w/screen->h;
   //#endif
-  drawclouds(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
+  //drawclouds(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
+	spSetZSet(1);
+	spSetZTest(1);
+	spSetAlphaTest(0);
   drawlevel(level,camerax,cameray-(4<<SP_ACCURACY),dx,dy);
+	spSetZSet(0);
+  spSetAlphaTest(1);
   drawcharacter(x-camerax,cameray-y-(4<<SP_ACCURACY),0,facedir);
+  spSetAlphaTest(0);
   drawenemies(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
+	spSetZSet(0);
+	spSetZTest(0);
   drawBullet(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
   drawBallBullet(camerax,cameray-(4<<SP_ACCURACY));
   drawparticle(camerax,cameray-(4<<SP_ACCURACY),0,dx,dy);
+  spSetAlphaTest(1);
 
 
   char buffer[64];
@@ -711,8 +721,6 @@ void init_snowman()
   positive_chunk=spSoundLoad("./sounds/positive.wav");
   hu_chunk=spSoundLoad("./sounds/hu.wav");
   negative_chunk=spSoundLoad("./sounds/negative.wav");
-  spSetZTest(1);
-  spSetZSet(1);
   spSetLight(1);
 }
 
