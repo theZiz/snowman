@@ -239,7 +239,7 @@ void draw_game(void)
     spFontDrawMiddle(screen->w>>1,(screen->h>>1)                ,-1,"Press "SP_BUTTON_SELECT_NAME" to return to submenu",font);
     spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight,-1,"Press "SP_BUTTON_A_NAME","SP_BUTTON_B_NAME","SP_BUTTON_X_NAME" and "SP_BUTTON_Y_NAME" to quit",font);
   }
-  spScale2X(screen,real_screen);
+  spScale2XFast(screen,real_screen);
   spFlip();
 }
 
