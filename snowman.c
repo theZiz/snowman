@@ -5,10 +5,12 @@ spFontPointer font = NULL;
 spFontPointer font_red = NULL;
 spFontPointer font_green = NULL;
 SDL_Surface* real_screen;
-SDL_Surface* screen;
+SDL_Surface* screen = NULL;
 
 void resize( Uint16 w, Uint16 h )
 {
+	if (screen)
+		spDeleteSurface(screen);
 	screen = spCreateSurface(real_screen->w/2,real_screen->h/2);
 	spSelectRenderTarget(screen);
 	//Setup of the new/resized window
