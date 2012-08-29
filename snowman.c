@@ -232,23 +232,23 @@ void draw_game(void)
     int part_text_length = spFontWidth("Small Belly: 18/18     Big Belly: ",font);
     spFontDraw((screen->w - whole_text_length>>1)+part_text_length,screen->h-font->maxheight*2,-1,buffer,font);
   }
-  /*if (fade)
+  if (fade)
   {
     if (fade>512)
-      engineAddWhiteLayer((1024-fade)>>1);
+      spAddWhiteLayer((1024-fade)>>1);
     else
-      engineAddWhiteLayer(      fade >>1);
+      spAddWhiteLayer(      fade >>1);
   }
   if (fade2)
   {
     if (fade2>512)
-      engineAddBlackLayer((1024-fade2)>>1);
+      spAddBlackLayer((1024-fade2)>>1);
     else
-      engineAddBlackLayer(      fade2 >>1);
-  }*/
+      spAddBlackLayer(      fade2 >>1);
+  }
   if (pausemode)
   {
-    //engineAddBlackLayer(192);
+    spAddBlackLayer(192);
     spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight,-1,"Press "SP_BUTTON_START_NAME" to unpause",font);
     spFontDrawMiddle(screen->w>>1,(screen->h>>1)                ,-1,"Press "SP_BUTTON_SELECT_NAME" to return to submenu",font);
     spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight,-1,"Press "SP_BUTTON_A_NAME","SP_BUTTON_B_NAME","SP_BUTTON_X_NAME" and "SP_BUTTON_Y_NAME" to quit",font);
