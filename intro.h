@@ -14,7 +14,9 @@ void draw_intro(void)
   spFontDrawMiddle( screen->w/2 ,(((intro_pos-3800)*(screen->h>>6))>>7),-1,"but the enemies are still there.",font);
   spFontDrawMiddle( screen->w/2 ,(((intro_pos-3000)*(screen->h>>6))>>7),-1,"You are the last (snow)man.",font);
   spFontDrawMiddle( screen->w/2 ,(((intro_pos-2200)*(screen->h>>6))>>7),-1,"Bring it to an end.",font);
-  spScale2XFast(screen,real_screen);
+  #ifdef SCALE_UP
+  spScale2XSmooth(screen,real_screen);
+  #endif
   spFlip();
 }
 

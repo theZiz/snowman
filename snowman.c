@@ -1,39 +1,48 @@
 #include <string.h>
 #include <sparrow3d.h>
 
+//#define SCALE_UP
 spFontPointer font = NULL;
 spFontPointer font_red = NULL;
 spFontPointer font_green = NULL;
+#ifdef SCALE_UP
 SDL_Surface* real_screen;
+#endif
 SDL_Surface* screen = NULL;
 
 void resize( Uint16 w, Uint16 h )
 {
+	#ifdef SCALE_UP
 	if (screen)
 		spDeleteSurface(screen);
 	screen = spCreateSurface(real_screen->w/2,real_screen->h/2);
+	#endif
 	spSelectRenderTarget(screen);
 	//Setup of the new/resized window
 	spSetPerspective( 50.0, ( float )screen->w / ( float )screen->h, 0.1, 100 );
 
+	int scale = 0;
+	#ifdef SCALE_UP
+	scale++;
+	#endif
 	//Font Loading
 	if ( font )
 		spFontDelete( font );
-	font = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor()/2 >> SP_ACCURACY );
+	font = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font, SP_FONT_GROUP_ASCII, 65535 ); //whole ASCII
-	spFontAddBorder( font, spGetRGB(192,192,192) );
+	//spFontAddBorder( font, spGetRGB(192,192,192) );
 	spFontAddBorder( font, spGetRGB(128,128,128) );
 	if ( font_red )
 		spFontDelete( font_red );
-	font_red = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor()/2 >> SP_ACCURACY );
+	font_red = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_red, SP_FONT_GROUP_ASCII, spGetRGB(255,128,128) ); //whole ASCII
-	spFontAddBorder( font_red, spGetRGB(192,96,96) );
+	//spFontAddBorder( font_red, spGetRGB(192,96,96) );
 	spFontAddBorder( font_red, spGetRGB(128,64,64) );
 	if ( font_green )
 		spFontDelete( font_green );
-	font_green = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor()/2 >> SP_ACCURACY );
+	font_green = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_green, SP_FONT_GROUP_ASCII, spGetRGB(128,255,128) ); //whole ASCII
-	spFontAddBorder( font_green, spGetRGB(96,192,96) );
+	//spFontAddBorder( font_green, spGetRGB(96,192,96) );
 	spFontAddBorder( font_green, spGetRGB(64,128,64) );
 }
 
@@ -241,7 +250,9 @@ void draw_game(void)
     spFontDrawMiddle(screen->w>>1,(screen->h>>1)                ,-1,"Press "SP_BUTTON_SELECT_NAME" to return to submenu",font);
     spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight,-1,"Press "SP_BUTTON_A_NAME","SP_BUTTON_B_NAME","SP_BUTTON_X_NAME" and "SP_BUTTON_Y_NAME" to quit",font);
   }
-  spScale2XFast(screen,real_screen);
+  #ifdef SCALE_UP
+  spScale2XSmooth(screen,real_screen);
+  #endif
   spFlip();
 }
 
@@ -765,15 +776,22 @@ int main(int argc, char **argv)
 	//spSetDefaultWindowSize( 640, 480 ); //Creates a 640x480 window at PC instead of 320x240
 	spInitCore();
 	//Setup
+	#ifdef SCALE_UP
 	real_screen = spCreateDefaultWindow();
 	resize( real_screen->w, real_screen->h );  
+	#else
+	screen = spCreateDefaultWindow();
+	resize( screen->w, screen->h );  
+	#endif
   intro();
   init_snowman();
   level=loadlevel("./levels/menu.slvl");
   init_game(level,1);
   spLoop(draw_game,calc_game,10,resize,NULL);
   freeLevel(level);
+  #ifdef SCALE_UP
   spDeleteSurface(screen);
+  #endif
   quit_snowman();
   spQuitCore();
   return 0;
