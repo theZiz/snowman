@@ -773,6 +773,7 @@ int main(int argc, char **argv)
   init_game(level,1);
   spLoop(draw_game,calc_game,10,resize,NULL);
   freeLevel(level);
+  spDeleteSurface(screen);
   quit_snowman();
   spQuitCore();
   return 0;
