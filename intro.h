@@ -29,7 +29,10 @@ int calc_intro(Uint32 steps)
   if (engineInput->button[SP_BUTTON_LEFT] || engineInput->button[SP_BUTTON_RIGHT] ||
 			engineInput->button[SP_BUTTON_DOWN] || engineInput->button[SP_BUTTON_UP] ||
 			engineInput->button[SP_BUTTON_START] || engineInput->button[SP_BUTTON_SELECT])
+	{
+		spResetButtonsState();
     return 1;
+  }
   
   return 0;
 }

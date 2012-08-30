@@ -14,6 +14,11 @@ failback        = ./levels/level2.slvl
   'T'    ./data/cube_nolrsites.obj       (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
   't'    ./data/cube_nolrsites_small.obj (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
   '%'    ./data/cube_noudsites.obj       (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '!'    ./data/cube_nolrudsites.obj     (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '^'    ./data/cube_nolrusites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '_'    ./data/cube_nolrdsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  ']'    ./data/cube_noludsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '['    ./data/cube_norudsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
   '+'    ./data/cube.obj                 (31 ,220, 31) quad   (-1.0,-1.0, 1.0, 1.0) none
   'Z'    ./data/cube_nolrsites.obj       (31 ,220, 31) quad   (-1.0,-1.0, 1.0, 1.0) none
   'z'    ./data/cube_nolrsites_small.obj (31 ,220, 31) quad   (-1.0,-1.0, 1.0, 1.0) none

@@ -741,6 +741,7 @@ void init_snowman()
   fade=0;
   fade2=0;
 	spSoundInit();
+	spSoundSetChannels(16);
   spSoundSetVolume(volume>>4);  
   spSoundSetVolume(((volumefactor*volume)/(128<<4))>>5);
   spSoundSetMusic("./sounds/Cold Funk.ogg");
