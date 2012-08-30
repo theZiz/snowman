@@ -13,11 +13,15 @@ havetokill      =  0
   'T'    ./data/cube_nolrsites.obj       (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
   't'    ./data/cube_nolrsites_small.obj (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
   '%'    ./data/cube_noudsites.obj       (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
-  '!'    ./data/cube_nolrudsites.obj     (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
-  '^'    ./data/cube_nolrusites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
-  '_'    ./data/cube_nolrdsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
-  ']'    ./data/cube_noludsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
-  '['    ./data/cube_norudsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '!'    ./data/cube_nolrudsites.obj     (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '^'    ./data/cube_nolrusites.obj      (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '_'    ./data/cube_nolrdsites.obj      (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '}'    ./data/cube_noludsites.obj      (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '{'    ./data/cube_norudsites.obj      (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
+  ']'    ./data/cube_nolsites.obj        (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '['    ./data/cube_norsites.obj        (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
+  'U'    ./data/cube_nousites.obj        (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '"'    ./data/cube_nodsites.obj        (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
   '|'    ./data/tree_stem.obj            (140,127,  0) quad   (-3.0,-1.0, 3.0, 3.0) none
   '|'    ./data/tree_crown.obj           (31 ,255, 31) quad   (-3.0,-1.0, 3.0, 3.0) none
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
@@ -62,15 +66,15 @@ havetokill      =  0
 [layer1]
 # 2 of 3 layers
 # the "game"-layer. With collision!
-'#TTTTTTTTTTTTTTT#'
-'%               %'
-'%               %'
-'%               %'
-'%       #       %'
-'%               %'
-'%               %'
-'% O  P  Q  R  Z %'
-'#TTTTTTTTTTTTTTT#'
+'!_______________!'
+'}               {'
+'}               {'
+'}               {'
+'}       #       {'
+'}               {'
+'}               {'
+'} O  P  Q  R  Z {'
+'!^^^^^^^^^^^^^^^!'
 [layer2]
 # 3 of 3 layers
 # in the foreground

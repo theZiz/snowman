@@ -777,7 +777,7 @@ void quit_snowman()
 
 int main(int argc, char **argv)
 {
-	//spSetDefaultWindowSize( 640, 480 ); //Creates a 640x480 window at PC instead of 320x240
+	spSetDefaultWindowSize( 800, 480 );
 	spInitCore();
 	//Setup
 	#ifdef SCALE_UP
