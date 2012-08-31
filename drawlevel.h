@@ -36,7 +36,7 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 							spMesh3DwithPos(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<SP_ACCURACY,now->mesh,0);
 					}
 					else
-					if ((now->functionmask & 1) == 1)
+					if (now->functionmask & 1)
 					{
 						if (show_snow)
 						{
@@ -68,7 +68,7 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 						}
 					}
 					else
-					if ((now->meshmask & 2) == 2)
+					if (now->meshmask & 2)
 					{
 						Sint32 tx,ty,tz;
 						spProjectPoint3D(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),&tx,&ty,&tz,1);
@@ -77,12 +77,22 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 						spSetAlphaTest(0);
 					}
 					else
-					if ((now->meshmask & 4) == 4)
+					if (now->meshmask & 12)
 					{
-						if (enemyKilled<level->havetokill || now->needed_level>levelcount)
-							spBindTexture(door_closed);
+						if (now->meshmask & 4)
+						{
+							if (enemyKilled<level->havetokill || now->needed_level>levelcount)
+								spBindTexture(door_closed);
+							else
+								spBindTexture(door_open);
+						}
 						else
-							spBindTexture(door_open);
+						{
+							if (enemyKilled<level->havetokill || now->needed_level>levelcount)
+								spBindTexture(door_boss_closed);
+							else
+								spBindTexture(door_boss_open);
+						}
 						spSetAlphaTest(1);
 						Sint32 matrix[16];
 						memcpy( matrix, spGetMatrix(), 16 * sizeof( Sint32 ) ); //glPush()

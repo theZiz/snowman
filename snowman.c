@@ -64,6 +64,8 @@ SDL_Surface* sphere_right;
 SDL_Surface* flake;
 SDL_Surface* door_open;
 SDL_Surface* door_closed;
+SDL_Surface* door_boss_open;
+SDL_Surface* door_boss_closed;
 spModelPointer sphere_nose_left;
 spModelPointer sphere_nose_right;
 //spModelPointer cloud;
@@ -746,6 +748,8 @@ void init_snowman()
 	flake=spLoadSurface("./data/snowflake.png");
 	door_open=spLoadSurface("./data/door.png");
 	door_closed=spLoadSurface("./data/door_closed.png");
+	door_boss_open=spLoadSurface("./data/door_boss.png");
+	door_boss_closed=spLoadSurface("./data/door_boss_closed.png");
 	sphere_nose_left=spMeshLoadObjSize("./data/sphere_head.obj",NULL,spGetRGB(255,200,0),1<<SP_ACCURACY-1);
 	//mirror X
 	int i;
@@ -787,6 +791,8 @@ void quit_snowman()
 	spDeleteSurface(flake);
 	spDeleteSurface(door_closed);
 	spDeleteSurface(door_open);
+	spDeleteSurface(door_boss_closed);
+	spDeleteSurface(door_boss_open);
 	spMeshDelete(sphere_nose_left);
 	spMeshDelete(sphere_nose_right);
 	//spMeshDelete(cloud);
