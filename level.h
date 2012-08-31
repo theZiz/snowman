@@ -3,7 +3,7 @@ typedef struct ssymbol {
   char symbol;
   char objectfile[256];
   spModelPointer mesh;
-  int meshmask; //1 badcoin
+  int meshmask; //1 badcoin, 2 text, 4 door
   Uint16 color;
   char form; //0 none, 1 quad
   Sint32 measures[4];
@@ -291,6 +291,13 @@ plevel loadlevel(char* filename)
       printf("  No Objectfille\n");
       newsymbol->mesh=NULL;
       newsymbol->meshmask|=2;
+    }
+    else
+    if (strcmp("./data/door.obj",newsymbol->objectfile)==0 || strcmp("door",newsymbol->objectfile)==0)
+    {
+      printf("  No Objectfille\n");
+      newsymbol->mesh=NULL;
+      newsymbol->meshmask|=4;
     }
     else
     {
