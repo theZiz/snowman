@@ -14,8 +14,17 @@ failback        = ./levels/level1.slvl
   'T'    ./data/cube_nolrsites.obj       (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
   't'    ./data/cube_nolrsites_small.obj (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
   '%'    ./data/cube_noudsites.obj       (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '!'    ./data/cube_nolrudsites.obj     (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '^'    ./data/cube_nolrusites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '_'    ./data/cube_nolrdsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '}'    ./data/cube_noludsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '{'    ./data/cube_norudsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
   '|'    ./data/tree_stem.obj            (140,127,  0) quad   (-3.0,-1.0, 3.0, 3.0) none
   '|'    ./data/tree_crown.obj           (31 ,255, 31) quad   (-3.0,-1.0, 3.0, 3.0) none
+  ']'    ./data/cube_nolsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '['    ./data/cube_norsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  'U'    ./data/cube_nousites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '"'    ./data/cube_nodsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
   '*'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) snow
   'O'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level1_2.slvl),-12
@@ -46,16 +55,16 @@ failback        = ./levels/level1.slvl
 [layer1]
 # 2 of 3 layers
 # the "game"-layer. With collision!
-'## #T#                                                                          '
+'[] [T]                                                                          '
 '%    %                                                                          '
 '%    %                                            *  B  *                       '
-'% #  #TTTTTTTT#                                 #TTTTTTTTT#                     '
+'% #  [TTTTTTTT]                                 [TTTTTTTTT]                     '
 '%             %                                             * a*  *             '
-'% a a         %c * * * c                c                   #TTTTTTT#           '
-'#TTTTTT#      #TTTTTTTTTT#            #TTTTTTTTTT#                           #T#'
+'% a a         %c * * * c                c                   [TTTTTTT]           '
+'!^^^^^^]      [TTTTTTTTTT]            [TTTTTTTTTT]                           [T]'
 '       %                 %                                          * *b* * *   '
-'       %              a O%                       c*******        #TTTTTTTTTTTT# '
-'       #T#   #TTTTTTTTTTTTTTTTTTTTTT#            #TTTTTTT#                      '
+'       %              a O%                       c*******        [TTTTTTTTTTTT] '
+'       !^]   [^^^^^^^^^^^!^^^^^^^^^^]            [^^^^^^^]                      '
 [layer2]
 # 3 of 3 layers
 # in the foreground

@@ -14,6 +14,15 @@ failback        = ./levels/level2.slvl
   'T'    ./data/cube_nolrsites.obj       (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
   't'    ./data/cube_nolrsites_small.obj (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
   '%'    ./data/cube_noudsites.obj       (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '!'    ./data/cube_nolrudsites.obj     (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '^'    ./data/cube_nolrusites.obj      (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '_'    ./data/cube_nolrdsites.obj      (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '}'    ./data/cube_noludsites.obj      (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '{'    ./data/cube_norudsites.obj      (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  ']'    ./data/cube_nolsites.obj        (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '['    ./data/cube_norsites.obj        (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  'U'    ./data/cube_nousites.obj        (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '"'    ./data/cube_nodsites.obj        (197, 95,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
   '|'    ./data/tree_stem.obj            (140,127,  0) quad   (-3.0,-1.0, 3.0, 3.0) none
   '|'    ./data/tree_crown.obj           (31 ,255, 31) quad   (-3.0,-1.0, 3.0, 3.0) none
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
@@ -53,12 +62,12 @@ failback        = ./levels/level2.slvl
 '                                                                                          *???*                  h                                    '
 '                                                                  f         f             *h| *                  h                                    '
 '                                                                 ???       ???           *??? *                                 h  h  h               '
-'                                        f   f            h        |         |            *h|  *                #TTT#           #TTTTTTT#              '
-'  ****                              ????????????        ***    #TTTTT#   #TTTTT#        *???  *                >   <                 ************     '
-' *****      h **   ** f **    **     |**|**|**|         ***                      ***    *h|   *       #***#    > g <   #**#    h     ***h*h******     '
-' **???     ???***+***???********???  #TTTTTTTT#*********???***********???        ??? ***???   *       %***%    #TTT#   %**%**********#TTTTTTTT#**     '
+'                                        f   f            h        |         |            *h|  *                [TTT]           [TTTTTTT]              '
+'  ****                              ????????????        ***    [TTTTT]   [TTTTT]        *???  *                >   <                 ************     '
+' *****      h **   ** f **    **     |**|**|**|         ***                      ***    *h|   *       "***"    > g <   "**"    h     ***h*h******     '
+' **???     ???*** ***???********???  [TTTTTTTT]*********???***********???        ??? ***???   *       %***%    [TTT]   %**%**********[TTTTTTTT]**     '
 ' ** |       | ******* | ******** |             ********* | *********** |          |  *** |    *       %***%            %**%**********   h h    **    O'
-'#TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT#'
+'[^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^!^^^!^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^]'
 [layer2]
 # 3 of 3 layers
 # in the foreground
