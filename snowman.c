@@ -178,7 +178,7 @@ void draw_game(void)
     Sint32 dy=16<<SP_ACCURACY;
     Sint32 dx=dy*screen->w/screen->h;
   //#endif
-  //drawclouds(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
+  drawclouds(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
 	spSetZSet(1);
 	spSetZTest(1);
 	spSetAlphaTest(0);
