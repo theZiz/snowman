@@ -86,7 +86,7 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 						spSetAlphaTest(1);
 						Sint32 matrix[16];
 						memcpy( matrix, spGetMatrix(), 16 * sizeof( Sint32 ) ); //glPush()
-						spTranslate(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1));
+						spTranslate(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,((l-1)*4-1<<SP_ACCURACY-1));
 						spQuadTex3D(-2 << SP_ACCURACY-1, 6 << SP_ACCURACY-1,0, 0, 0,
 									-2 << SP_ACCURACY-1,-2 << SP_ACCURACY-1,0, 0,95,
 									 2 << SP_ACCURACY-1,-2 << SP_ACCURACY-1,0,63,95,

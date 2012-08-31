@@ -29,7 +29,7 @@ void newBullet(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy, int lifetime,char good,Uin
     removesnow(2);
   }
   if (good==1)
-    Mix_PlayChannel(-1,shot_chunk,0);
+    spSoundPlay(shot_chunk,-1,0,0,0);
   pbullet bullet=(pbullet)malloc(sizeof(tbullet));
   bullet->x=x;
   bullet->y=y;
@@ -266,7 +266,7 @@ void bulletPlayerInteraction()
       if (removesnow(3))
       {
         fade2=1024;
-        Mix_PlayChannel(-1,negative_chunk,0);
+        spSoundPlay(negative_chunk,-1,0,0,0);
         return;
       }
     }

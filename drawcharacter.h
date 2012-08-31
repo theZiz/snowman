@@ -132,24 +132,24 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
     if (right)
     {
       spRotateZ( SP_PI>>2);
-      if (in_hit>192)
-        spRotateZ(-((288-in_hit)*SP_PI)>>7);
+      if (in_hit>768)
+        spRotateZ(-((864-in_hit)*SP_PI)>>7);
       else
-        spRotateZ(-(in_hit*SP_PI)>>8);
+        spRotateZ(-(in_hit*SP_PI)>>10);
     }
     else
     {
       spRotateZ( 7*SP_PI>>2);
-      if (in_hit>192)
-        spRotateZ(((288-in_hit)*SP_PI)>>7);
+      if (in_hit>768)
+        spRotateZ(((864-in_hit)*SP_PI)>>7);
       else
-        spRotateZ((in_hit*SP_PI)>>8);
+        spRotateZ((in_hit*SP_PI)>>10);
     }
     
-    if (in_hit>192)
-      spMesh3DwithPos(0,(288-in_hit)<<(SP_ACCURACY-8),0,broom,0);
+    if (in_hit>768)
+      spMesh3DwithPos(0,(864-in_hit)<<(SP_ACCURACY-6),0,broom,0);
     else
-      spMesh3DwithPos(0,(    in_hit)<<(SP_ACCURACY-7),0,broom,0);
+      spMesh3DwithPos(0,(    in_hit)<<(SP_ACCURACY-9),0,broom,0);
     memcpy(modellViewMatrix,matrix,64);
   }
 }

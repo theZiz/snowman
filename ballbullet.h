@@ -17,7 +17,7 @@ void fireBallBullet()
   ballbullet.lifetime=2000;
   ballbullet.x=x;
   ballbullet.y=y-ballBulletSize;
-  Mix_PlayChannel(-1,ballshot_chunk,0);
+  spSoundPlay(ballshot_chunk,-1,0,0,0);
 }
 
 void drawBallBullet(Sint32 x,Sint32 y)

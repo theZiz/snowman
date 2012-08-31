@@ -10,6 +10,8 @@ SDL_Surface* real_screen;
 #endif
 SDL_Surface* screen = NULL;
 
+#define TIME_BETWEEN_TWO_JUMPS 20
+
 void resize( Uint16 w, Uint16 h )
 {
 	#ifdef SCALE_UP
@@ -53,6 +55,8 @@ void resize( Uint16 w, Uint16 h )
 #define PARTICLES 16
 
 int show_snow = 1;
+
+int jump_min_time;
 
 SDL_Surface* sphere;
 SDL_Surface* sphere_left;
@@ -126,6 +130,7 @@ char pausemode;
 
 void init_game(plevel level,char complete)
 {
+	jump_min_time = 0;
 	angle=0;
 	resetallparticle();
 	in_hit = 0;
@@ -187,8 +192,6 @@ void draw_game(void)
 	drawlevel(level,camerax,cameray-(4<<SP_ACCURACY),dx,dy);
 	spSetZSet(0);
 	spSetAlphaTest(1);
-	spSetZSet(0);
-	spSetZTest(0);
 	drawcharacter(x-camerax,cameray-y-(4<<SP_ACCURACY),0,facedir);
 	spSetZSet(1);
 	spSetZTest(1);
@@ -309,7 +312,7 @@ int calc_game(Uint32 steps)
 			volumefactor=0;
 		else
 			volumefactor=128<<4;
-		Mix_VolumeMusic(((volumefactor*volume)/(128<<4))>>5);
+		spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
 		savelevelcount();
 		engineSetMuteKey(0);
 	}*/
@@ -317,6 +320,7 @@ int calc_game(Uint32 steps)
 	{
 		engineInput->button[SP_BUTTON_START]=0;
 		pausemode=1-pausemode;
+		jump_min_time = 0;
 	}
 	if (pausemode)
 	{
@@ -353,6 +357,7 @@ int calc_game(Uint32 steps)
 				freeLevel(level);
 				level=loadlevel(buffer);
 				init_game(level,reset);
+				ballsize[0] = 0;
 			}
 		}
 		return 0;
@@ -393,6 +398,8 @@ int calc_game(Uint32 steps)
 	int step;
 	for (step=0;step<steps;step++)
 	{
+		if (jump_min_time>0)
+			jump_min_time--;
 		//Camera
 		Sint32 dx=(x-camerax)>>7;
 		Sint32 dy=((y-cameray)*3)>>7;
@@ -432,12 +439,12 @@ int calc_game(Uint32 steps)
 		if (broom_exist && in_hit<=0 && engineInput->button[SP_BUTTON_B])
 		{
 			//engineInput->button[SP_BUTTON_B]=0;
-			in_hit=288;
+			in_hit=864;
 		}
-		if (in_hit==192)
+		if (in_hit==768)
 			broomEnemyInteraction(facedir);
 		if (in_hit>0)
-			in_hit-=1;
+			in_hit--;
 		testX(x,ox);
 				
 		char tofat=0;
@@ -654,8 +661,9 @@ int calc_game(Uint32 steps)
 		playerEnemyInteraction();
 	}
 	//Jump
-	if (engineInput->button[SP_BUTTON_Y])
+	if (engineInput->button[SP_BUTTON_Y] && jump_min_time <= 0)
 	{
+		jump_min_time = TIME_BETWEEN_TWO_JUMPS;
 		int biggest=2;
 		if (ballcount>2)
 		{
