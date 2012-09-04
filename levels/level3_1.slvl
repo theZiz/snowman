@@ -4,7 +4,6 @@ width           = 80
 height          = 20
 startx          = 78
 starty          = 18
-backgroundcolor = (63,127,255)
 backgroundcolor = (255,181,234)
 havetokill      =  22
 failback        = ./levels/level3.slvl
