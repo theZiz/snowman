@@ -761,7 +761,7 @@ void init_snowman()
 	fade=0;
 	fade2=0;
 	spSoundInit();
-	//spSoundSetChannels(16);
+	spSoundSetChannels(16);
 	spSoundSetVolume(volume>>4);
 	spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
 	spSoundSetMusic("./sounds/Cold Funk.ogg");
@@ -801,7 +801,7 @@ void quit_snowman()
 
 int main(int argc, char **argv)
 {
-	//spSetDefaultWindowSize( 800, 480 );
+	spSetDefaultWindowSize( 800, 480 );
 	spInitCore();
 	//Setup
 	#ifdef SCALE_UP
