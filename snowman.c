@@ -70,7 +70,7 @@ void resize( Uint16 w, Uint16 h )
 			for (y = y_from+step+2; y <= y_to-step-2; y+=rand()%step)
 			{
 				int c = rand()%16;
-				spEllipse(x,y,-1,step,step,spGetFastRGB(210+c,210+c,230+c));
+				spEllipse(x,y,-1,step,step,spGetFastRGB(200+c,200+c,200+c));
 			}
 		}
 		spAddBorder(cloud[i],0,SP_ALPHA_COLOR);
@@ -794,7 +794,7 @@ void init_snowman()
 	fade=0;
 	fade2=0;
 	spSoundInit();
-	//spSoundSetChannels(16);
+	spSoundSetChannels(16);
 	spSoundSetVolume(volume>>4);
 	spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
 	spSoundSetMusic("./sounds/Cold Funk.ogg");
