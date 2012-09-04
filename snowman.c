@@ -9,6 +9,8 @@ spFontPointer font_green = NULL;
 SDL_Surface* real_screen;
 #endif
 SDL_Surface* screen = NULL;
+#define CLOUD_COUNT 16
+SDL_Surface* cloud[CLOUD_COUNT];
 
 #define TIME_BETWEEN_TWO_JUMPS 20
 
@@ -46,6 +48,35 @@ void resize( Uint16 w, Uint16 h )
 	spFontAdd( font_green, SP_FONT_GROUP_ASCII, spGetRGB(128,255,128) ); //whole ASCII
 	//spFontAddBorder( font_green, spGetRGB(96,192,96) );
 	spFontAddBorder( font_green, spGetRGB(64,128,64) );
+	
+	//Creating Clouds
+	int i;
+	for (i = 0; i < CLOUD_COUNT; i++)
+	{
+		if (cloud[i])
+			spDeleteSurface(cloud[i]);
+		cloud[i] = spCreateSurface((96+rand()%96)*spGetSizeFactor() >> SP_ACCURACY,(48+rand()%48)*spGetSizeFactor() >> SP_ACCURACY);
+		spSelectRenderTarget(cloud[i]);
+		spClearTarget(SP_ALPHA_COLOR);
+		int step = 16*spGetSizeFactor() >> SP_ACCURACY;
+		int x;
+		spSetZSet(0);
+		spSetZTest(0);
+		for (x = step+2; x < cloud[i]->w-step-2; x+=rand()%step)
+		{
+			int y_from = (x-cloud[i]->w/2)*(x-cloud[i]->w/2)*(cloud[i]->h/2)/((cloud[i]->w/2)*(cloud[i]->w/2));
+			int y_to = cloud[i]->h - y_from;
+			int y;
+			for (y = y_from+step+2; y <= y_to-step-2; y+=rand()%step)
+			{
+				int c = rand()%16;
+				spEllipse(x,y,-1,step,step,spGetFastRGB(190+c,190+c,190+c));
+			}
+		}
+		spAddBorder(cloud[i],spGetFastRGB(150,150,150),SP_ALPHA_COLOR);
+		spAddBorder(cloud[i],spGetFastRGB(100,100,100),SP_ALPHA_COLOR);
+	}
+	spSelectRenderTarget(screen);
 }
 
 #include "intro.h"
@@ -156,7 +187,7 @@ void init_game(plevel level,char complete)
 		ballsize[1]=0;//9<<(SP_ACCURACY-4);
 		ballsize[2]=7<<(SP_ACCURACY-4);
 	}
-	cloudcount=level->width*level->height/200;
+	cloudcount=level->width*level->height/50+1;
 	if (cloudcount>16)
 		cloudcount=16;
 	int i;
@@ -165,7 +196,7 @@ void init_game(plevel level,char complete)
 		cloudx[i]=(rand()%(2*level->width+40)-20)<<SP_ACCURACY;
 		cloudy[i]=(rand()%(2*level->height+40)-20)<<SP_ACCURACY;
 		cloudz[i]=-(rand()%20+10)<<SP_ACCURACY;
-		clouds[i]=1<<SP_ACCURACY;
+		clouds[i]=rand()%CLOUD_COUNT;
 	}
 	facedir=1;
 }
@@ -187,6 +218,8 @@ void draw_game(void)
 		Sint32 dy=16<<SP_ACCURACY;
 		Sint32 dx=dy*screen->w/screen->h;
 	//#endif
+	spSetZSet(0);
+	spSetZTest(0);
 	drawclouds(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
 	spSetZSet(1);
 	spSetZTest(1);
@@ -259,7 +292,7 @@ void draw_game(void)
 	}
 	if (pausemode)
 	{
-		spAddBlackLayer(192);
+		spAddBlackLayer(128);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight,-1,"Press "SP_BUTTON_START_NAME" to unpause",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)								,-1,"Press "SP_BUTTON_SELECT_NAME" to return to submenu",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight,-1,"Press "SP_BUTTON_A_NAME","SP_BUTTON_B_NAME","SP_BUTTON_X_NAME" and "SP_BUTTON_Y_NAME" to quit",font);
@@ -795,13 +828,18 @@ void quit_snowman()
 	spDeleteSurface(door_boss_open);
 	spMeshDelete(sphere_nose_left);
 	spMeshDelete(sphere_nose_right);
-	//spMeshDelete(cloud);
+	int i;
+	for (i = 0; i < CLOUD_COUNT; i++)
+		spDeleteSurface(cloud[i]);
 	spMeshDelete(broom);
 }
 
 int main(int argc, char **argv)
 {
-	spSetDefaultWindowSize( 800, 480 );
+	int i;
+	for (i = 0; i < CLOUD_COUNT; i++)
+		cloud[i] = NULL;
+	//spSetDefaultWindowSize( 800, 480 );
 	spInitCore();
 	//Setup
 	#ifdef SCALE_UP

@@ -21,10 +21,6 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 	{
 		for (y=starty;y<endy;y++)
 		{
-/*			if (((-2*y)<<SP_ACCURACY)+my < miny)
-				continue;
-			if (((-2*y)<<SP_ACCURACY)+my > maxy)
-				continue;*/
 			for (l=0;l<3;l++)
 			{
 				psymbol now=level->symbollist[level->layer[l][x+y*level->width]];
@@ -106,9 +102,6 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 					}		
 					now=now->next;
 				}
-					/*engineEllipse(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),
-												1<<SP_ACCURACY,1<<SP_ACCURACY,
-												level->symbollist[level->layer[l][x+y*level->width]]->color);*/
 			}
 		}
 	}
@@ -116,21 +109,7 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 
 void drawclouds(Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 {
-	/*int i;
-	Sint32 minx=-dx-(20<<SP_ACCURACY);
-	Sint32 maxx=+dx+(20<<SP_ACCURACY);
-	Sint32 miny=-dy-(20<<SP_ACCURACY);
-	Sint32 maxy=+dy+(20<<SP_ACCURACY);
+	int i;
 	for (i=0;i<cloudcount;i++)
-	{
-		if (cloudx[i]-mx < minx)
-			continue;
-		if (cloudx[i]-mx > maxx)
-			continue;
-		if (-cloudy[i]+my < miny)
-			continue;
-		if (-cloudy[i]+my > maxy)
-			continue;
-		spMesh3DwithPos(cloudx[i]-mx,-cloudy[i]+my,cloudz[i],cloud,0);
-	}*/
+		spBlit3D(cloudx[i]-mx,-cloudy[i]+my,cloudz[i],cloud[clouds[i]]);
 }
