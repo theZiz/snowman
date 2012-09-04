@@ -116,21 +116,21 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 
 void drawclouds(Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 {
-	/*int i;
-	Sint32 minx=-dx-(20<<SP_ACCURACY);
+	int i;
+	/*Sint32 minx=-dx-(20<<SP_ACCURACY);
 	Sint32 maxx=+dx+(20<<SP_ACCURACY);
 	Sint32 miny=-dy-(20<<SP_ACCURACY);
-	Sint32 maxy=+dy+(20<<SP_ACCURACY);
+	Sint32 maxy=+dy+(20<<SP_ACCURACY);*/
 	for (i=0;i<cloudcount;i++)
 	{
-		if (cloudx[i]-mx < minx)
+		/*if (cloudx[i]-mx < minx)
 			continue;
 		if (cloudx[i]-mx > maxx)
 			continue;
 		if (-cloudy[i]+my < miny)
 			continue;
 		if (-cloudy[i]+my > maxy)
-			continue;
-		spMesh3DwithPos(cloudx[i]-mx,-cloudy[i]+my,cloudz[i],cloud,0);
-	}*/
+			continue;*/
+		spBlit3D(cloudx[i]-mx,-cloudy[i]+my,cloudz[i],cloud[clouds[i]]);
+	}
 }
