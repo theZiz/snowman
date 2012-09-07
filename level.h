@@ -3,13 +3,14 @@ typedef struct ssymbol {
 	char symbol;
 	char objectfile[256];
 	spModelPointer mesh;
-	int meshmask; //1 badcoin, 2 text, 4 door, 8 super door
+	int meshmask; //1 badcoin, 2 text, 4 door, 8 super door, 16 enemy (was badcoin)
 	Uint16 color;
 	char form; //0 none, 1 quad
 	Sint32 measures[4];
 	int functionmask; //1 snow, 2 teleport, 4 left, 8 right, 256 waywalker
 	char function[512];
 	int needed_level;
+	int enemy_kind;
 	psymbol next;
 } tsymbol;
 
@@ -282,14 +283,21 @@ plevel loadlevel(char* filename)
 		else
 		if (strcmp("badcoin",newsymbol->objectfile)==0)
 		{
-			printf("	No Objectfille\n");
+			printf("\tNo Objectfille\n");
 			newsymbol->mesh=NULL;
-			newsymbol->meshmask|=1;
+			if (newsymbol->color == spGetRGB(255,0,0))
+			{
+				newsymbol->meshmask|=16;
+				newsymbol->enemy_kind=0;
+				printf("\tFound enemy of kind coal\n");
+			}
+			else
+				newsymbol->meshmask|=1;
 		}
 		else
 		if (strcmp("text",newsymbol->objectfile)==0)
 		{
-			printf("	No Objectfille\n");
+			printf("\tNo Objectfille\n");
 			newsymbol->mesh=NULL;
 			newsymbol->meshmask|=2;
 		}

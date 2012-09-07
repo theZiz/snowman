@@ -37,6 +37,25 @@ void drawenemies(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy)
                                                   to,y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
                                                   to,y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,enemy->symbol->color);
     }
+    else
+    if ((enemy->symbol->meshmask & 16)) //enemy with sprite
+    {
+			Sint32 matrix[16];
+			memcpy( matrix, spGetMatrix(), 16 * sizeof( Sint32 ) ); //glPush()
+			spBindTexture(enemySur[enemy->symbol->enemy_kind]);
+			spTranslate(enemy->x-x,y-enemy->y,0);
+			spRotateZ(-enemy->x>>1);
+			spQuadTex3D(enemy->symbol->measures[0],enemy->symbol->measures[3],0,  0,  0,
+									enemy->symbol->measures[0],enemy->symbol->measures[1],0,  0,127,
+									enemy->symbol->measures[2],enemy->symbol->measures[1],0,127,127,
+									enemy->symbol->measures[2],enemy->symbol->measures[3],0,127,  0,65535);
+      memcpy( spGetMatrix(), matrix, 16 * sizeof( Sint32 ) ); //glPop()
+      Sint32 to=enemy->x-x-enemy->symbol->measures[2]+(2*enemy->symbol->measures[2])*enemy->health/enemy->maxhealth;
+      spQuad3D(enemy->x-x-enemy->symbol->measures[2],y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,
+               enemy->x-x-enemy->symbol->measures[2],y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
+                                                  to,y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
+                                                  to,y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,enemy->symbol->color);
+    }    
     enemy=enemy->next; 
   }
 }

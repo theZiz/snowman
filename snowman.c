@@ -88,7 +88,7 @@ void resize( Uint16 w, Uint16 h )
 int show_snow = 1;
 
 int jump_min_time;
-
+#define ENEMY_COUNT 1
 SDL_Surface* sphere;
 SDL_Surface* sphere_left;
 SDL_Surface* sphere_right;
@@ -97,9 +97,7 @@ SDL_Surface* door_open;
 SDL_Surface* door_closed;
 SDL_Surface* door_boss_open;
 SDL_Surface* door_boss_closed;
-spModelPointer sphere_nose_left;
-spModelPointer sphere_nose_right;
-//spModelPointer cloud;
+SDL_Surface* enemySur[ENEMY_COUNT];
 spModelPointer broom;
 
 Sint32 w=0;
@@ -230,16 +228,12 @@ void draw_game(void)
 	drawcharacter(x-camerax,cameray-y-(4<<SP_ACCURACY),0,facedir);
 	spSetZSet(1);
 	spSetZTest(1);
-	spSetAlphaTest(0);
 	drawenemies(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
 	spSetZSet(0);
 	spSetZTest(0);
 	drawBullet(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
-	spSetAlphaTest(1);
 	drawBallBullet(camerax,cameray-(4<<SP_ACCURACY));
-	spSetAlphaTest(0);
 	drawparticle(camerax,cameray-(4<<SP_ACCURACY),0,dx,dy);
-	spSetAlphaTest(1);
 
 
 	char buffer[64];
@@ -783,13 +777,13 @@ void init_snowman()
 	door_closed=spLoadSurface("./data/door_closed.png");
 	door_boss_open=spLoadSurface("./data/door_boss.png");
 	door_boss_closed=spLoadSurface("./data/door_boss_closed.png");
-	sphere_nose_left=spMeshLoadObjSize("./data/sphere_head.obj",NULL,spGetRGB(255,200,0),1<<SP_ACCURACY-1);
-	//mirror X
 	int i;
-	for (i = 0; i < sphere_nose_left->pointCount; i++)
-		sphere_nose_left->point[i].x = -sphere_nose_left->point[i].x;
-	sphere_nose_right=spMeshLoadObjSize("./data/sphere_head.obj",NULL,spGetRGB(255,200,0),1<<SP_ACCURACY-1);
-	//cloud=spMeshLoadObj("./data/cloud.obj",NULL,65535);
+	for (i = 0; i < ENEMY_COUNT; i++)
+	{
+		char buffer[256];
+		sprintf(buffer,"./data/enemy%i.png",i);
+		enemySur[i]=spLoadSurface(buffer);
+	}
 	broom=spMeshLoadObj("./data/broom.obj",NULL,spGetRGB(86,22,0));
 	fade=0;
 	fade2=0;
@@ -826,11 +820,11 @@ void quit_snowman()
 	spDeleteSurface(door_open);
 	spDeleteSurface(door_boss_closed);
 	spDeleteSurface(door_boss_open);
-	spMeshDelete(sphere_nose_left);
-	spMeshDelete(sphere_nose_right);
 	int i;
 	for (i = 0; i < CLOUD_COUNT; i++)
 		spDeleteSurface(cloud[i]);
+	for (i = 0; i < ENEMY_COUNT; i++)
+		spDeleteSurface(enemySur[i]);
 	spMeshDelete(broom);
 }
 
