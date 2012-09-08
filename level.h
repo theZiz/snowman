@@ -270,7 +270,7 @@ plevel loadlevel(char* filename)
 		int g = atoi(value);
 				pos2 = getNextWord(pos2,word,value,1024,',',0);
 		int b = atoi(value);
-		newsymbol->color=spGetRGB(r,g,b);
+		newsymbol->color=spGetFastRGB(r,g,b);
 		printf("	Color: r:%i g:%i b:%i\n",r,g,b);
 		
 		int object_is_door = 0;
@@ -285,14 +285,15 @@ plevel loadlevel(char* filename)
 		{
 			printf("\tNo Objectfille\n");
 			newsymbol->mesh=NULL;
-			if (newsymbol->color == spGetRGB(255,0,0))
-			{
-				newsymbol->meshmask|=16;
-				newsymbol->enemy_kind=0;
-				printf("\tFound enemy of kind coal\n");
-			}
-			else
-				newsymbol->meshmask|=1;
+			newsymbol->meshmask|=1;
+		}
+		else
+		if (strstr(newsymbol->objectfile,"enemy")==newsymbol->objectfile)
+		{
+			printf("\tEnemy with sprite\n");
+			newsymbol->mesh=NULL;
+			newsymbol->enemy_kind = newsymbol->objectfile[5]-'0';
+			newsymbol->meshmask|=16;
 		}
 		else
 		if (strcmp("text",newsymbol->objectfile)==0)

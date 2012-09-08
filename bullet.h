@@ -57,10 +57,7 @@ void calcBullet()
         firstBullet=bullet->next;
       else
         before->next=bullet->next;
-      if (bullet->good)
-        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,spGetRGB(255,255,255));
-      else
-        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,spGetRGB(0,0,0));
+      newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,bullet->color);
       free(bullet);
       bullet=before;
     }
@@ -119,7 +116,7 @@ void bulletEnemyInteraction()
           firstBullet=bullet->next;
         else
           bbefore->next=bullet->next;
-        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,spGetRGB(255,255,255));
+        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,bullet->color);
         free(bullet);
         bullet=bbefore;
         newexplosion(PARTICLES,enemy->x,enemy->y,0,1024,enemy->symbol->color);
@@ -162,10 +159,7 @@ void bulletEnvironmentInteraction()
         firstBullet=bullet->next;
       else
         bbefore->next=bullet->next;
-      if (bullet->good)
-        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,spGetRGB(255,255,255));
-      else
-        newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,spGetRGB(0,0,0));
+      newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,bullet->color);
       free(bullet);
       bullet=bbefore;
     }
@@ -193,7 +187,7 @@ void bulletEnemy()
       switch (enemy->weapon)
       {
         case 1: //just like the snowmans weapon
-          newBullet(enemy->x,enemy->y,(enemy->dx>=0)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,0,spGetRGB(0,0,0));
+          newBullet(enemy->x,enemy->y,(enemy->dx>=0)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,0,spGetRGB(0,0,255));
           enemy->lastshot=enemy->shotfq;
         break;
         case 2: //With targeting
@@ -258,7 +252,7 @@ void bulletPlayerInteraction()
         firstBullet=bullet->next;
       else
         bbefore->next=bullet->next;
-      newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,spGetRGB(0,0,0));
+      newexplosion(PARTICLES,bullet->x,bullet->y,0,1024,bullet->color);
       free(bullet);
       bullet=bbefore;
       

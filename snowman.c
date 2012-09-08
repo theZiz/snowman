@@ -84,11 +84,11 @@ void resize( Uint16 w, Uint16 h )
 #include "particle.h"
 
 #define PARTICLES 16
+#define ENEMY_COUNT 7
 
 int show_snow = 1;
 
 int jump_min_time;
-#define ENEMY_COUNT 1
 SDL_Surface* sphere;
 SDL_Surface* sphere_left;
 SDL_Surface* sphere_right;
