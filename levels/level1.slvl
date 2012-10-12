@@ -1,8 +1,8 @@
 [head]
 # all coordinates are zero-based!
-width           = 17
+width           = 23
 height          = 9
-startx          = 8
+startx          = 5
 starty          = 3
 backgroundcolor = (63,127,255)
 havetokill      =  0
@@ -30,6 +30,8 @@ havetokill      =  0
   'P'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level1_1.slvl),11
   'Q'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level1_2.slvl),12
   'R'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level1_3.slvl),13
+  'S'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level1_4.slvl),14
+  'V'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level1_5.slvl),15
   'Z'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadr(./levels/play.slvl)
   '<'    ./data/arrow_left.obj           (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) left
   '>'    ./data/arrow_right.obj          (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) right
@@ -43,48 +45,49 @@ havetokill      =  0
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
   'A'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Snowman"
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Choose a Sublevel"
-
   'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "1-0"
   'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "1-1"
   'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "1-2"
   'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "1-3"
-  'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Back"
+  'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "1-4"
+  'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "1-5"
+  'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Back"
 
 [layer0]
 # best viewed with a font, where width=height
 # 1 of 3 layers
 # in the background
-'                 '
-'        A        '
-'        C        '
-'                 '
-'                 '
-'  E  F  G  H  I  '
-'                 '
-'                 '
-'                 '
+'                       '
+'     A                 '
+'     C                 '
+'                       '
+'                       '
+'  E  F  G  H  I  J  K  '
+'                       '
+'                       '
+'                       '
 [layer1]
 # 2 of 3 layers
 # the "game"-layer. With collision!
-'!_______________!'
-'}               {'
-'}               {'
-'}               {'
-'}       #       {'
-'}               {'
-'}               {'
-'} O  P  Q  R  Z {'
-'!^^^^^^^^^^^^^^^!'
+'!_____________________!'
+'}                     {'
+'}                     {'
+'}                     {'
+'}    #                {'
+'}                     {'
+'}                     {'
+'} O  P  Q  R  S  V  Z {'
+'!^^^^^^^^^^^^^^^^^^^^^!'
 [layer2]
 # 3 of 3 layers
 # in the foreground
-'                 '
-'                 '
-'                 '
-'                 '
-'                 '
-'                 '
-'                 '
-'                 '
-'                 '
+'                       '
+'                       '
+'                       '
+'                       '
+'                       '
+'                       '
+'                       '
+'                       '
+'                       '
 [end]

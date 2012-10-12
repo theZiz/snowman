@@ -1,8 +1,8 @@
 [head]
 # all coordinates are zero-based!
-width           = 19
+width           = 27
 height          = 9
-startx          = 9
+startx          = 7
 starty          = 3
 backgroundcolor = (63,127,255)
 havetokill      =  0
@@ -25,6 +25,8 @@ havetokill      =  0
   'O'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level1.slvl),10
   'P'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level2.slvl),20
   'Q'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level3.slvl),30
+  'R'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level4.slvl),40
+  'S'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level5.slvl),50
   'Z'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadr(./levels/menu.slvl)
   '<'    ./data/arrow_left.obj           (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) left
   '>'    ./data/arrow_right.obj          (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) right
@@ -42,43 +44,45 @@ havetokill      =  0
   'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Level 1"
   'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Level 2"
   'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Level 3"
-  'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Menu"
+  'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Level 4"
+  'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Level 5"
+  'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Menu"
 
 [layer0]
 # best viewed with a font, where width=height
 # 1 of 3 layers
 # in the background
-'                   '
-'         A         '
-'         C         '
-'                   '
-'                   '
-'   E   F   G   H   '
-'                   '
-'                   '
-'                   '
+'                           '
+'       A                   '
+'       C                   '
+'                           '
+'                           '
+'   E   F   G   H   I   J   '
+'                           '
+'                           '
+'                           '
 [layer1]
 # 2 of 3 layers
 # the "game"-layer. With collision!
-'!_________________!'
-'}                 {'
-'}                 {'
-'}                 {'
-'}        #        {'
-'}                 {'
-'}                 {'
-'}  O   P   Q   Z  {'
-'!^^^^^^^^^^^^^^^^^!'
+'!_________________________!'
+'}                         {'
+'}                         {'
+'}                         {'
+'}      #                  {'
+'}                         {'
+'}                         {'
+'}  O   P   Q   R   S   Z  {'
+'!^^^^^^^^^^^^^^^^^^^^^^^^^!'
 [layer2]
 # 3 of 3 layers
 # in the foreground
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
+'                           '
+'                           '
+'                           '
+'                           '
+'                           '
+'                           '
+'                           '
+'                           '
+'                           '
 [end]
