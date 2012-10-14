@@ -312,7 +312,10 @@ plevel loadlevel(char* filename)
 		else
 		{
 			printf("	Loading Mesh %s...",newsymbol->objectfile);
-			newsymbol->mesh=spMeshLoadObj(newsymbol->objectfile,NULL,newsymbol->color);
+			if (strcmp(newsymbol->objectfile,"./data/broom.obj") == 0)
+				newsymbol->mesh=spMeshLoadObj(newsymbol->objectfile,spLoadSurface("./data/broom.png"),spGetRGB(255,255,255));
+			else
+				newsymbol->mesh=spMeshLoadObj(newsymbol->objectfile,NULL,newsymbol->color);
 			printf(" done\n");
 		}
 

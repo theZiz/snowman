@@ -784,7 +784,7 @@ void init_snowman()
 		sprintf(buffer,"./data/enemy%i.png",i);
 		enemySur[i]=spLoadSurface(buffer);
 	}
-	broom=spMeshLoadObj("./data/broom.obj",NULL,spGetRGB(86,22,0));
+	broom=spMeshLoadObj("./data/broom.obj",spLoadSurface("./data/broom.png"),spGetRGB(255,255,255));
 	fade=0;
 	fade2=0;
 	spSoundInit();
