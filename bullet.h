@@ -187,7 +187,7 @@ void bulletEnemy()
       switch (enemy->weapon)
       {
         case 1: //just like the snowmans weapon
-          newBullet(enemy->x,enemy->y,(enemy->dx>=0)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,0,spGetRGB(0,0,255));
+          newBullet(enemy->x,enemy->y,(enemy->dx>=0)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,0,enemy->symbol->color);
           enemy->lastshot=enemy->shotfq;
         break;
         case 2: //With targeting
@@ -201,7 +201,7 @@ void bulletEnemy()
             dx=dx>>5;
             dy=dy>>5;
           }
-          newBullet(enemy->x,enemy->y,dx,dy,1000,0,spGetRGB(0,0,0));
+          newBullet(enemy->x,enemy->y,dx,dy,1000,0,enemy->symbol->color);
           enemy->lastshot=enemy->shotfq;
         break;
         

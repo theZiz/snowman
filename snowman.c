@@ -853,6 +853,7 @@ int main(int argc, char **argv)
 	spDeleteSurface(screen);
 	#endif
 	quit_snowman();
+	printf("Quit\n");
 	spQuitCore();
 	return 0;
 }

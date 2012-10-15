@@ -44,11 +44,25 @@ void drawenemies(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy)
 			memcpy( matrix, spGetMatrix(), 16 * sizeof( Sint32 ) ); //glPush()
 			spBindTexture(enemySur[enemy->symbol->enemy_kind]);
 			spTranslate(enemy->x-x,y-enemy->y,0);
-			spRotateZ(-enemy->x>>1);
-			spQuadTex3D(enemy->symbol->measures[0],enemy->symbol->measures[3],0,  0,  0,
-									enemy->symbol->measures[0],enemy->symbol->measures[1],0,  0,127,
-									enemy->symbol->measures[2],enemy->symbol->measures[1],0,127,127,
-									enemy->symbol->measures[2],enemy->symbol->measures[3],0,127,  0,65535);
+			Sint32 left = 0;
+			Sint32 right = enemySur[enemy->symbol->enemy_kind]->w-1;
+			switch (enemy->symbol->enemy_kind)
+			{
+				case 0:case 1:case 2:case 3:
+					spRotateZ(-enemy->x>>1);
+					break;
+				case 4:
+					if (enemy->dx > 0)
+					{
+						left = right;
+						right = 0;
+					}
+					break;
+			}
+			spQuadTex3D(enemy->symbol->measures[0],enemy->symbol->measures[3],0, left,  0,
+									enemy->symbol->measures[0],enemy->symbol->measures[1],0, left,enemySur[enemy->symbol->enemy_kind]->h-1,
+									enemy->symbol->measures[2],enemy->symbol->measures[1],0,right,enemySur[enemy->symbol->enemy_kind]->h-1,
+									enemy->symbol->measures[2],enemy->symbol->measures[3],0,right,  0,65535);
       memcpy( spGetMatrix(), matrix, 16 * sizeof( Sint32 ) ); //glPop()
       Sint32 to=enemy->x-x-enemy->symbol->measures[2]+(2*enemy->symbol->measures[2])*enemy->health/enemy->maxhealth;
       spQuad3D(enemy->x-x-enemy->symbol->measures[2],y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,
@@ -66,11 +80,10 @@ void moveenemies()
   while (enemy!=NULL)
   {
     enemy->x+=enemy->dx;
-    enemy->y+=enemy->dy;
     if ((enemy->symbol->functionmask & 256) == 256) //waywalker
     {
       int bx  =((((enemy->x                           ) >> (SP_ACCURACY))+1)>>1);
-      int bxl =((((enemy->x-enemy->symbol->measures[2]) >> (SP_ACCURACY))+1)>>1);
+      int bxl =((((enemy->x+enemy->symbol->measures[0]) >> (SP_ACCURACY))+1)>>1);
       int bxr =((((enemy->x+enemy->symbol->measures[2]) >> (SP_ACCURACY))+1)>>1);
       int by  =((((enemy->y+enemy->symbol->measures[3]) >> (SP_ACCURACY))+1)>>1)-1;
       if (bx>=level->width || bx<0 || 
@@ -78,7 +91,14 @@ void moveenemies()
          (enemy->dx>0 && level->symbollist[level->layer[1][bxr+ by   *level->width]]!=NULL && level->symbollist[level->layer[1][bxr+by*level->width]]->form>0) ||
                          level->symbollist[level->layer[1][bx +(by+1)*level->width]]==NULL || 
                          level->symbollist[level->layer[1][bx +(by+1)*level->width]]->form == 0)
+      {
         enemy->dx=-enemy->dx;
+        if (enemy->was_change)
+					enemy->dx = 0;
+				enemy->was_change = 1;
+			}
+			else
+				enemy->was_change = 0;
     }
     enemy=enemy->next;
   }

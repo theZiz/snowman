@@ -34,10 +34,10 @@ failback        = ./levels/level3.slvl
   'b'    enemy1                          (  0,  0,255) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1,weapon=1,shotfq=1000
   'c'    enemy2                          (255,230,  0) none   (-1.5,-1.5, 1.5, 1.5) waywalker,health=3
   'd'    badcoin                         (255,255,  0) none   (-1.0,-1.0, 1.0, 1.0) waywalker,weapon=1,health=3,shotfq=750
-  'e'    badcoin                         (255,  0,255) none   (-1.0,-1.0, 1.5, 1.0) waywalker,weapon=2,health=1,shotfq=1500
+  'e'    enemy4                          ( 63, 63, 63) none   (-1.5,-1.0, 1.5, 1.0) waywalker,weapon=2,health=1,shotfq=1500
   'f'    badcoin                         (  0,255,255) none   (-1.0,-1.0, 1.0, 1.5) waywalker,weapon=2,health=3,shotfq=1000
   'g'    badcoin                         (  0,  0,  0) none   (-1.0,-1.0, 2.0, 2.0) waywalker,weapon=1,health=30,shotfq=500
-  'h'    badcoin                         (127,  0,192) none   (-1.0,-1.0, 1.5, 1.0) waywalker,weapon=2,health=1,shotfq=500
+  'h'    enemy4                          ( 63, 63, 63) none   (-1.5,-1.0, 1.5, 1.0) waywalker,weapon=2,health=1,shotfq=500
   'j'    badcoin                         (192,192, 64) none   (-1.0,-1.0, 2.5, 2.5) waywalker,weapon=2,health=10,shotfq=1000
   'k'    badcoin                         ( 64,192,192) none   (-1.0,-1.0, 2.5, 2.5) waywalker,weapon=2,health=17,shotfq=900
   'l'    badcoin                         (192, 64,192) none   (-1.0,-1.0, 2.5, 2.5) waywalker,weapon=2,health=24,shotfq=800

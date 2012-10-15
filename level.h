@@ -19,7 +19,7 @@ typedef struct senemy {
 	Sint32 x;
 	Sint32 y;
 	Sint32 dx;	//Vector
-	Sint32 dy;	//Vector
+	Sint32 was_change;
 	psymbol symbol;
 	int health;
 	int maxhealth;
@@ -569,7 +569,6 @@ plevel loadlevel(char* filename)
 			if ((level->symbollist[level->layer[1][i]]->functionmask & 256) == 256) //waywalker
 			{
 				newenemy->dx = (rand()%2==0 ? -1:1)<<(SP_ACCURACY-7);
-				newenemy->dy = 0;
 				newenemy-> x = (i%level->width	)<<(SP_ACCURACY+1);
 				newenemy-> y = ((i/level->width*2+1)<<(SP_ACCURACY))-newenemy->symbol->measures[3];
 			}
