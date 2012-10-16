@@ -38,10 +38,6 @@ failback        = ./levels/level3.slvl
   'f'    enemy5                          (192,192,192) none   (-1.3,-1.3, 1.3, 1.3) waywalker,weapon=2,health=3,shotfq=1000
   'g'    badcoin                         (  0,  0,  0) none   (-1.0,-1.0, 2.0, 2.0) waywalker,weapon=1,health=30,shotfq=500
   'h'    enemy4                          ( 63, 63, 63) none   (-1.5,-1.0, 1.5, 1.0) waywalker,weapon=2,health=1,shotfq=500
-  'j'    badcoin                         (192,192, 64) none   (-1.0,-1.0, 2.5, 2.5) waywalker,weapon=2,health=10,shotfq=1000
-  'k'    badcoin                         ( 64,192,192) none   (-1.0,-1.0, 2.5, 2.5) waywalker,weapon=2,health=17,shotfq=900
-  'l'    badcoin                         (192, 64,192) none   (-1.0,-1.0, 2.5, 2.5) waywalker,weapon=2,health=24,shotfq=800
-  'm'    badcoin                         (192, 64, 64) none   (-1.0,-1.0, 2.5, 2.5) waywalker,weapon=2,health=31,shotfq=700
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
  
 [layer0]
