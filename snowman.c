@@ -84,7 +84,7 @@ void resize( Uint16 w, Uint16 h )
 #include "particle.h"
 
 #define PARTICLES 16
-#define ENEMY_COUNT 7
+#define ENEMY_COUNT 8
 
 int show_snow = 1;
 
