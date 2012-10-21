@@ -788,7 +788,7 @@ void init_snowman()
 	fade=0;
 	fade2=0;
 	spSoundInit();
-	spSoundSetChannels(16);
+	spSoundSetChannels(32);
 	spSoundSetVolume(volume>>4);
 	spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
 	spSoundSetMusic("./sounds/Cold Funk.ogg");
@@ -811,7 +811,9 @@ void quit_snowman()
 	spSoundDelete(jump_chunk);
 	spSoundDelete(negative_chunk);
 	spSoundDelete(hu_chunk);
+	printf("Deleted Sounds\n");
 	spSoundQuit();
+	printf("Quit Sound\n");
 	spDeleteSurface(sphere);
 	spDeleteSurface(sphere_left);
 	spDeleteSurface(sphere_right);
@@ -825,7 +827,9 @@ void quit_snowman()
 		spDeleteSurface(cloud[i]);
 	for (i = 0; i < ENEMY_COUNT; i++)
 		spDeleteSurface(enemySur[i]);
+	printf("Deleted Surfaces\n");
 	spMeshDelete(broom);
+	printf("Deleted Meshs\n");
 }
 
 int main(int argc, char **argv)
@@ -853,7 +857,6 @@ int main(int argc, char **argv)
 	spDeleteSurface(screen);
 	#endif
 	quit_snowman();
-	printf("Quit\n");
 	spQuitCore();
 	return 0;
 }

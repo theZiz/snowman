@@ -445,7 +445,7 @@ plevel loadlevel(char* filename)
 	for (i=0;i<3;i++)
 	{
 		level->layer[i]=(char*)malloc(sizeof(char)*level->width*level->height);
-		memset(level->layer[i],0,sizeof(char)*level->width*level->height);
+		memset(level->layer[i],' ',sizeof(char)*level->width*level->height);
 	}
 	printf(" done\n");
 
