@@ -34,19 +34,22 @@ void resize( Uint16 w, Uint16 h )
 		spFontDelete( font );
 	font = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font, SP_FONT_GROUP_ASCII, 65535 ); //whole ASCII
-	//spFontAddBorder( font, spGetRGB(192,192,192) );
+	spFontAddButton( font, 'a', SP_BUTTON_LEFT_NAME, 65535, SP_ALPHA_COLOR );
+	spFontAddButton( font, 'd', SP_BUTTON_RIGHT_NAME, 65535, SP_ALPHA_COLOR );
+	spFontAddButton( font, 'w', SP_BUTTON_UP_NAME, 65535, SP_ALPHA_COLOR );
+	spFontAddButton( font, 's', SP_BUTTON_DOWN_NAME, 65535, SP_ALPHA_COLOR );
 	spFontAddBorder( font, spGetRGB(128,128,128) );
+	
+	
 	if ( font_red )
 		spFontDelete( font_red );
 	font_red = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_red, SP_FONT_GROUP_ASCII, spGetRGB(255,128,128) ); //whole ASCII
-	//spFontAddBorder( font_red, spGetRGB(192,96,96) );
 	spFontAddBorder( font_red, spGetRGB(128,64,64) );
 	if ( font_green )
 		spFontDelete( font_green );
 	font_green = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_green, SP_FONT_GROUP_ASCII, spGetRGB(128,255,128) ); //whole ASCII
-	//spFontAddBorder( font_green, spGetRGB(96,192,96) );
 	spFontAddBorder( font_green, spGetRGB(64,128,64) );
 	
 	//Creating Clouds
@@ -289,7 +292,7 @@ void draw_game(void)
 		spAddBlackLayer(128);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight,-1,"Press "SP_BUTTON_START_NAME" to unpause",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)								,-1,"Press "SP_BUTTON_SELECT_NAME" to return to submenu",font);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight,-1,"Press "SP_BUTTON_A_NAME","SP_BUTTON_B_NAME","SP_BUTTON_X_NAME" and "SP_BUTTON_Y_NAME" to quit",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight,-1,"Press "SP_BUTTON_LEFT_NAME","SP_BUTTON_RIGHT_NAME","SP_BUTTON_DOWN_NAME" and "SP_BUTTON_UP_NAME" to quit",font);
 	}
 	#ifdef SCALE_UP
 	spScale2XSmooth(screen,real_screen);
@@ -359,12 +362,12 @@ int calc_game(Uint32 steps)
 			fade2=1024;
 			pausemode=0;
 		}
-		if (engineInput->button[SP_BUTTON_A] && engineInput->button[SP_BUTTON_B] && engineInput->button[SP_BUTTON_X] && engineInput->button[SP_BUTTON_Y])
+		if (engineInput->button[SP_BUTTON_LEFT] && engineInput->button[SP_BUTTON_RIGHT] && engineInput->button[SP_BUTTON_DOWN] && engineInput->button[SP_BUTTON_UP])
 		{
-			engineInput->button[SP_BUTTON_A]=0;
-			engineInput->button[SP_BUTTON_B]=0;
-			engineInput->button[SP_BUTTON_X]=0;
-			engineInput->button[SP_BUTTON_Y]=0;
+			engineInput->button[SP_BUTTON_LEFT]=0;
+			engineInput->button[SP_BUTTON_RIGHT]=0;
+			engineInput->button[SP_BUTTON_DOWN]=0;
+			engineInput->button[SP_BUTTON_UP]=0;
 			return 1;
 		}
 		return 0; 
@@ -446,9 +449,9 @@ int calc_game(Uint32 steps)
 		
 		//Bullets
 		calcBullet();
-		if (engineInput->button[SP_BUTTON_A])
+		if (engineInput->button[SP_BUTTON_LEFT])
 		{
-			engineInput->button[SP_BUTTON_A]=0;
+			engineInput->button[SP_BUTTON_LEFT]=0;
 			int sum=0;
 			int i;
 			for (i=3-ballcount;i<3;i++)
@@ -456,18 +459,18 @@ int calc_game(Uint32 steps)
 			newBullet(x,y-(sum>>1),(facedir)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,1,spGetRGB(255,255,255));
 		}
 		calcBallBullet();
-		if (engineInput->button[SP_BUTTON_X])
+		if (engineInput->button[SP_BUTTON_DOWN])
 		{
-			engineInput->button[SP_BUTTON_X]=0;
+			engineInput->button[SP_BUTTON_DOWN]=0;
 			fireBallBullet();
 		}
 		bulletEnemyInteraction();
 		bulletPlayerInteraction();
 		bulletEnvironmentInteraction();
 
-		if (broom_exist && in_hit<=0 && engineInput->button[SP_BUTTON_B])
+		if (broom_exist && in_hit<=0 && engineInput->button[SP_BUTTON_RIGHT])
 		{
-			//engineInput->button[SP_BUTTON_B]=0;
+			//engineInput->button[SP_BUTTON_RIGHT]=0;
 			in_hit=864;
 		}
 		if (in_hit==768)
@@ -690,7 +693,7 @@ int calc_game(Uint32 steps)
 		playerEnemyInteraction();
 	}
 	//Jump
-	if (engineInput->button[SP_BUTTON_Y] && jump_min_time <= 0)
+	if (engineInput->button[SP_BUTTON_UP] && jump_min_time <= 0)
 	{
 		jump_min_time = TIME_BETWEEN_TWO_JUMPS;
 		int biggest=2;
@@ -722,7 +725,7 @@ int calc_game(Uint32 steps)
 			speedup=-23<<(SP_ACCURACY-9);
 			spSoundPlay(jump_chunk,-1,0,0,0);
 		}
-		//engineInput->button[SP_BUTTON_Y]=0;
+		//engineInput->button[SP_BUTTON_UP]=0;
 	}
 	
 	
@@ -837,7 +840,7 @@ int main(int argc, char **argv)
 	int i;
 	for (i = 0; i < CLOUD_COUNT; i++)
 		cloud[i] = NULL;
-	//spSetDefaultWindowSize( 800, 480 );
+	spSetDefaultWindowSize( 800, 480 );
 	spInitCore();
 	//Setup
 	#ifdef SCALE_UP
