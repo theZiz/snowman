@@ -33,18 +33,29 @@ failback        = ./levels/level1.slvl
   'a'    enemy0                          (32,  32, 32) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1
   'c'    enemy2                          (255,230,  0) none   (-1.5,-1.5, 1.5, 1.5) waywalker,health=3
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
+  'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Use the"
+  'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "broom"
+  'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "with [d]"
+  'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Attention!"
+  'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Some enemies"
+  'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "have more"
+  'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "health"
+  'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "If you jump"
+  'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "with [w] you"
+  'L'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "loose one"
+  'M'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "snow, too"
 
 [layer0]
 # best viewed with a font, where width=height
 # 1 of 3 layers
 # in the background
-'  t                                                                             '
-'                                                                                '
-'                                                                                '
-'                                                                                '
-'                                                                                '
-'                                                                                '
-'                                                                                '
+'  t                                        F         C                          '
+'                                           G         D                          '
+'                                           H         E                          '
+'                                           I                           J        '
+'                                                                       K        '
+'                                                                       L        '
+'                                                                       M        '
 '                                                                                '
 '                                                                                '
 '                                                                                '
@@ -53,12 +64,12 @@ failback        = ./levels/level1.slvl
 # the "game"-layer. With collision!
 '[] [T]                                                                          '
 '%    %                                                                          '
-'%    %                                            *  B  *                       '
+'%    %                                           * * B * *                      '
 '% #  [TTTTTTTT]                                 [TTTTTTTTT]                     '
-'%             %                                             * a*  *             '
+'%             %                                             a* * * *            '
 '% a a         %c * * * c                c                   [TTTTTTT]           '
 '!^^^^^^]      [TTTTTTTTTT]            [TTTTTTTTTT]                           [T]'
-'       %                 %                                          * *a* * *   '
+'       %                 %                                        * * *a* * *   '
 '       %              a O%                       c*******        [TTTTTTTTTTTT] '
 '       !^]   [^^^^^^^^^^^!^^^^^^^^^^]            [^^^^^^^]                      '
 [layer2]

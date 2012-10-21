@@ -1,11 +1,11 @@
 [head]
 # all coordinates are zero-based!
 width           = 40
-height          = 19
+height          = 24
 startx          = 2
-starty          = 2
+starty          = 7
 backgroundcolor = (63,127,255)
-havetokill      =  15
+havetokill      =  18
 failback        = ./levels/level1.slvl
 #startzoom       =  20.0
 [symbols]
@@ -35,11 +35,21 @@ failback        = ./levels/level1.slvl
   'c'    enemy2                          (255,230,  0) none   (-1.5,-1.5, 1.5, 1.5) waywalker,health=3
   'd'    enemy2                          (255,230,  0) none   (-1.8,-1.8, 1.8, 1.8) waywalker,health=4
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
+  'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "If you enter"
+  'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "a new level"
+  'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "you loose your"
+  'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "big belly and"
+  'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "your broom."
 
 [layer0]
 # best viewed with a font, where width=height
 # 1 of 3 layers
 # in the background
+'   C                                    '
+'   D                                    '
+'   E                                    '
+'   F                                    '
+'   G                                    '
 '                                        '
 '                                        '
 '                                        '
@@ -62,6 +72,11 @@ failback        = ./levels/level1.slvl
 [layer1]
 # 2 of 3 layers
 # the "game"-layer. With collision!
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
 '[TTT]**[TTT]**[TTT]**[TTT]**[TTT]**[TTT]'
 '%    **%    **%    **%    **%    **%    '
 '%    **%    **%    **%    **%    **%   O'
@@ -84,6 +99,11 @@ failback        = ./levels/level1.slvl
 [layer2]
 # 3 of 3 layers
 # in the foreground
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
 '                                        '
 '                                        '
 '                                        '

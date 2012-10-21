@@ -95,12 +95,12 @@ void moveenemies()
 												 level->symbollist[level->layer[1][bx +(by+1)*level->width]]->form == 0)
 			{
 				enemy->dx=-enemy->dx;
-				if (enemy->was_change)
+				/*if (enemy->was_change)
 					enemy->dx = 0;
-				enemy->was_change = 1;
+				enemy->was_change = 1;*/
 			}
-			else
-				enemy->was_change = 0;
+			/*else
+				enemy->was_change = 0;*/
 		}
 		enemy=enemy->next;
 	}
