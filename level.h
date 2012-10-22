@@ -166,7 +166,7 @@ plevel loadlevel(char* filename)
 			SDL_RWclose(file);
 			return NULL;
 		}
-				pos = getNextWord(pos,buffer,value,1024,' ',' ');
+		pos = getNextWord(pos,buffer,value,1024,' ','\n');
 		if (strcmp_firstsign(word,"width")==0)
 			level->width=atoi(value);
 		if (strcmp_firstsign(word,"height")==0)
@@ -186,9 +186,9 @@ plevel loadlevel(char* filename)
 			char word[1024];
 			int pos2 = getNextWord(0,value,word,1024,'(',',');
 			int r = atoi(word);
-					pos2 = getNextWord(pos2,value,word,1024,',',',');
+			pos2 = getNextWord(pos2,value,word,1024,',',',');
 			int g = atoi(word);
-					pos2 = getNextWord(pos2,value,word,1024,',',')');
+			pos2 = getNextWord(pos2,value,word,1024,',',',');
 			int b = atoi(word);
 			level->backgroundcolor=spGetRGB(r,g,b);
 		}
