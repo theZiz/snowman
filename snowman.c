@@ -852,7 +852,14 @@ int main(int argc, char **argv)
 	#endif
 	intro();
 	init_snowman();
-	level=loadlevel("./levels/menu.slvl");
+	if (argc < 2)
+		level=loadlevel("./levels/menu.slvl");
+	else
+	{
+		char buffer[256];
+		sprintf(buffer,"./levels/%s.slvl",argv[1]);
+		level=loadlevel(buffer);
+	}
 	init_game(level,1);
 	spLoop(draw_game,calc_game,10,resize,NULL);
 	freeLevel(level);
