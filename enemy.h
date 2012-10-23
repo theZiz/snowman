@@ -81,9 +81,9 @@ void moveenemies()
 	penemy enemy = level->firstenemy;
 	while (enemy!=NULL)
 	{
-		enemy->x+=enemy->dx;
 		if ((enemy->symbol->functionmask & 256) == 256) //waywalker
 		{
+			enemy->x+=enemy->dx;
 			int bx	=((((enemy->x													 ) >> (SP_ACCURACY))+1)>>1);
 			int bxl =((((enemy->x+enemy->symbol->measures[0]) >> (SP_ACCURACY))+1)>>1);
 			int bxr =((((enemy->x+enemy->symbol->measures[2]) >> (SP_ACCURACY))+1)>>1);

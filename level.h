@@ -393,6 +393,8 @@ plevel loadlevel(char* filename)
 			//enemies
 			if (strstr(newsymbol->function,"waywalker")!=NULL)
 				newsymbol->functionmask|=256;
+			if (strstr(newsymbol->function,"standing")!=NULL)
+				newsymbol->functionmask|=512;
 		}
 		if (object_is_door)
 		{
@@ -565,14 +567,11 @@ plevel loadlevel(char* filename)
 					printf("Setting shot frequency to %i (%s)\n",newenemy->shotfq,value);
 				}				
 			}
-			lastenemy=newenemy;
-			if ((level->symbollist[level->layer[1][i]]->functionmask & 256) == 256) //waywalker
-			{
-				newenemy->dx = (rand()%2==0 ? -1:1)<<(SP_ACCURACY-7);
-				newenemy-> x = (i%level->width	)<<(SP_ACCURACY+1);
-				newenemy-> y = ((i/level->width*2+1)<<(SP_ACCURACY))-newenemy->symbol->measures[3];
-			}
+			newenemy->dx = (rand()%2 ? -1:1)<<(SP_ACCURACY-7);
+			newenemy-> x = (i%level->width	)<<(SP_ACCURACY+1);
+			newenemy-> y = ((i/level->width*2+1)<<(SP_ACCURACY))-newenemy->symbol->measures[3];
 			level->layer[1][i]=' ';
+			lastenemy=newenemy;
 		}
 	SDL_RWclose(file);
 	return level;
