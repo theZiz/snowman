@@ -218,20 +218,8 @@ void bulletPlayerInteraction()
   int i;
   for (i=3-ballcount;i<3;i++)
     sum+=ballsize[i]*2;
-  biggest=2;
-  if (ballcount>2)
-  {
-    if (ballsize[0]>ballsize[2] && ballsize[0]>ballsize[1])
-      biggest=0;
-    if (ballsize[1]>ballsize[2] && ballsize[1]>ballsize[0])
-      biggest=1;
-  }
-  else
-  if (ballcount>1)
-  {
-    if (ballsize[1]>ballsize[2])
-      biggest=1;
-  }  
+  biggest=getBiggest();
+  
   pbullet bbefore=NULL;
   pbullet bullet=firstBullet;
   while (bullet!=NULL)

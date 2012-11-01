@@ -156,20 +156,7 @@ void drawcharacter(Sint32 x,Sint32 y,Sint32 z,char right)
 
 char testX(Sint32 x,Sint32 ox)
 {
-  biggest=2;
-  if (ballcount>2)
-  {
-    if (ballsize[0]>ballsize[2] && ballsize[0]>ballsize[1])
-      biggest=0;
-    if (ballsize[1]>ballsize[2] && ballsize[1]>ballsize[0])
-      biggest=1;
-  }
-  else
-  if (ballcount>1)
-  {
-    if (ballsize[1]>ballsize[2])
-      biggest=1;
-  }
+	biggest = getBiggest();
   bx =((x>>(SP_ACCURACY))+1)>>1;
   bxl=(((x-ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
   bxr=(((x+ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
@@ -183,16 +170,12 @@ char testX(Sint32 x,Sint32 ox)
     sum+=ballsize[i]*2;
   byt =((((y-sum)>>(SP_ACCURACY))+1)>>1);
   bym =(byt + byb)>>1;
-
-  //printf("b: %i m: %i t: %i xl: %i x: %i xr: %i\n",byb,bym,byt,bxl,bx,bxr);
   //Solid Block on the left?
   if (bxl>=0 && bxl<level->width)
   {
     if (byb>0 && level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]       != NULL &&
                  level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->form > 0)
     {
-      if ((level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->functionmask & 4) == 4 && ox>x) //left
-        return 0; 
       if ((level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->functionmask & 8) == 8 && ox<x) //right
         return 0; 
       return 1;
@@ -200,8 +183,6 @@ char testX(Sint32 x,Sint32 ox)
     if (byt>=0 && level->symbollist[level->layer[1][bxl+(byt)*level->width]]       != NULL &&
                   level->symbollist[level->layer[1][bxl+(byt)*level->width]]->form > 0)
     {
-      if ((level->symbollist[level->layer[1][bxl+(byt)*level->width]]->functionmask & 4) == 4 && ox>x) //left
-        return 0; 
       if ((level->symbollist[level->layer[1][bxl+(byt)*level->width]]->functionmask & 8) == 8 && ox<x) //right
         return 0; 
       return 1;
@@ -209,8 +190,6 @@ char testX(Sint32 x,Sint32 ox)
     if (bym>=0 && level->symbollist[level->layer[1][bxl+(bym)*level->width]]       != NULL &&
                   level->symbollist[level->layer[1][bxl+(bym)*level->width]]->form > 0)
     {
-      if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //left
-        return 0; 
       if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //right
         return 0; 
       return 1;
@@ -224,8 +203,6 @@ char testX(Sint32 x,Sint32 ox)
     {
       if ((level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]->functionmask & 4) == 4 && ox>x) //left
         return 0; 
-      if ((level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]->functionmask & 8) == 8 && ox<x) //right
-        return 0; 
       return 2;
     }
     if (byt>=0 && level->symbollist[level->layer[1][bxr+(byt)*level->width]]       != NULL &&
@@ -233,85 +210,12 @@ char testX(Sint32 x,Sint32 ox)
     {
       if ((level->symbollist[level->layer[1][bxr+(byt)*level->width]]->functionmask & 4) == 4 && ox>x) //left
         return 0; 
-      if ((level->symbollist[level->layer[1][bxr+(byt)*level->width]]->functionmask & 8) == 8 && ox<x) //right
-        return 0; 
       return 2;
     }
     if (bym>=0 && level->symbollist[level->layer[1][bxr+(bym)*level->width]]       != NULL &&
                   level->symbollist[level->layer[1][bxr+(bym)*level->width]]->form > 0)
     {
       if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //left
-        return 0; 
-      if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //right
-        return 0; 
-      return 2;
-    }
-  }
-  //Solid Block where I am?
-  /*if (bx>=0 && bx<level->width &&
-     ((byb>0 && level->symbollist[level->layer[1][bx +(byb-1)*level->width]]       != NULL &&
-                 level->symbollist[level->layer[1][bx +(byb-1)*level->width]]->form > 0) ||
-      (byt>=0 && level->symbollist[level->layer[1][bx +(byt  )*level->width]]       != NULL &&
-                 level->symbollist[level->layer[1][bx +(byt  )*level->width]]->form > 0) ||
-      (bym>=0 && level->symbollist[level->layer[1][bx +(bym  )*level->width]]       != NULL &&
-                 level->symbollist[level->layer[1][bx +(bym  )*level->width]]->form > 0)))
-    return 1;*/
-  return 0;
-}
-
-char testX2(Sint32 x,Sint32 ox)
-{
-  biggest=2;
-  if (ballcount>2)
-  {
-    if (ballsize[0]>ballsize[2] && ballsize[0]>ballsize[1])
-      biggest=0;
-    if (ballsize[1]>ballsize[2] && ballsize[1]>ballsize[0])
-      biggest=1;
-  }
-  else
-  if (ballcount>1)
-  {
-    if (ballsize[1]>ballsize[2])
-      biggest=1;
-  }
-  int sum=0;
-  int i;
-  for (i=3-ballcount;i<3;i++)
-    sum+=ballsize[i]*2;
-  bx =((x>>(SP_ACCURACY))+1)>>1;
-  bxl=(((x-ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
-  bxr=(((x+ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
-  /*by =((y>>(SP_ACCURACY))+1)>>1;
-  byb=by;
-  if (((2*by-1)<<SP_ACCURACY)!=y)
-    byb+=1;
-  byt =((((y-sum)>>(SP_ACCURACY))+1)>>1);
-  bym =(byt + byb)>>1;*/
-  bym = (((y-sum/2)>>SP_ACCURACY)+1)/2;
-  //printf("b: %i m: %i t: %i xl: %i x: %i xr: %i\n",byb,bym,byt,bxl,bx,bxr);
-  //Solid Block on the left?
-  if (bxl>=0 && bxl<level->width)
-  {
-    if (bym>=0 && level->symbollist[level->layer[1][bxl+(bym)*level->width]]       != NULL &&
-                  level->symbollist[level->layer[1][bxl+(bym)*level->width]]->form > 0)
-    {
-      if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //left
-        return 0; 
-      if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //right
-        return 0; 
-      return 1;
-    }
-  }
-  //Solid Block on the right?
-  if (bxr>=0 && bxr<level->width)
-  {
-    if (bym>=0 && level->symbollist[level->layer[1][bxr+(bym)*level->width]]       != NULL &&
-                  level->symbollist[level->layer[1][bxr+(bym)*level->width]]->form > 0)
-    {
-      if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //left
-        return 0; 
-      if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //right
         return 0; 
       return 2;
     }
@@ -321,12 +225,12 @@ char testX2(Sint32 x,Sint32 ox)
 
 char fattest(Sint32 *x,Sint32 ox)
 {
-  char i=testX2((*x),ox);
+  char i=testX((*x),ox);
   if (i==1)
   {
     while (i==1)
     {
-      i=testX2((*x),ox);
+      i=testX((*x),ox);
       (*x)+=(1<<(SP_ACCURACY-4));
       printf("Left\n");
     }
@@ -336,7 +240,7 @@ char fattest(Sint32 *x,Sint32 ox)
   {
     while (i==2)
     {
-      i=testX2((*x),ox);
+      i=testX((*x),ox);
       (*x)-=(1<<(SP_ACCURACY-4));
       printf("Right\n");
     }
@@ -353,20 +257,7 @@ void playerEnemyInteraction()
   int i;
   for (i=3-ballcount;i<3;i++)
     sum+=ballsize[i]*2;
-  biggest=2;
-  if (ballcount>2)
-  {
-    if (ballsize[0]>ballsize[2] && ballsize[0]>ballsize[1])
-      biggest=0;
-    if (ballsize[1]>ballsize[2] && ballsize[1]>ballsize[0])
-      biggest=1;
-  }
-  else
-  if (ballcount>1)
-  {
-    if (ballsize[1]>ballsize[2])
-      biggest=1;
-  }
+  biggest=getBiggest();
   penemy enemy=level->firstenemy;
   while (enemy!=NULL)
   {

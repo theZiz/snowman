@@ -34,6 +34,7 @@ void resize( Uint16 w, Uint16 h )
 		spFontDelete( font );
 	font = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font, SP_FONT_GROUP_ASCII, 65535 ); //whole ASCII
+	spFontSetButtonStrategy(SP_FONT_BUTTON);
 	spFontAddButton( font, 'a', SP_BUTTON_LEFT_NAME, 65535, SP_ALPHA_COLOR );
 	spFontAddButton( font, 'd', SP_BUTTON_RIGHT_NAME, 65535, SP_ALPHA_COLOR );
 	spFontAddButton( font, 'w', SP_BUTTON_UP_NAME, 65535, SP_ALPHA_COLOR );
@@ -155,6 +156,15 @@ Sint32 angle;
 int levelcount;
 
 char pausemode;
+
+int getBiggest()
+{
+	if (ballsize[0]>=ballsize[2] && ballsize[0]>=ballsize[1])
+		return 0;
+	if (ballsize[1]>=ballsize[2] && ballsize[1]>=ballsize[0])
+		return 1;
+  return 2;
+}
 
 #include "enemy.h"
 #include "drawlevel.h"
@@ -449,36 +459,33 @@ int calc_game(Uint32 steps)
 		
 		//Bullets
 		calcBullet();
-		if (engineInput->button[SP_BUTTON_LEFT])
-		{
-			engineInput->button[SP_BUTTON_LEFT]=0;
-			int sum=0;
-			int i;
-			for (i=3-ballcount;i<3;i++)
-				sum+=ballsize[i]*2;
-			newBullet(x,y-(sum>>1),(facedir)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,1,spGetRGB(255,255,255));
-		}
 		calcBallBullet();
-		if (engineInput->button[SP_BUTTON_DOWN])
-		{
-			engineInput->button[SP_BUTTON_DOWN]=0;
-			fireBallBullet();
-		}
 		bulletEnemyInteraction();
 		bulletPlayerInteraction();
 		bulletEnvironmentInteraction();
 
 		if (broom_exist && in_hit<=0 && engineInput->button[SP_BUTTON_RIGHT])
-		{
-			//engineInput->button[SP_BUTTON_RIGHT]=0;
 			in_hit=864;
-		}
 		if (in_hit==768)
 			broomEnemyInteraction(facedir);
 		if (in_hit>0)
 			in_hit--;
-		testX(x,ox);
-				
+			
+		//Setting some values
+		biggest = getBiggest();
+		bx =((x>>(SP_ACCURACY))+1)>>1;
+		bxl=(((x-ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
+		bxr=(((x+ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
+		by =((y>>(SP_ACCURACY))+1)>>1;
+		byb=by;
+		if (((2*by-1)<<SP_ACCURACY)!=y)
+			byb+=1;
+		int sum=0;
+		int i;
+		for (i=3-ballcount;i<3;i++)
+			sum+=ballsize[i]*2;
+		byt =((((y-sum)>>(SP_ACCURACY))+1)>>1);
+		bym =(byt + byb)>>1;
 		char tofat=0;
 		//Snow left?
 		if (bxl>=0 && bxl<level->width)
@@ -621,23 +628,9 @@ int calc_game(Uint32 steps)
 			if (testX(x,ox))
 				x=ox;
 		}
-		
 
 		//new calculation after the X-Check
-		biggest=2;
-		if (ballcount>2)
-		{
-			if (ballsize[0]>ballsize[2] && ballsize[0]>ballsize[1])
-				biggest=0;
-			if (ballsize[1]>ballsize[2] && ballsize[1]>ballsize[0])
-				biggest=1;
-		}
-		else
-		if (ballcount>1)
-		{
-			if (ballsize[1]>ballsize[2])
-				biggest=1;
-		}
+		biggest = getBiggest();
 		bx =((x>>(SP_ACCURACY))+1)>>1;
 		bxl=(((x-ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
 		bxr=(((x+ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
@@ -696,20 +689,7 @@ int calc_game(Uint32 steps)
 	if (engineInput->button[SP_BUTTON_UP] && jump_min_time <= 0)
 	{
 		jump_min_time = TIME_BETWEEN_TWO_JUMPS;
-		int biggest=2;
-		if (ballcount>2)
-		{
-			if (ballsize[0]>ballsize[2] && ballsize[0]>ballsize[1])
-				biggest=0;
-			if (ballsize[1]>ballsize[2] && ballsize[1]>ballsize[0])
-				biggest=1;
-		}
-		else
-		if (ballcount>1)
-		{
-			if (ballsize[1]>ballsize[2])
-				biggest=1;
-		}
+		int biggest=getBiggest();
 		int bxl=(((x-ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
 		int bxr=(((x+ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
 		int by =((y>>(SP_ACCURACY))+1)>>1;
@@ -725,10 +705,24 @@ int calc_game(Uint32 steps)
 			speedup=-23<<(SP_ACCURACY-9);
 			spSoundPlay(jump_chunk,-1,0,0,0);
 		}
-		//engineInput->button[SP_BUTTON_UP]=0;
 	}
-	
-	
+
+	//Shooting
+	if (engineInput->button[SP_BUTTON_LEFT])
+	{
+		engineInput->button[SP_BUTTON_LEFT]=0;
+		int sum=0;
+		int i;
+		for (i=3-ballcount;i<3;i++)
+			sum+=ballsize[i]*2;
+		newBullet(x,y-(sum>>1),(facedir)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,1,spGetRGB(255,255,255));
+	}
+	if (engineInput->button[SP_BUTTON_DOWN])
+	{
+		engineInput->button[SP_BUTTON_DOWN]=0;
+		fireBallBullet();
+	}	
+		
 	//clouds
 	int i;
 	for (i=0;i<cloudcount;i++)
@@ -840,7 +834,7 @@ int main(int argc, char **argv)
 	int i;
 	for (i = 0; i < CLOUD_COUNT; i++)
 		cloud[i] = NULL;
-	spSetDefaultWindowSize( 800, 480 );
+	spSetDefaultWindowSize( 400, 240 );
 	spInitCore();
 	//Setup
 	#ifdef SCALE_UP
