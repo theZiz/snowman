@@ -223,6 +223,41 @@ char testX(Sint32 x,Sint32 ox)
   return 0;
 }
 
+char testX_down(Sint32 x,Sint32 ox)
+{
+	biggest = getBiggest();
+	int sum=0;
+	int i;
+	for (i=3-ballcount;i<3;i++)
+		sum+=ballsize[i]*2;
+	bx =((x>>(SP_ACCURACY))+1)>>1;
+	bxl=(((x-ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
+	bxr=(((x+ballsize[biggest])>>(SP_ACCURACY))+1)>>1;
+	bym = (((y-sum/2)>>SP_ACCURACY)+1)/2;
+	//Solid Block on the left?
+	if (bxl>=0 && bxl<level->width)
+	{
+		if (bym>=0 && level->symbollist[level->layer[1][bxl+(bym)*level->width]]       != NULL &&
+									level->symbollist[level->layer[1][bxl+(bym)*level->width]]->form > 0)
+		{
+			if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //right
+				return 0; 
+			return 1;
+		}
+	}
+	//Solid Block on the right?
+	if (bxr>=0 && bxr<level->width)
+	{
+		if (bym>=0 && level->symbollist[level->layer[1][bxr+(bym)*level->width]]       != NULL &&
+									level->symbollist[level->layer[1][bxr+(bym)*level->width]]->form > 0)
+		{
+			if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //left
+				return 0; 
+			return 2;
+		}
+	}
+}
+
 char fattest(Sint32 *x,Sint32 ox)
 {
   char i=testX((*x),ox);
@@ -230,7 +265,7 @@ char fattest(Sint32 *x,Sint32 ox)
   {
     while (i==1)
     {
-      i=testX((*x),ox);
+      i=testX_down((*x),ox);
       (*x)+=(1<<(SP_ACCURACY-4));
       printf("Left\n");
     }
@@ -240,7 +275,7 @@ char fattest(Sint32 *x,Sint32 ox)
   {
     while (i==2)
     {
-      i=testX((*x),ox);
+      i=testX_down((*x),ox);
       (*x)-=(1<<(SP_ACCURACY-4));
       printf("Right\n");
     }

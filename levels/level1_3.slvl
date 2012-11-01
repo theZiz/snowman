@@ -5,7 +5,7 @@ height          = 52
 startx          = 2
 starty          = 50
 backgroundcolor = (63,127,255)
-havetokill      =  18
+havetokill      =  20
 failback        = ./levels/level1.slvl
 #startzoom       =  20.0
 [symbols]
@@ -33,6 +33,7 @@ failback        = ./levels/level1.slvl
   'a'    enemy0                          (32,  32, 32) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1
   'b'    enemy1                          (  0,  0,255) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1,weapon=1,shotfq=1000
   'c'    enemy2                          (255,230,  0) none   (-1.5,-1.5, 1.5, 1.5) waywalker,health=3
+  'd'    enemy1                          (  0,  0,255) none   (-1.5,-1.5, 1.5, 1.0) waywalker,health=2,weapon=1,shotfq=1000
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "If you get"
   'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "hit you lose"
@@ -102,7 +103,7 @@ failback        = ./levels/level1.slvl
 '} [T]                      {'
 '}   %                      {'
 '!T] {T]    #    #    #    [!'
-'}   %                      {'
+'}   %   **   **   **   **  {'
 '}   %   **   **   **   **  {'
 '}   %   ** c ** c ** c **  {'
 '} [T!TTTTTTTTTTTTTTTTTTT]  {'
@@ -110,7 +111,7 @@ failback        = ./levels/level1.slvl
 '}   %                      {'
 '}   %                      {'
 '!T] {]    #    #    #    [T!'
-'}   %                      {'
+'}   %  **   **   **   **   {'
 '}   %  **   **   **   **   {'
 '}   %  ** b ** b ** b **   {'
 '} [T}  [TTTTTTTTTTTTTTTTTTT!'
@@ -118,7 +119,7 @@ failback        = ./levels/level1.slvl
 '}   %                      {'
 '}   %                      {'
 '!T] {T]    #    #    #    [!'
-'}   %                      {'
+'}   %   **   **   **   **  {'
 '}   %   **   **   **   **  {'
 '}   %   ** c ** c ** c **  {'
 '} [T!TTTTTTTTTTTTTTTTTTT]  {'
@@ -126,15 +127,15 @@ failback        = ./levels/level1.slvl
 '}   %                      {'
 '}   %                      {'
 '!T] {]    #    #    #    [T!'
-'}   %                      {'
 '}   %  **   **   **   **   {'
-'}   %  ** b ** b ** b **   {'
+'}   %  **   **   **   **   {'
+'}   %  ** d ** d ** d **   {'
 '} [T}  [TTTTTTTTTTTTTTTTTTT!'
 '}   %                      {'
 '}   %                      {'
 '}   %                      {'
 '!T] {T]    #    #    #    [!'
-'}   %                      {'
+'}   %   **   **   **   **  {'
 '}   %   **   **   **   **  {'
 '}   %O c** c ** c ** c ** c{'
 '} [T!TTTTTTTTTTTTTTTTTTTTTT!'

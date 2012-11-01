@@ -799,6 +799,7 @@ void init_snowman()
 	spSetLight(1);
 	spSetAmbientLightColor(1 << SP_ACCURACY-1,1 << SP_ACCURACY-1,1 << SP_ACCURACY-1);
 	spSetLightColor(1,1 << SP_ACCURACY,1 << SP_ACCURACY,1 << SP_ACCURACY);
+	spUsePrecalculatedNormals(0);
 }
 
 void quit_snowman()
