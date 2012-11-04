@@ -177,7 +177,9 @@ char testX(Sint32 x,Sint32 ox)
         level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]!= NULL &&
         level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->form > 0)
     {
-      if ((level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->functionmask & 8) == 8 && ox<x) //right
+      if ((level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->functionmask & 4) == 4 && ox>x) //right open
+        return 0; 
+      if ((level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->functionmask & 8) == 8 && ox<x) //left open
         return 0; 
       return 1;
     }
@@ -185,7 +187,9 @@ char testX(Sint32 x,Sint32 ox)
         level->symbollist[level->layer[1][bxl+(byt)*level->width]]!= NULL &&
         level->symbollist[level->layer[1][bxl+(byt)*level->width]]->form > 0)
     {
-      if ((level->symbollist[level->layer[1][bxl+(byt)*level->width]]->functionmask & 8) == 8 && ox<x) //right
+      if ((level->symbollist[level->layer[1][bxl+(byt)*level->width]]->functionmask & 4) == 4 && ox>x) //right open
+        return 0; 
+      if ((level->symbollist[level->layer[1][bxl+(byt)*level->width]]->functionmask & 8) == 8 && ox<x) //left open
         return 0; 
       return 1;
     }
@@ -193,7 +197,9 @@ char testX(Sint32 x,Sint32 ox)
         level->symbollist[level->layer[1][bxl+(bym)*level->width]]!= NULL &&
         level->symbollist[level->layer[1][bxl+(bym)*level->width]]->form > 0)
     {
-      if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //right
+      if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //right open
+        return 0; 
+      if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //left open
         return 0; 
       return 1;
     }
@@ -205,7 +211,9 @@ char testX(Sint32 x,Sint32 ox)
         level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]!= NULL &&
         level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]->form > 0)
     {
-      if ((level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]->functionmask & 4) == 4 && ox>x) //left
+      if ((level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]->functionmask & 8) == 8 && ox<x) //left open
+        return 0; 
+      if ((level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]->functionmask & 4) == 4 && ox>x) //right open
         return 0; 
       return 2;
     }
@@ -213,7 +221,9 @@ char testX(Sint32 x,Sint32 ox)
         level->symbollist[level->layer[1][bxr+(byt)*level->width]]!= NULL &&
         level->symbollist[level->layer[1][bxr+(byt)*level->width]]->form > 0)
     {
-      if ((level->symbollist[level->layer[1][bxr+(byt)*level->width]]->functionmask & 4) == 4 && ox>x) //left
+      if ((level->symbollist[level->layer[1][bxr+(byt)*level->width]]->functionmask & 8) == 8 && ox<x) //left open
+        return 0; 
+      if ((level->symbollist[level->layer[1][bxr+(byt)*level->width]]->functionmask & 4) == 4 && ox>x) //right open
         return 0; 
       return 2;
     }
@@ -221,7 +231,9 @@ char testX(Sint32 x,Sint32 ox)
         level->symbollist[level->layer[1][bxr+(bym)*level->width]]!= NULL &&
         level->symbollist[level->layer[1][bxr+(bym)*level->width]]->form > 0)
     {
-      if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //left
+      if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //left open
+        return 0; 
+      if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //right open
         return 0; 
       return 2;
     }
@@ -247,7 +259,9 @@ char testX_down(Sint32 x,Sint32 ox)
 		    level->symbollist[level->layer[1][bxl+(bym)*level->width]]!= NULL &&
 		    level->symbollist[level->layer[1][bxl+(bym)*level->width]]->form > 0)
 		{
-			if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //right
+			if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //right open
+				return 0; 
+			if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //left open
 				return 0; 
 			return 1;
 		}
@@ -259,7 +273,9 @@ char testX_down(Sint32 x,Sint32 ox)
 		    level->symbollist[level->layer[1][bxr+(bym)*level->width]]!= NULL &&
 		    level->symbollist[level->layer[1][bxr+(bym)*level->width]]->form > 0)
 		{
-			if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //left
+			if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //left open
+				return 0; 
+			if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //right open
 				return 0; 
 			return 2;
 		}
@@ -268,7 +284,7 @@ char testX_down(Sint32 x,Sint32 ox)
 
 char fattest(Sint32 *x,Sint32 ox)
 {
-  char i=testX((*x),ox);
+  char i=testX_down((*x),ox);
   if (i==1)
   {
     while (i==1)

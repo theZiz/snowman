@@ -1,11 +1,11 @@
 [head]
 # all coordinates are zero-based!
-width           = 10
-height          = 6
-startx          =  1
-starty          =  4
+width           = 61
+height          = 14
+startx          = 30
+starty          =  7
 backgroundcolor = (  0,192,127)
-havetokill      =  0
+havetokill      =  3
 failback        = ./levels/level2.slvl
 #startzoom       =  20.0
 [symbols]
@@ -30,16 +30,24 @@ failback        = ./levels/level2.slvl
   'O'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/play.slvl),-30
   '<'    ./data/arrow_left.obj           (127,127,127) quad   (-1.0,-1.0, 1.0, 1.0) left
   '>'    ./data/arrow_right.obj          (127,127,127) quad   (-1.0,-1.0, 1.0, 1.0) right
-  'a'    enemy0                          (32,  32, 32) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1
-  'c'    enemy2                          (255,230,  0) none   (-1.5,-1.5, 1.5, 1.5) waywalker,health=3
+  'e'    enemy4                          ( 63, 63, 63) none   (-4.5,-3.0, 4.5, 3.0) waywalker,weapon=2,health=70,shotfq=500
+  'h'    enemy4                          ( 63, 63, 63) none   (-4.5,-3.0, 4.5, 3.0) standing,weapon=2,health=70,shotfq=200
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Dummy Text"
 
 [layer1]
-'!________!'
-'}********{'
-'}********{'
-'}********{'
-'}***B***O{'
-'!^^^^^^^^!'
+'                                                             '
+'                                                             '
+'**********    h               O               h    **********'
+'**********                [TTTTTTT]                **********'
+'**********[TTTT]    []    <       >    []    [TTTT]**********'
+'**********      **********<*******>**********      **********'
+'*****[TTTT]     **********<*******>**********     [TTTT]*****'
+'******************[TTTT]**<*******>**[TTTT]**          ******'
+'**************************[TTTTTTT]**************************'
+'[TTTT]*************************************************[TTTT]'
+'      ******* ** ** ** ** ** *** ** ** ** ** ** *******      '
+'     [TTTT]** ** ** ** ** ** *** ** ** ** ** ** **[TTTT]     '
+'           ** ** ** ** ** **  e  ** ** ** ** ** **           '
+'          [^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^]          '
 [end]
