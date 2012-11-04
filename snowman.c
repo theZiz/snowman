@@ -490,7 +490,7 @@ int calc_game(Uint32 steps)
 		//Snow left?
 		if (bxl>=0 && bxl<level->width)
 		{
-			 if (byb>=0 && byb<level->height && level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]!= NULL)
+			 if (byb>0 && byb<=level->height && level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]!= NULL)
 			 {
 				 if ((level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->functionmask & 1) == 1)
 				 {
@@ -548,7 +548,7 @@ int calc_game(Uint32 steps)
 		//Snow right?
 		if (bxr>=0 && bxr<level->width)
 		{
-			 if (byb>=0 && byb<level->height && level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]			 != NULL)
+			 if (byb>0 && byb<=level->height && level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]			 != NULL)
 			 {
 				 if ((level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]->functionmask & 1) == 1)
 				 {
@@ -739,8 +739,9 @@ int calc_game(Uint32 steps)
 	//Door
 	if (engineInput->axis[1]==-1)
 		if (bx>=0 && bx<level->width)
-			if (byb>0 && level->symbollist[level->layer[1][bx+(byb-1)*level->width]]			 != NULL &&
-									(level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->functionmask & 2) == 2)
+			if (byb>0 && byb<=level->height &&
+			    level->symbollist[level->layer[1][bx+(byb-1)*level->width]]!= NULL &&
+					(level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->functionmask & 2) == 2)
 				if (enemyKilled>=level->havetokill && level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->needed_level<=levelcount)
 				{
 					if (level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->needed_level<0)

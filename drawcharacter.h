@@ -173,7 +173,7 @@ char testX(Sint32 x,Sint32 ox)
   //Solid Block on the left?
   if (bxl>=0 && bxl<level->width)
   {
-    if (byb>=0 && byb<level->height &&
+    if (byb>0 && byb<=level->height &&
         level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]!= NULL &&
         level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->form > 0)
     {
@@ -201,7 +201,7 @@ char testX(Sint32 x,Sint32 ox)
   //Solid Block on the right?
   if (bxr>=0 && bxr<level->width)
   {
-    if (byb>=0 && byb<level->height &&
+    if (byb>0 && byb<=level->height &&
         level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]!= NULL &&
         level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]->form > 0)
     {
