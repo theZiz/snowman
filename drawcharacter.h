@@ -173,22 +173,25 @@ char testX(Sint32 x,Sint32 ox)
   //Solid Block on the left?
   if (bxl>=0 && bxl<level->width)
   {
-    if (byb>0 && level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]       != NULL &&
-                 level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->form > 0)
+    if (byb>=0 && byb<level->height &&
+        level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]!= NULL &&
+        level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->form > 0)
     {
       if ((level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->functionmask & 8) == 8 && ox<x) //right
         return 0; 
       return 1;
     }
-    if (byt>=0 && level->symbollist[level->layer[1][bxl+(byt)*level->width]]       != NULL &&
-                  level->symbollist[level->layer[1][bxl+(byt)*level->width]]->form > 0)
+    if (byt>=0 && byt<level->height &&
+        level->symbollist[level->layer[1][bxl+(byt)*level->width]]!= NULL &&
+        level->symbollist[level->layer[1][bxl+(byt)*level->width]]->form > 0)
     {
       if ((level->symbollist[level->layer[1][bxl+(byt)*level->width]]->functionmask & 8) == 8 && ox<x) //right
         return 0; 
       return 1;
     }
-    if (bym>=0 && level->symbollist[level->layer[1][bxl+(bym)*level->width]]       != NULL &&
-                  level->symbollist[level->layer[1][bxl+(bym)*level->width]]->form > 0)
+    if (bym>=0 && bym<level->height &&
+        level->symbollist[level->layer[1][bxl+(bym)*level->width]]!= NULL &&
+        level->symbollist[level->layer[1][bxl+(bym)*level->width]]->form > 0)
     {
       if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //right
         return 0; 
@@ -198,22 +201,25 @@ char testX(Sint32 x,Sint32 ox)
   //Solid Block on the right?
   if (bxr>=0 && bxr<level->width)
   {
-    if (byb>0 && level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]       != NULL &&
-                 level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]->form > 0)
+    if (byb>=0 && byb<level->height &&
+        level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]!= NULL &&
+        level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]->form > 0)
     {
       if ((level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]->functionmask & 4) == 4 && ox>x) //left
         return 0; 
       return 2;
     }
-    if (byt>=0 && level->symbollist[level->layer[1][bxr+(byt)*level->width]]       != NULL &&
-                  level->symbollist[level->layer[1][bxr+(byt)*level->width]]->form > 0)
+    if (byt>=0 && byt<level->height &&
+        level->symbollist[level->layer[1][bxr+(byt)*level->width]]!= NULL &&
+        level->symbollist[level->layer[1][bxr+(byt)*level->width]]->form > 0)
     {
       if ((level->symbollist[level->layer[1][bxr+(byt)*level->width]]->functionmask & 4) == 4 && ox>x) //left
         return 0; 
       return 2;
     }
-    if (bym>=0 && level->symbollist[level->layer[1][bxr+(bym)*level->width]]       != NULL &&
-                  level->symbollist[level->layer[1][bxr+(bym)*level->width]]->form > 0)
+    if (bym>=0 && bym<level->height &&
+        level->symbollist[level->layer[1][bxr+(bym)*level->width]]!= NULL &&
+        level->symbollist[level->layer[1][bxr+(bym)*level->width]]->form > 0)
     {
       if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //left
         return 0; 
@@ -237,8 +243,9 @@ char testX_down(Sint32 x,Sint32 ox)
 	//Solid Block on the left?
 	if (bxl>=0 && bxl<level->width)
 	{
-		if (bym>=0 && level->symbollist[level->layer[1][bxl+(bym)*level->width]]       != NULL &&
-									level->symbollist[level->layer[1][bxl+(bym)*level->width]]->form > 0)
+		if (bym>=0 && bym<level->height &&
+		    level->symbollist[level->layer[1][bxl+(bym)*level->width]]!= NULL &&
+		    level->symbollist[level->layer[1][bxl+(bym)*level->width]]->form > 0)
 		{
 			if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 8) == 8 && ox<x) //right
 				return 0; 
@@ -248,8 +255,9 @@ char testX_down(Sint32 x,Sint32 ox)
 	//Solid Block on the right?
 	if (bxr>=0 && bxr<level->width)
 	{
-		if (bym>=0 && level->symbollist[level->layer[1][bxr+(bym)*level->width]]       != NULL &&
-									level->symbollist[level->layer[1][bxr+(bym)*level->width]]->form > 0)
+		if (bym>=0 && bym<level->height &&
+		    level->symbollist[level->layer[1][bxr+(bym)*level->width]]!= NULL &&
+		    level->symbollist[level->layer[1][bxr+(bym)*level->width]]->form > 0)
 		{
 			if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 4) == 4 && ox>x) //left
 				return 0; 

@@ -490,7 +490,7 @@ int calc_game(Uint32 steps)
 		//Snow left?
 		if (bxl>=0 && bxl<level->width)
 		{
-			 if (byb>0 && level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]			 != NULL)
+			 if (byb>=0 && byb<level->height && level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]!= NULL)
 			 {
 				 if ((level->symbollist[level->layer[1][bxl+(byb-1)*level->width]]->functionmask & 1) == 1)
 				 {
@@ -508,7 +508,7 @@ int calc_game(Uint32 steps)
 					 spSoundPlay(positive_chunk,-1,0,0,0);
 				 }
 			 }
-			 if (byt>=0 && level->symbollist[level->layer[1][bxl+(byt)*level->width]]			 != NULL)
+			 if (byt>=0 && byt<level->height && level->symbollist[level->layer[1][bxl+(byt)*level->width]]!= NULL)
 			 {
 				 if ((level->symbollist[level->layer[1][bxl+(byt)*level->width]]->functionmask & 1) == 1)
 				 {
@@ -526,7 +526,7 @@ int calc_game(Uint32 steps)
 					 spSoundPlay(positive_chunk,-1,0,0,0);
 				 }
 			 }
-			 if (bym>=0 && level->symbollist[level->layer[1][bxl+(bym)*level->width]]			 != NULL)
+			 if (bym>=0 && bym<level->height && level->symbollist[level->layer[1][bxl+(bym)*level->width]]!= NULL)
 			 {
 				 if ((level->symbollist[level->layer[1][bxl+(bym)*level->width]]->functionmask & 1) == 1)
 				 {
@@ -548,7 +548,7 @@ int calc_game(Uint32 steps)
 		//Snow right?
 		if (bxr>=0 && bxr<level->width)
 		{
-			 if (byb>0 && level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]			 != NULL)
+			 if (byb>=0 && byb<level->height && level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]			 != NULL)
 			 {
 				 if ((level->symbollist[level->layer[1][bxr+(byb-1)*level->width]]->functionmask & 1) == 1)
 				 {
@@ -566,7 +566,7 @@ int calc_game(Uint32 steps)
 					 spSoundPlay(positive_chunk,-1,0,0,0);
 				 }
 			 }
-			 if (byt>=0 && level->symbollist[level->layer[1][bxr+(byt)*level->width]]			 != NULL)
+			 if (byt>=0 && byt<level->height && level->symbollist[level->layer[1][bxr+(byt)*level->width]]			 != NULL)
 			 {
 				 if ((level->symbollist[level->layer[1][bxr+(byt)*level->width]]->functionmask & 1) == 1)
 				 {
@@ -584,7 +584,7 @@ int calc_game(Uint32 steps)
 					 spSoundPlay(positive_chunk,-1,0,0,0);
 				 }
 			 }
-			 if (bym>=0 && level->symbollist[level->layer[1][bxr+(bym)*level->width]]			 != NULL)
+			 if (bym>=0 && bym<level->height && level->symbollist[level->layer[1][bxr+(bym)*level->width]]			 != NULL)
 			 {
 				 if ((level->symbollist[level->layer[1][bxr+(bym)*level->width]]->functionmask & 1) == 1)
 				 {

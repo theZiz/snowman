@@ -1,7 +1,7 @@
 [head]
 # all coordinates are zero-based!
-width           = 10
-height          = 6
+width           = 59
+height          = 24
 startx          =  1
 starty          =  4
 backgroundcolor = (  0,192,127)
@@ -36,10 +36,28 @@ failback        = ./levels/level2.slvl
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Dummy Text"
 
 [layer1]
-'!________!'
-'}********{'
-'}********{'
-'}********{'
-'}***B***O{'
-'!^^^^^^^^!'
+'                                                           '
+'                     #                                     '
+'  #                                                        '
+'                #                                          '
+'      #                                                    '
+'            #                                              '
+' #                  #                                      '
+'         #                                                 '
+'                                                           '
+'               #                                           '
+'   #      #                                                '
+'                                                           '
+'        #                                                  '
+'                                                           '
+'                                                           '
+'                                                           '
+'                                                           '
+'                                                           '
+'                                                           '
+'                                                           '
+'                                                           '
+'                                                           '
+'                                                           '
+'                                                           '
 [end]
