@@ -398,7 +398,7 @@ plevel loadlevel(char* filename)
 		}
 		if (object_is_door)
 		{
-			if (strstr(newsymbol->function,"_5") == NULL)
+			if (strstr(newsymbol->function,"_4") == NULL)
 				newsymbol->meshmask|=4;
 			else
 				newsymbol->meshmask|=8;

@@ -1,6 +1,6 @@
 [head]
 # all coordinates are zero-based!
-width           = 23
+width           = 20
 height          = 9
 startx          = 5
 starty          = 3
@@ -31,7 +31,6 @@ havetokill      =  0
   'Q'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level4_2.slvl),42
   'R'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level4_3.slvl),43
   'S'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level4_4.slvl),44
-  'V'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level4_5.slvl),45
   'Z'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadr(./levels/play.slvl)
   '<'    ./data/arrow_left.obj           (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) left
   '>'    ./data/arrow_right.obj          (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) right
@@ -49,44 +48,31 @@ havetokill      =  0
   'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "4-2"
   'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "4-3"
   'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "4-4"
-  'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "4-5"
-  'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Back"
+  'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Back"
 
 [layer0]
 # best viewed with a font, where width=height
 # 1 of 3 layers
 # in the background
-'                       '
-'     A                 '
-'     C                 '
-'                       '
-'                       '
-'  E  F  G  H  I  J  K  '
-'                       '
-'                       '
-'                       '
+'                    '
+'     A              '
+'     C              '
+'                    '
+'                    '
+'  E  F  G  H  I  J  '
+'                    '
+'                    '
+'                    '
 [layer1]
 # 2 of 3 layers
 # the "game"-layer. With collision!
-'!_____________________!'
-'}                     {'
-'}                     {'
-'}                     {'
-'}    #                {'
-'}                     {'
-'}                     {'
-'} O  P  Q  R  S  V  Z {'
-'!^^^^^^^^^^^^^^^^^^^^^!'
-[layer2]
-# 3 of 3 layers
-# in the foreground
-'                       '
-'                       '
-'                       '
-'                       '
-'                       '
-'                       '
-'                       '
-'                       '
-'                       '
+'!__________________!'
+'}                  {'
+'}                  {'
+'}                  {'
+'}    #             {'
+'}                  {'
+'}                  {'
+'} O  P  Q  R  S  Z {'
+'!^^^^^^^^^^^^^^^^^^!'
 [end]

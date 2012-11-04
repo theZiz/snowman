@@ -1,11 +1,11 @@
 [head]
 # all coordinates are zero-based!
-width           = 42
-height          = 24
-startx          =  1
-starty          = 22
+width           = 140
+height          = 9
+startx          = 0
+starty          = 7
 backgroundcolor = (  0,192,127)
-havetokill      =  0
+havetokill      =  18
 failback        = ./levels/level2.slvl
 #startzoom       =  20.0
 [symbols]
@@ -42,29 +42,15 @@ failback        = ./levels/level2.slvl
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Dummy Text"
 
+
 [layer1]
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'}                                        {'
-'} ***                                    {'
-'} ***                                    {'
-'} ***  e                                 {'
-'} ***[TTTT]   [TTTT]   [TTTT]   [TTTT]   {'
-'}S***     a                              {'
-'!^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^!'
+'                                                                                                                                           {'
+'                                                                                                                                           {'
+'                                                                                                                                           {'
+'    *                                                                                                                                      {'
+'    "    * * * *    * * * *    * * * *     * * * *     * * * *     * * * *     * * * *     * * * *     * * * *     ************************{'
+'    %    [TTTTT]    [TTTTT]    [TTTTT]     [TTTTT]     [TTTTT]     [TTTTT]     [TTTTT]     [TTTTT]     [TTTTT]     [TTTTT]*****[TTTTT]*****{'
+'    %                                                                                                              %***********************{'
+' O *%    a     a     a     a     a     a     b     b     b     b     b     b     c     c     c     c     c     c   %***********************{'
+'[^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^!^^^^^^^^^^^^^^^^^^^^^^^!'
 [end]
