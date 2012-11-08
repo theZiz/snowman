@@ -53,6 +53,8 @@ char* readnextline(SDL_RWops *file,char* buffer,int bufferlen)
 	char sign;
 	while ((levelreadbytes=SDL_RWread(file,&sign,1,1))>0 && pos<bufferlen-1 && sign!='\n')
 	{
+		if (sign == '\r')
+			continue;
 		buffer[pos]=sign;
 		pos++;
 	}
