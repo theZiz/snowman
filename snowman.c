@@ -40,8 +40,8 @@ void resize( Uint16 w, Uint16 h )
 	spFontAddButton( font, 'w', SP_BUTTON_UP_NAME, 65535, SP_ALPHA_COLOR );
 	spFontAddButton( font, 's', SP_BUTTON_DOWN_NAME, 65535, SP_ALPHA_COLOR );
 	spFontAddBorder( font, spGetRGB(128,128,128) );
-	
-	
+
+
 	if ( font_red )
 		spFontDelete( font_red );
 	font_red = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
@@ -52,7 +52,7 @@ void resize( Uint16 w, Uint16 h )
 	font_green = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_green, SP_FONT_GROUP_ASCII, spGetRGB(128,255,128) ); //whole ASCII
 	spFontAddBorder( font_green, spGetRGB(64,128,64) );
-	
+
 	//Creating Clouds
 	int i;
 	for (i = 0; i < CLOUD_COUNT; i++)
@@ -193,7 +193,7 @@ void init_game(plevel level,char complete)
 	speedup=0;
 	if (complete)
 	{
-		ballcount=1; 
+		ballcount=1;
 		ballsize[0]=0;//13<<(SP_ACCURACY-4);
 		ballsize[1]=0;//9<<(SP_ACCURACY-4);
 		ballsize[2]=7<<(SP_ACCURACY-4);
@@ -214,13 +214,13 @@ void init_game(plevel level,char complete)
 
 void draw_game(void)
 {
-	Sint32* modellViewMatrix=spGetMatrix();	
-	
+	Sint32* modellViewMatrix=spGetMatrix();
+
 	spClearTarget(level->backgroundcolor);
 	spResetZBuffer();
 	spIdentity();
 
-	modellViewMatrix[14]=-25<<SP_ACCURACY;	
+	modellViewMatrix[14]=-25<<SP_ACCURACY;
 
 	//#ifdef PANDORA
 	//	Sint32 dx=25<<SP_ACCURACY;
@@ -380,7 +380,7 @@ int calc_game(Uint32 steps)
 			engineInput->button[SP_BUTTON_UP]=0;
 			return 1;
 		}
-		return 0; 
+		return 0;
 	}
 	if (fade)
 	{
@@ -434,7 +434,7 @@ int calc_game(Uint32 steps)
 		if (gotchabig<0)
 			gotchabig=0;
 	}
-	
+
 	w+=(steps*256)%(2*SP_PI);
 	//Time based movement
 	int step;
@@ -447,16 +447,16 @@ int calc_game(Uint32 steps)
 		Sint32 dy=((y-cameray)*3)>>7;
 		camerax+=dx;
 		cameray+=dy;
-		
+
 		Sint32 ox=x;
 		Sint32 oy=y;
-		
+
 		calcparticle();
-		
+
 		//Enemys
 		moveenemies();
 		bulletEnemy();
-		
+
 		//Bullets
 		calcBullet();
 		calcBallBullet();
@@ -470,7 +470,7 @@ int calc_game(Uint32 steps)
 			broomEnemyInteraction(facedir);
 		if (in_hit>0)
 			in_hit--;
-			
+
 		//Setting some values
 		biggest = getBiggest();
 		bx =((x>>(SP_ACCURACY))+1)>>1;
@@ -603,7 +603,7 @@ int calc_game(Uint32 steps)
 				 }
 			 }
 		}
-				
+
 		//	Player
 		if (!tofat)
 		{
@@ -624,7 +624,7 @@ int calc_game(Uint32 steps)
 				facedir=1;
 			}
 			//Hm, where am I?
-			
+
 			if (testX(x,ox))
 				x=ox;
 		}
@@ -680,7 +680,7 @@ int calc_game(Uint32 steps)
 			speedup=0;
 			y=(by-1)<<(SP_ACCURACY+1);
 			y+=1<<SP_ACCURACY;
-		}		
+		}
 		if (damaged>0)
 			damaged--;
 		playerEnemyInteraction();
@@ -701,7 +701,7 @@ int calc_game(Uint32 steps)
 		if (ballsize[1]>(0<<(SP_ACCURACY-5)))
 		{
 			removesnow(1);
-			newexplosion(PARTICLES,x,y,0,1024,spGetRGB(255,255,255));			
+			newexplosion(PARTICLES,x,y,0,1024,spGetRGB(255,255,255));
 			speedup=-23<<(SP_ACCURACY-9);
 			spSoundPlay(jump_chunk,-1,0,0,0);
 		}
@@ -721,8 +721,8 @@ int calc_game(Uint32 steps)
 	{
 		engineInput->button[SP_BUTTON_DOWN]=0;
 		fireBallBullet();
-	}	
-		
+	}
+
 	//clouds
 	int i;
 	for (i=0;i<cloudcount;i++)
@@ -756,8 +756,8 @@ int calc_game(Uint32 steps)
 
 	sum=0;
 	for (i=3-ballcount;i<3;i++)
-		sum+=ballsize[i]*2;	
-	return 0; 
+		sum+=ballsize[i]*2;
+	return 0;
 }
 
 void init_snowman()
@@ -841,10 +841,10 @@ int main(int argc, char **argv)
 	//Setup
 	#ifdef SCALE_UP
 	real_screen = spCreateDefaultWindow();
-	resize( real_screen->w, real_screen->h );	
+	resize( real_screen->w, real_screen->h );
 	#else
 	screen = spCreateDefaultWindow();
-	resize( screen->w, screen->h );	
+	resize( screen->w, screen->h );
 	#endif
 	intro();
 	init_snowman();
