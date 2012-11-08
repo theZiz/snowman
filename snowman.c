@@ -313,7 +313,7 @@ void draw_game(void)
 int calc_game(Uint32 steps)
 {
 	PspInput engineInput = spGetInput();
-	if (engineInput->button[SP_BUTTON_VOLMINUS])
+	if (engineInput->button[SP_BUTTON_L])
 	{
 		volume-=steps;
 		if (volume<0)
@@ -322,7 +322,7 @@ int calc_game(Uint32 steps)
 		spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
 		savelevelcount();
 	}
-	if (engineInput->button[SP_BUTTON_VOLPLUS])
+	if (engineInput->button[SP_BUTTON_R])
 	{
 		volume+=steps;
 		if (volume>(128<<4))
@@ -331,7 +331,7 @@ int calc_game(Uint32 steps)
 		spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
 		savelevelcount();
 	}
-	if (engineInput->button[SP_BUTTON_L])
+	/*if (engineInput->button[SP_BUTTON_L])
 	{
 		volumefactor-=steps;
 		if (volumefactor<0)
@@ -346,7 +346,7 @@ int calc_game(Uint32 steps)
 			volumefactor=128<<4;
 		spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
 		savelevelcount();
-	}
+	}*/
 	/*if (engineGetMuteKey())
 	{
 		printf("teenage MUTEnt ninja turtles\n");
