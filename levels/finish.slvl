@@ -1,7 +1,7 @@
 [head]
 # all coordinates are zero-based!
 width           = 19
-height          = 9
+height          = 11
 startx          = 1
 starty          = 2
 backgroundcolor = (63,127,255)
@@ -42,8 +42,9 @@ havetokill      =  0
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
   'A'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Congratulations!"
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "You saved our all asses"
-  'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) ""
   'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Thx 4 Playing"
+  'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Press Start and try the"
+  'L'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "hard mode now maybe?"
   'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Music from Kevin MacLeod"
   'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "=== Ziz ==="
   'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "http://ziz.delphigl.com"
@@ -55,8 +56,10 @@ havetokill      =  0
 '                   '
 '         A         '
 '         C         '
-'         F         '
 '         G         '
+'         I         '
+'         L         '
+'                   '
 '         H         '
 '         J         '
 '         K         '
@@ -65,6 +68,8 @@ havetokill      =  0
 # 2 of 3 layers
 # the "game"-layer. With collision!
 '!_________________!'
+'}                 {'
+'}                 {'
 '}                 {'
 '}                 {'
 '!]               [!'

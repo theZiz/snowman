@@ -14,6 +14,8 @@ SDL_Surface* cloud[CLOUD_COUNT];
 
 #define TIME_BETWEEN_TWO_JUMPS 20
 
+int gameMode = 0; //easy
+
 void addBorder( spFontPointer font, Uint16 fontColor,Uint16 backgroundColor)
 {
 	int i;
@@ -44,11 +46,14 @@ void resize( Uint16 w, Uint16 h )
 		spFontDelete( font );
 	font = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font, SP_FONT_GROUP_ASCII, 65535 ); //whole ASCII
-	spFontSetButtonStrategy(SP_FONT_BUTTON);
-	spFontAddButton( font, 'a', SP_BUTTON_LEFT_NAME, 65535, SP_ALPHA_COLOR );
-	spFontAddButton( font, 'd', SP_BUTTON_RIGHT_NAME, 65535, SP_ALPHA_COLOR );
-	spFontAddButton( font, 'w', SP_BUTTON_UP_NAME, 65535, SP_ALPHA_COLOR );
-	spFontAddButton( font, 's', SP_BUTTON_DOWN_NAME, 65535, SP_ALPHA_COLOR );
+	spFontAddButton( font, 'R', SP_BUTTON_START_NAME, 65535, SP_ALPHA_COLOR ); //Return == START
+	spFontAddButton( font, 'B', SP_BUTTON_SELECT_NAME, 65535, SP_ALPHA_COLOR ); //Backspace == SELECT
+	spFontAddButton( font, 'q', SP_BUTTON_L_NAME, 65535, SP_ALPHA_COLOR ); // q == L
+	spFontAddButton( font, 'e', SP_BUTTON_R_NAME, 65535, SP_ALPHA_COLOR ); // e == R
+	spFontAddButton( font, 'a', SP_BUTTON_LEFT_NAME, 65535, SP_ALPHA_COLOR ); //a == left button
+	spFontAddButton( font, 'd', SP_BUTTON_RIGHT_NAME, 65535, SP_ALPHA_COLOR ); // d == right button
+	spFontAddButton( font, 'w', SP_BUTTON_UP_NAME, 65535, SP_ALPHA_COLOR ); // w == up button
+	spFontAddButton( font, 's', SP_BUTTON_DOWN_NAME, 65535, SP_ALPHA_COLOR ); // s == down button
 	
 	addBorder( font, 65535, spGetRGB(128,128,128) );
 
@@ -312,9 +317,20 @@ void draw_game(void)
 	if (pausemode)
 	{
 		spAddBlackLayer(128);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight,-1,"Press "SP_BUTTON_START_NAME" to unpause",font);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)								,-1,"Press "SP_BUTTON_SELECT_NAME" to return to submenu",font);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight,-1,"Press "SP_BUTTON_LEFT_NAME","SP_BUTTON_RIGHT_NAME","SP_BUTTON_DOWN_NAME" and "SP_BUTTON_UP_NAME" to quit",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*7/2,-1,"Press [R] to unpause",font);
+
+		if (gameMode)
+			spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*4/2,-1,"Mode: Hard[w]",font);
+		else
+			spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*4/2,-1,"Mode: Easy[w]",font);
+
+		sprintf(buffer,"Total volume: [q]%i %%[e]",volume*100/2048);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*1/2,-1,buffer,font);
+		sprintf(buffer,"Music volume: [a]%i %%[d] of total volume",volumefactor*100/2048);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*1/2,-1,buffer,font);
+		
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*4/2,-1,"Press [s] to return to submenu",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*6/2,-1,"Press [B] to quit",font);
 	}
 	#ifdef SCALE_UP
 	spScale2XSmooth(screen,real_screen);
@@ -343,22 +359,6 @@ int calc_game(Uint32 steps)
 		spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
 		savelevelcount();
 	}
-	/*if (engineInput->button[SP_BUTTON_L])
-	{
-		volumefactor-=steps;
-		if (volumefactor<0)
-			volumefactor=0;
-		spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
-		savelevelcount();
-	}
-	if (engineInput->button[SP_BUTTON_R])
-	{
-		volumefactor+=steps;
-		if (volumefactor>(128<<4))
-			volumefactor=128<<4;
-		spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
-		savelevelcount();
-	}*/
 	/*if (engineGetMuteKey())
 	{
 		printf("teenage MUTEnt ninja turtles\n");
@@ -391,6 +391,27 @@ int calc_game(Uint32 steps)
 			engineInput->button[SP_BUTTON_DOWN]=0;
 			engineInput->button[SP_BUTTON_UP]=0;
 			return 1;
+		}
+		if (engineInput->button[SP_BUTTON_LEFT])
+		{
+			volumefactor-=steps;
+			if (volumefactor<0)
+				volumefactor=0;
+			spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
+			savelevelcount();
+		}
+		if (engineInput->button[SP_BUTTON_RIGHT])
+		{
+			volumefactor+=steps;
+			if (volumefactor>(128<<4))
+				volumefactor=128<<4;
+			spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
+			savelevelcount();
+		}
+		if (engineInput->button[SP_BUTTON_UP])
+		{
+			engineInput->button[SP_BUTTON_UP] = 0;
+			gameMode = 1-gameMode;
 		}
 		return 0;
 	}
