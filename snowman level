@@ -1,9 +1,9 @@
 Level 1: Snow -> DONE
 Level 2: Psycho -> DONE
 Level 3: Gr¸nlich ("Wiese") (modifizierte 1.)
-	- 3-0: too easy
-	- 3-1: too easy
-	- 3-2: too easy
+	+ 3-0: done
+	+ 3-1: done
+	+ 3-2: done
 	- 3-3: to do
 	- 3-4: brauner Hase, weiﬂer Hase, roter Superhase
 Level 4: Wie 3 sonst war
@@ -12,9 +12,4 @@ Level 4: Wie 3 sonst war
 	- 4-2: Ehemalige 3-1 mit pissed snow
 	- 4-3: Ehemalige 3-2 mit pissed snow
 	- 4-4: riesiger pissed snow
-Level 5: Colorful?
-	- 5-0: groﬂ
-	- 5-1: groﬂ
-	- 5-2: Endlevel 1 - Level 1 & 2
-	- 5-3: Endlevel 2 - Level 3 & 4
-	- 5-4: Endlevel 3 - alle
+Finish: DONE

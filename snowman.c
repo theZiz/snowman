@@ -14,6 +14,16 @@ SDL_Surface* cloud[CLOUD_COUNT];
 
 #define TIME_BETWEEN_TWO_JUMPS 20
 
+void addBorder( spFontPointer font, Uint16 fontColor,Uint16 backgroundColor)
+{
+	int i;
+	for (i = 0; i < (spGetSizeFactor() >> SP_ACCURACY)-1; i++)
+		spFontAddBorder( font, fontColor );
+	for (i = 0; i < (spGetSizeFactor()*3/2 >> SP_ACCURACY); i++)
+		spFontAddBorder( font, backgroundColor );
+	printf("%i %i\n",spGetSizeFactor(),spGetSizeFactor() >> SP_ACCURACY);
+}
+
 void resize( Uint16 w, Uint16 h )
 {
 	#ifdef SCALE_UP
@@ -39,19 +49,21 @@ void resize( Uint16 w, Uint16 h )
 	spFontAddButton( font, 'd', SP_BUTTON_RIGHT_NAME, 65535, SP_ALPHA_COLOR );
 	spFontAddButton( font, 'w', SP_BUTTON_UP_NAME, 65535, SP_ALPHA_COLOR );
 	spFontAddButton( font, 's', SP_BUTTON_DOWN_NAME, 65535, SP_ALPHA_COLOR );
-	spFontAddBorder( font, spGetRGB(128,128,128) );
+	
+	addBorder( font, 65535, spGetRGB(128,128,128) );
 
 
 	if ( font_red )
 		spFontDelete( font_red );
 	font_red = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_red, SP_FONT_GROUP_ASCII, spGetRGB(255,128,128) ); //whole ASCII
-	spFontAddBorder( font_red, spGetRGB(128,64,64) );
+	addBorder( font_red, spGetRGB(255,128,128), spGetRGB(128,64,64) );
+	
 	if ( font_green )
 		spFontDelete( font_green );
 	font_green = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_green, SP_FONT_GROUP_ASCII, spGetRGB(128,255,128) ); //whole ASCII
-	spFontAddBorder( font_green, spGetRGB(64,128,64) );
+	addBorder( font_green, spGetRGB(128,255,128), spGetRGB(64,128,64) );
 
 	//Creating Clouds
 	int i;
