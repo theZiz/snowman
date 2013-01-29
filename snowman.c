@@ -35,7 +35,7 @@ void resize( Uint16 w, Uint16 h )
 	#endif
 	spSelectRenderTarget(screen);
 	//Setup of the new/resized window
-	spSetPerspective( 50.0, ( float )screen->w / ( float )screen->h, 0.1, 100 );
+	spSetPerspective( 130.0, ( float )screen->w / ( float )screen->h, 0.1, 100 );
 
 	int scale = 0;
 	#ifdef SCALE_UP
@@ -329,7 +329,7 @@ void draw_game(void)
 		sprintf(buffer,"Music volume: [a]%i %%[d] of total volume",volumefactor*100/2048);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*1/2,-1,buffer,font);
 		
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*4/2,-1,"Press [s] to return to submenu",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*4/2,-1,"Press [s] to return to sublevel",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*6/2,-1,"Press [B] to quit",font);
 	}
 	#ifdef SCALE_UP
@@ -376,11 +376,13 @@ int calc_game(Uint32 steps)
 		pausemode=1-pausemode;
 		jump_min_time = 0;
 	}
+	if (engineInput->button[SP_BUTTON_SELECT])
+		return 1;
 	if (pausemode)
 	{
-		if (engineInput->button[SP_BUTTON_SELECT])
+		if (engineInput->button[SP_BUTTON_DOWN])
 		{
-			engineInput->button[SP_BUTTON_SELECT]=0;
+			engineInput->button[SP_BUTTON_DOWN]=0;
 			fade2=1024;
 			pausemode=0;
 		}
@@ -412,6 +414,7 @@ int calc_game(Uint32 steps)
 		{
 			engineInput->button[SP_BUTTON_UP] = 0;
 			gameMode = 1-gameMode;
+			savelevelcount();
 		}
 		return 0;
 	}

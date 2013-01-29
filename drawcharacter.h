@@ -390,6 +390,7 @@ void savelevelcount()
   SDL_RWwrite(file,&levelcount,sizeof(int),1);
   SDL_RWwrite(file,&volume,sizeof(int),1);
   SDL_RWwrite(file,&volumefactor,sizeof(int),1);
+  SDL_RWwrite(file,&gameMode,sizeof(int),1);
   levelcount^=1337;
   SDL_RWclose(file);
 }
@@ -407,6 +408,7 @@ void loadlevelcount()
   SDL_RWread(file,&levelcount,sizeof(int),1);
   SDL_RWread(file,&volume,sizeof(int),1);
   SDL_RWread(file,&volumefactor,sizeof(int),1);
+  SDL_RWread(file,&gameMode,sizeof(int),1);
   levelcount^=1337;
   SDL_RWclose(file);
 }

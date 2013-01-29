@@ -17,6 +17,9 @@ void drawenemies(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy)
 		 enemy=enemy->next;
 		 continue; 
 		}
+		spRectangle3D(enemy->x-x,y-enemy->y,0,
+		              enemy->symbol->measures[0],enemy->symbol->measures[1],
+		              enemy->symbol->color);
 		if (enemy->symbol->mesh!=NULL)
 		{
 			//enemymesh

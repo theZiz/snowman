@@ -27,6 +27,7 @@ failback        = ./levels/level1.slvl
   '|'    ./data/tree_crown.obj           (31 ,255, 31) quad   (-3.0,-1.0, 3.0, 3.0) none
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
   '*'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) snow
+  'o'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) easysnow
   'O'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level1_1.slvl),-11
   '<'    ./data/arrow_left.obj           (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) left
   '>'    ./data/arrow_right.obj          (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) right
@@ -74,23 +75,23 @@ failback        = ./levels/level1.slvl
 # the "game"-layer. With collision!
 '!__________________!'
 '}                  {'
-'} ***              {'
+'} ooo              {'
 '!TTT]              {'
 '}                  {'
-'}* * *a* * * * * * {'
+'}o * oa* o * o * o {'
 '!TTTTTTTTTTTTT] [TT!'
-'}              *   {'
+'}              o   {'
 '}                  {'
 '}              *   {'
 '}                  {'
-'}* * * *a* * * * * {'
+'}* o * oa* o * o * {'
 '!TTTTTTTT]*[TTTTTTT!'
 '}                  {'
-'}         *        {'
+'}         o        {'
 '}                  {'
 '}         *        {'
 '}                  {'
-'} * *a* * *a* *O* *{'
+'} o *ao * oa* oO* o{'
 '!^^^^^^^^^^^^^^^^^^!'
 [layer2]
 # 3 of 3 layers

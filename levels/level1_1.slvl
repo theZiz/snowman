@@ -27,6 +27,7 @@ failback        = ./levels/level1.slvl
   '"'    ./data/cube_nodsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
   '*'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) snow
+  'o'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) easysnow
   'O'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level1_2.slvl),-12
   '<'    ./data/arrow_left.obj           (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) left
   '>'    ./data/arrow_right.obj          (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) right
@@ -66,11 +67,11 @@ failback        = ./levels/level1.slvl
 '%    %                                                                          '
 '%    %                                           * * B * *                      '
 '% #  [TTTTTTTT]                                 [TTTTTTTTT]                     '
-'%             %                                             a* * * *            '
-'% a a         %c * * * c                c                   [TTTTTTT]           '
+'%             %                                             a*o*o*o*            '
+'% a a         %c *o*o* c                c oooo              [TTTTTTT]           '
 '!^^^^^^]      [TTTTTTTTTT]            [TTTTTTTTTT]                           [T]'
-'       %                 %                                        * * *a* * *   '
-'       %              a O%                       c*******        [TTTTTTTTTTTT] '
+'       %                 %                                        *o*o*a*o*o*   '
+'       %              a O%                       c*o*o*o*        [TTTTTTTTTTTT] '
 '       !^]   [^^^^^^^^^^^!^^^^^^^^^^]            [^^^^^^^]                      '
 [layer2]
 # 3 of 3 layers

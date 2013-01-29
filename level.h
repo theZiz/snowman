@@ -359,6 +359,8 @@ plevel loadlevel(char* filename)
 			printf("	Function: %s\n",newsymbol->function);
 			if (strcmp(newsymbol->function,"snow")==0)
 				newsymbol->functionmask|=1;
+			if (strcmp(newsymbol->function,"easysnow")==0 && gameMode==0)
+				newsymbol->functionmask|=1;
 			char* meow=strstr(newsymbol->function,"load");
 			if (meow)
 			{

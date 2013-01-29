@@ -66,8 +66,8 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 					else
 					if (now->meshmask & 2)
 					{
-						Sint32 tx,ty,tz;
-						spProjectPoint3D(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),&tx,&ty,&tz,1);
+						Sint32 tx,ty,tz,w;
+						spProjectPoint3D(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),&tx,&ty,&tz,&w,1);
 						spSetAlphaTest(1);
 						spFontDrawMiddle(tx,ty-font->maxheight/2,tz,now->function,font);
 						spSetAlphaTest(0);
