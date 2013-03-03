@@ -39,77 +39,37 @@ CPP = gcc -g -march=native -DX86CPU $(GENERAL_TWEAKS)
 # SDL sets some SDL options with the program "sdl-config".
 SDL = `sdl-config --cflags`
 
-# SPARROW_LIB determines, where the sparrow library is.
-SPARROW_LIB = -L../sparrow3d
-
-# SPARROW_INCLUDE determines, where the sparrow includes are
-SPARROW_INCLUDE = -I../sparrow3d
-
 # SDL_PATH determines, where the SDL includes are (necessary if SDL is in subfolders)
 SDL_PATH = -I/usr/include/SDL
 
-# INCLUDE determines, where all the other includes are
-# INCLUDE = -I/usr/include
+SPARROW_FOLDER = ../sparrow3d
 
-# LIB determines, where all the other libraries are
-# LIB = -L/usr/lib
+ifdef TARGET
+include $(SPARROW_FOLDER)/target-files/$(TARGET).mk
+BUILD = ./build/$(TARGET)/snowman
+SPARROW_LIB = $(SPARROW_FOLDER)/build/$(TARGET)/sparrow3d
+else
+TARGET = "Default (change with make TARGET=otherTarget. See All targets with make targets)"
+BUILD = .
+SPARROW_LIB = $(SPARROW_FOLDER)
+endif
+LIB += -L$(SPARROW_LIB)
+DYNAMIC += -lsparrow3d -lsparrowSound
 
-# Where to put the executables to?
-# BUILD_PATH = ./build/
-
-# === The Targets. Set your own paths on your PC!
-# == GP2X/WIZ ==
-ifeq ($(TARGET),open2x)
-CPP = /opt/open2x/gcc-4.1.1-glibc-2.3.6/bin/arm-open2x-linux-gcc -DMOBILE_DEVICE -DARMCPU -DGP2X -DF100 $(GENERAL_TWEAKS) $(SMALL_RESOLUTION_DEVICES)
-SDL = `/opt/open2x/gcc-4.1.1-glibc-2.3.6/bin/sdl-config --cflags`
-INCLUDE = -I/opt/open2x/gcc-4.1.1-glibc-2.3.6/include
-LIB = -L/opt/open2x/gcc-4.1.1-glibc-2.3.6/lib -Wl,-rpath=/opt/open2x/gcc-4.1.1-glibc-2.3.6/lib
-endif
-ifeq ($(TARGET),gp2x)
-CPP = /opt/open2x/gcc-4.1.1-glibc-2.3.6/bin/arm-open2x-linux-gcc -DMOBILE_DEVICE -DARMCPU -DGP2X -DF100 $(GENERAL_TWEAKS) $(SMALL_RESOLUTION_DEVICES)
-STATIC = -Wl,-Bstatic -lSDL -lm -Wl,-Bdynamic
-DYNAMIC = -lSDL_image -lSDL_ttf -lfreetype -lpng -lz -ljpeg
-SDL = `/opt/open2x/gcc-4.1.1-glibc-2.3.6/bin/sdl-config --cflags`
-INCLUDE = -I/opt/open2x/gcc-4.1.1-glibc-2.3.6/include
-LIB = -L/opt/open2x/gcc-4.1.1-glibc-2.3.6/lib -Wl,-rpath=/opt/open2x/gcc-4.1.1-glibc-2.3.6/lib
-endif
-ifeq ($(TARGET),wiz)
-CPP = /opt/open2x/gcc-4.1.1-glibc-2.3.6/bin/arm-open2x-linux-gcc -DMOBILE_DEVICE -DARMCPU -DGP2X -DWIZ $(GENERAL_TWEAKS) $(SMALL_RESOLUTION_DEVICES)
-STATIC = -Wl,-Bstatic -lpng -Wl,-Bdynamic
-DYNAMIC = -lSDL_ttf -lSDL_image -lSDL -lm -lsparrow3d
-SDL = `/opt/open2x/gcc-4.1.1-glibc-2.3.6/bin/sdl-config --cflags`
-INCLUDE = -I/opt/open2x/gcc-4.1.1-glibc-2.3.6/include
-LIB = -L/opt/open2x/gcc-4.1.1-glibc-2.3.6/lib -Wl,-rpath=/opt/open2x/gcc-4.1.1-glibc-2.3.6/lib
-endif
-# == Caanoo ==
-ifeq ($(TARGET),caanoo)
-CPP = /opt/caanoo/gcc-4.2.4-glibc-2.7-eabi/bin/arm-gph-linux-gnueabi-gcc -DMOBILE_DEVICE -DARMCPU -DCAANOO $(GENERAL_TWEAKS) $(SMALL_RESOLUTION_DEVICES)
-SDL = -I/opt/caanoo/gcc-4.2.4-glibc-2.7-eabi/arm-gph-linux-gnueabi/sys-root/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
-INCLUDE = -I/opt/caanoo/gcc-4.2.4-glibc-2.7-eabi/arm-gph-linux-gnueabi/sys-root/usr/include
-LIB = -L/opt/caanoo/gcc-4.2.4-glibc-2.7-eabi/arm-gph-linux-gnueabi/sys-root/usr/lib -Wl,-rpath=/opt/caanoo/gcc-4.2.4-glibc-2.7-eabi/arm-gph-linux-gnueabi/sys-root/usr/lib
-endif
-# == Dingux ==
-ifeq ($(TARGET),dingux)
-CPP = /opt/opendingux-toolchain/usr/bin/mipsel-linux-gcc -DMOBILE_DEVICE -DDINGUX $(GENERAL_TWEAKS) $(SMALL_RESOLUTION_DEVICES)
-SDL = -I/opt/opendingux-toolchain/usr/mipsel-unknown-linux-uclibc/sys-include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
-INCLUDE = -I/opt/opendingux-toolchain/usr/mipsel-unknown-linux-uclibc/sys-include
-LIB = -L/opt/opendingux-toolchain/usr/lib -Wl,-rpath=/opt/opendingux-toolchain/usr/lib
-endif
-# == Pandora ==
-ifeq ($(TARGET),pandora)
-CPP = /opt/pandora/arm-2011.03/bin/arm-none-linux-gnueabi-gcc -DMOBILE_DEVICE -DARMCPU -DPANDORA $(GENERAL_TWEAKS)
-SDL = `/opt/pandora/arm-2011.03/usr/bin/sdl-config --cflags`
-INCLUDE = -I/opt/pandora/arm-2011.03/usr/include
-LIB = -L/opt/pandora/arm-2011.03/usr/lib -Wl,-rpath=/opt/pandora/arm-2011.03/usr/lib
-endif
 
 all: snowman
 
 targets:
 	@echo "gp2x, open2x (like gp2x, but dynamic compiled => smaller), wiz caanoo, dingux, pandora, maemo5, maemo6"
 
-snowman: ballbullet.h bullet_new.h drawlevel.h intro.h  particle.h bullet.h drawcharacter.h enemy.h level.h snowman.c
-	$(CPP) $(CFLAGS) snowman.c $(SDL) $(INCLUDE) $(SDL_INCLUDE) $(SPARROW_INCLUDE) $(LIB) $(SDL_LIB) $(SPARROW_LIB) $(STATIC) $(DYNAMIC) -o $(BUILD_PATH)snowman
+snowman: ballbullet.h bullet_new.h drawlevel.h intro.h  particle.h bullet.h drawcharacter.h enemy.h level.h snowman.c makeBuildDir
+	cp $(SPARROW_LIB)/libsparrow3d.so $(BUILD)
+	cp $(SPARROW_LIB)/libsparrowSound.so $(BUILD)
+	$(CPP) $(CFLAGS) snowman.c $(SDL) $(INCLUDE) -I$(SPARROW_FOLDER) $(LIB) $(SDL_LIB) $(STATIC) $(DYNAMIC) -o $(BUILD)/snowman
+
+makeBuildDir:
+	 @if [ ! -d $(BUILD:/snowman=/) ]; then mkdir $(BUILD:/snowman=/);fi
+	 @if [ ! -d $(BUILD) ]; then mkdir $(BUILD);fi
 
 clean:
 	rm -f *.o
