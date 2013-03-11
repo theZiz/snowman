@@ -35,7 +35,7 @@ void resize( Uint16 w, Uint16 h )
 	#endif
 	spSelectRenderTarget(screen);
 	//Setup of the new/resized window
-	spSetPerspective( 130.0, ( float )screen->w / ( float )screen->h, 0.1, 100 );
+	spSetPerspective( 50.0, ( float )screen->w / ( float )screen->h, 1.0, 100 );
 
 	int scale = 0;
 	#ifdef SCALE_UP
