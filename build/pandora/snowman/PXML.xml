@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PXML xmlns="http://openpandora.org/namespaces/PXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PXML_schema.xsd">
+  <package id="snowman-snowman-60065">
+    <version major="2" minor="0" release="0" build="0"/>
+    <author name="Ziz" website="http://ziz.openhandhelds.org"/>
+    <titles>
+      <title lang="en_US">
+        Snowman
+      </title>
+    </titles>
+    <title lang="en_US">
+      Snowman
+    </title>
+    <descriptions>
+      <description lang="en_US">
+       You are a snowman in a platformer at the last hope for your folk.
+      </description>
+    </descriptions>
+    <description lang="en_US">
+      You are a snowman in a platformer at the last hope for your folk.
+    </description>
+    <icon src="./snowman.png"/>
+  </package>
+  <application id="snowman-snowman-60065" appdata="snowman">
+    <exec command="./snowman.sh"/>
+    <title lang="en_US">Snowman</title>
+    <author name="Ziz" website="http://ziz.openhandhelds.org"/>
+    <version major="2" minor="0" release="0" build="0"/>
+    <osversion major="1" minor="0" release="0" build="0"/>
+    <description lang="en_US">A puzzle game. On a tube!</description>
+    <icon src="./snowman.png"/>
+    <previewpics>
+      <pic src="previews/screenshot1.png"/>
+      <pic src="previews/screenshot2.png"/>
+      <pic src="previews/screenshot3.png"/>
+      <pic src="previews/screenshot4.png"/>
+    </previewpics>
+    <licenses>
+      <license name="GPLv2+" url="http://www.gnu.org/licenses/gpl-2.0.html" sourcecodeurl="https://github.com/theZiz/snowman"/>
+      <license name="MPL1.1" url="http://www.mozilla.org/MPL/1.1/" sourcecodeurl="https://github.com/theZiz/snowman"/>
+    </licenses>
+    <categories>
+      <category name="Game">
+        <subcategory name="ActionGame"/>
+      </category>
+    </categories>
+  </application>
+</PXML>

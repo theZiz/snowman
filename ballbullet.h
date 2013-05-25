@@ -55,9 +55,12 @@ void calcBallBullet()
 		if ( enemy->symbol->measures[2] == enemy->symbol->measures[3])
 		{
 			//Squared distance:
-			Sint32 d2 = spSquare(ballbullet.x-enemy->x)+spSquare(ballbullet.y-enemy->y);
-			if (d2 > 0 && d2 <= spSquare(enemy->symbol->measures[2]+ballBulletSize))
-				hit = 1;
+			if (spMax(ballbullet.x-enemy->x,ballbullet.y-enemy->y) < (1 << SP_ACCURACY+3))
+			{
+				Sint32 d2 = spSquare(ballbullet.x-enemy->x)+spSquare(ballbullet.y-enemy->y);
+				if (d2 > 0 && d2 <= spSquare(enemy->symbol->measures[2]+ballBulletSize))
+					hit = 1;
+			}
 		}
 		else
 		{
