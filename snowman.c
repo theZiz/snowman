@@ -900,7 +900,7 @@ int main(int argc, char **argv)
 	int i;
 	for (i = 0; i < CLOUD_COUNT; i++)
 		cloud[i] = NULL;
-	spSetDefaultWindowSize( 320, 240 );
+	//spSetDefaultWindowSize( 800, 480 );
 	spInitCore();
 	//Setup
 	#ifdef SCALE_UP

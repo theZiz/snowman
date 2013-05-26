@@ -24,8 +24,8 @@ void drawSnow(Sint32 x,Sint32 y)
 {
 	Uint16 color = level->symbollist['#']->color;
 	int i;
-	x = -spFixedToInt(x*21);
-	y = -spFixedToInt(y*21);
+	x = -spFixedToInt(spMul(x*9,spGetSizeFactor()));
+	y = -spFixedToInt(spMul(y*9,spGetSizeFactor()));
 	x = x%(screen->w);
 	if (x > screen->w/2)
 		x-=screen->w;
