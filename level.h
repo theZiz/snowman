@@ -40,6 +40,7 @@ typedef struct slevel {
 	int enemycount;
 	int havetokill;
 	char failback[256];
+	SDL_Surface* mini_map;
 } tlevel;
 
 int levelerrorline;
@@ -117,6 +118,7 @@ void freeLevel(plevel level)
 		free(level->firstenemy);
 		level->firstenemy=temp;
 	}
+	spDeleteSurface( level->mini_map );
 	free(level);
 }
 
@@ -578,5 +580,6 @@ plevel loadlevel(char* filename)
 			lastenemy=newenemy;
 		}
 	SDL_RWclose(file);
+	level->mini_map = spCreateSurface(level->width,level->height);
 	return level;
 }

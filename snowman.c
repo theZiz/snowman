@@ -16,6 +16,9 @@ SDL_Surface* cloud[CLOUD_COUNT];
 
 int gameMode = 0; //easy
 
+Uint16* mapPixel;
+int mapLine;
+
 void addBorder( spFontPointer font, Uint16 fontColor,Uint16 backgroundColor)
 {
 	int i;
@@ -239,6 +242,12 @@ void draw_game(void)
 	spIdentity();
 
 	modellViewMatrix[14]=-25<<SP_ACCURACY;
+	SDL_LockSurface(level->mini_map);
+	mapPixel = level->mini_map->pixels;
+	int i;
+	mapLine = level->mini_map->pitch/level->mini_map->format->BytesPerPixel;
+	for (i = 0; i < mapLine*level->mini_map->h; i++)
+		mapPixel[i] = SP_ALPHA_COLOR;
 
 	//#ifdef PANDORA
 	//	Sint32 dx=25<<SP_ACCURACY;
@@ -259,6 +268,17 @@ void draw_game(void)
 	drawlevel(level,camerax,cameray-(4<<SP_ACCURACY),dx,dy);
 	spSetZSet(0);
 	spSetAlphaTest(1);
+	//updating mini map
+	int mx = (spFixedToInt(x)+1)/2;
+	int my = (spFixedToInt(y))/2;
+	if (mx >= 0 && mx < mapLine && my >= 0 && my<=level->mini_map->h)
+		mapPixel[mx+my*mapLine] = spGetRGB(255,127,127);
+	if (ballsize[0]>0)
+	{
+		my--;
+		if (mx >= 0 && mx < mapLine && my >= 0 && my<=level->mini_map->h)
+			mapPixel[mx+my*mapLine] = spGetRGB(255,127,127);		
+	}
 	drawcharacter(x-camerax,cameray-y-(4<<SP_ACCURACY),0,facedir);
 	spSetZSet(1);
 	spSetZTest(1);
@@ -268,23 +288,24 @@ void draw_game(void)
 	drawBullet(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
 	drawBallBullet(camerax,cameray-(4<<SP_ACCURACY));
 	drawparticle(camerax,cameray-(4<<SP_ACCURACY),0,dx,dy);
-
+	SDL_UnlockSurface(level->mini_map);
+	spRotozoomSurface(screen->w-spFixedToInt(level->mini_map->w*spGetSizeFactor()),screen->h-spFixedToInt(level->mini_map->h*spGetSizeFactor()),0,level->mini_map,spGetSizeFactor()*2,spGetSizeFactor()*2,0);
 
 	char buffer[64];
 	sprintf(buffer,"Killed %i/%i (Objective: %i)",enemyKilled,level->enemycount,level->havetokill);
 	if (enemyKilled<level->havetokill)
-		spFontDrawMiddle(screen->w>>1,1,-1,buffer,font_red);
+		spFontDraw(1,1,-1,buffer,font_red);
 	else
-		spFontDrawMiddle(screen->w>>1,1,-1,buffer,font_green);
+		spFontDraw(1,1,-1,buffer,font_green);
 
 
 	sprintf(buffer,"%i",spGetFPS());
-	spFontDraw(0,0,-1,buffer,font);
+	spFontDrawRight(screen->w-1,0,-1,buffer,font);
 	sprintf(buffer,"Small Belly: %i/18		 Big Belly: %i/26",ballsize[1]>>(SP_ACCURACY-5),ballsize[0]>>(SP_ACCURACY-5));
 	if (ballsize[1]<=0)
-		spFontDrawMiddle(screen->w>>1,screen->h-font_red->maxheight,-1,buffer,font_red);
+		spFontDraw(1,screen->h-font_red->maxheight,-1,buffer,font_red);
 	else
-		spFontDrawMiddle(screen->w>>1,screen->h-font_green->maxheight,-1,buffer,font_green);
+		spFontDraw(1,screen->h-font_green->maxheight,-1,buffer,font_green);
 	int whole_text_length = spFontWidth("Small Belly: %i/18		 Big Belly: %i/26",font);
 	if (gotchasmall)
 	{
@@ -440,6 +461,8 @@ int calc_game(Uint32 steps)
 				level=loadlevel(buffer);
 				init_game(level,reset);
 				ballsize[0] = 0;
+				if (gameMode != 0)
+					ballsize[1] = 0;
 			}
 		}
 		return 0;
@@ -877,7 +900,7 @@ int main(int argc, char **argv)
 	int i;
 	for (i = 0; i < CLOUD_COUNT; i++)
 		cloud[i] = NULL;
-	spSetDefaultWindowSize( 400, 240 );
+	spSetDefaultWindowSize( 320, 240 );
 	spInitCore();
 	//Setup
 	#ifdef SCALE_UP

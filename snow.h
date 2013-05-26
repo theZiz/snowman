@@ -1,4 +1,4 @@
-#define SNOW_COUNT 100
+#define SNOW_COUNT 50
 
 typedef struct snowStruct
 {
@@ -24,8 +24,8 @@ void drawSnow(Sint32 x,Sint32 y)
 {
 	Uint16 color = level->symbollist['#']->color;
 	int i;
-	x = -x >> 13;
-	y = -y >> 13;
+	x = -spFixedToInt(x*21);
+	y = -spFixedToInt(y*21);
 	x = x%(screen->w);
 	if (x > screen->w/2)
 		x-=screen->w;
@@ -55,7 +55,7 @@ void calcSnow(int steps)
 	for (i = 0; i < SNOW_COUNT; i++)
 	{
 		snow[i].counter += i<<4;		
-		snow[i].x += steps*spSin(snow[i].counter) >> 6;
+		snow[i].x += steps*spMul(spGetSizeFactor(),spSin(snow[i].counter)) >> 5;
 		snow[i].y += steps*spGetSizeFactor() >> 6;
 		if (spFixedToInt(snow[i].y) > screen->h )
 			snow[i].y -= spIntToFixed(screen->h);

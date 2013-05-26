@@ -9,6 +9,9 @@ void drawenemies(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy)
 	penemy enemy = level->firstenemy;
 	while (enemy!=NULL)
 	{
+		//updating mini map
+		mapPixel[spFixedToInt(enemy->x+SP_ONE)/2+spFixedToInt(enemy->y+SP_ONE)/2*mapLine] = enemy->symbol->color;
+		
 		if (enemy->x-x < minx ||
 				enemy->x-x > maxx ||
 				y-enemy->y < miny ||

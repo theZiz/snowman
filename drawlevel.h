@@ -1,6 +1,27 @@
 void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 {
+	//updating mini map
 	int l,x,y;
+	for (x = 0; x < level->width; x++)
+		for (y = 0; y < level->height; y++)
+		{
+			psymbol now=level->symbollist[level->layer[1][x+y*level->width]];
+			if (now)
+			{
+				if (now->functionmask & 1)
+				{
+					int c=abs(spSin(w)>>(SP_ACCURACY-7))+127;
+					if (c>255)
+						c=255;
+					mapPixel[x+(y)*mapLine] = spGetRGB(c,c,c);
+				}
+				else
+				if (now->meshmask & 12)
+					mapPixel[x+y*mapLine] = spGetRGB(0,255,255);
+				else
+					mapPixel[x+y*mapLine] = level->symbollist['#']->color;
+			}
+		}
 	Sint32 minx=-dx;
 	Sint32 maxx=+dx;
 	Sint32 miny=-dy;

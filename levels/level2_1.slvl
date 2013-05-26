@@ -27,6 +27,7 @@ failback        = ./levels/level2.slvl
   '"'    ./data/cube_nodsites.obj      (127,127,127) quad   (-1.0,-1.0, 1.0, 1.0) none
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
   '*'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) snow
+  'o'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) easysnow
   'O'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level2_2.slvl),-22
   '<'    ./data/arrow_left.obj           (127,127,127) quad   (-1.0,-1.0, 1.0, 1.0) left
   '>'    ./data/arrow_right.obj          (127,127,127) quad   (-1.0,-1.0, 1.0, 1.0) right
@@ -48,13 +49,13 @@ failback        = ./levels/level2.slvl
 '%           * b *    [}       ******             %'
 '%          *  b  *    %       ******             %'
 '%         *       *   %       [TTTT]             %'
-'% ***********  *******%                *a* *     %'
+'% ***********  *******%                *a*o*     %'
 '!TTTTTTTTTTT]  [TTTTTT]                [TTT]     %'
-'%                              *a* *             %'
+'%                              *a*o*             %'
 '%                              [TTT]             %'
-'%   * * *c* * * *c* * * *c*                      %'
+'%   *o*o*c*o*o*o*c*o*o*o*c*o                     %'
 '%   [TTTTTTTTTTTTTTTTTTTTTT]                     %'
-'%                                 * *a* * *a     %'
+'%                                 *o*a*o*o*a     %'
 '%  #                              [TTTTTTTT]     %'
 '%                                                %'
 '%* * *e* * * *    * * * *e* * *                  %'
@@ -81,6 +82,6 @@ failback        = ./levels/level2.slvl
 '%    *i          i*                 i   *        %'
 '%    #            #          #          #        %'
 '%                                                %'
-'%* * *e* * * * *e* * * * * *e* * * * *e* * * * * %'
+'%*o*o*e*o*o*o*o*e*o*o*o*o*o*e*o*o*o*o*e*o*o*o*o*o%'
 '{^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^}'
 [end]
