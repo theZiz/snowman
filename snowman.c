@@ -289,8 +289,7 @@ void draw_game(void)
 	drawBallBullet(camerax,cameray-(4<<SP_ACCURACY));
 	drawparticle(camerax,cameray-(4<<SP_ACCURACY),0,dx,dy);
 	SDL_UnlockSurface(level->mini_map);
-	spRotozoomSurface(screen->w-spFixedToInt(level->mini_map->w*spGetSizeFactor()),screen->h-spFixedToInt(level->mini_map->h*spGetSizeFactor()),0,level->mini_map,spGetSizeFactor()*2,spGetSizeFactor()*2,0);
-
+	
 	char buffer[64];
 	sprintf(buffer,"Killed %i/%i (Objective: %i)",enemyKilled,level->enemycount,level->havetokill);
 	if (enemyKilled<level->havetokill)
@@ -307,6 +306,7 @@ void draw_game(void)
 	else
 		spFontDraw(1,screen->h-font_green->maxheight,-1,buffer,font_green);
 	int whole_text_length = spFontWidth("Small Belly: %i/18		 Big Belly: %i/26",font);
+		
 	if (gotchasmall)
 	{
 		if (valuesmall>=0)
@@ -325,6 +325,16 @@ void draw_game(void)
 		int part_text_length = spFontWidth("Small Belly: 18/18		 Big Belly: ",font);
 		spFontDraw((screen->w - whole_text_length>>1)+part_text_length,screen->h-font->maxheight*2,-1,buffer,font);
 	}
+	spSetPattern8(170,//0b10101010, //0b doesn't work with older gcc versions
+				   85,//0b01010101,
+				  170,//0b10101010,
+				   85,//0b01010101,
+				  170,//0b10101010,
+				   85,//0b01010101,
+				  170,//0b10101010,
+				   85);//0b01010101);
+	spRotozoomSurface(screen->w-spFixedToInt(level->mini_map->w*spGetSizeFactor()),screen->h-spFixedToInt(level->mini_map->h*spGetSizeFactor()),0,level->mini_map,spGetSizeFactor()*2,spGetSizeFactor()*2,0);
+	spDeactivatePattern();
 	if (fade)
 	{
 		if (fade>512)
