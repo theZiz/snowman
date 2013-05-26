@@ -28,7 +28,7 @@ all: snowman
 targets:
 	@echo "The targets are the same like for sparrow3d. :P"
 
-snowman: ballbullet.h bullet_new.h drawlevel.h intro.h  particle.h bullet.h drawcharacter.h enemy.h level.h snowman.c makeBuildDir
+snowman: ballbullet.h bullet_new.h drawlevel.h intro.h  particle.h bullet.h drawcharacter.h enemy.h level.h splashscreen.h snow.h snowman.c makeBuildDir
 	cp $(SPARROW_LIB)/libsparrow3d.so $(BUILD)
 	cp $(SPARROW_LIB)/libsparrowSound.so $(BUILD)
 	$(CPP) $(CFLAGS) snowman.c $(SDL) $(INCLUDE) -I$(SPARROW_FOLDER) $(LIB) $(SDL_LIB) $(STATIC) $(DYNAMIC) -o $(BUILD)/snowman

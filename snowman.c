@@ -1,6 +1,6 @@
 #include <string.h>
 #include <sparrow3d.h>
-
+#include "splashscreen.h"
 //#define SCALE_UP
 spFontPointer font = NULL;
 spFontPointer font_red = NULL;
@@ -98,8 +98,8 @@ void resize( Uint16 w, Uint16 h )
 		spAddBorder(cloud[i],spGetFastRGB(100,100,100),SP_ALPHA_COLOR);
 	}
 	spSelectRenderTarget(screen);
+	initSnow();
 }
-
 #include "intro.h"
 #include "level.h"
 #include "particle.h"
@@ -183,6 +183,7 @@ int getBiggest()
   return 2;
 }
 
+#include "snow.h"
 #include "enemy.h"
 #include "drawlevel.h"
 #include "drawcharacter.h"
@@ -249,6 +250,9 @@ void draw_game(void)
 	spSetZSet(0);
 	spSetZTest(0);
 	drawclouds(camerax,cameray-(4<<SP_ACCURACY),dx,dy);
+	spSetZSet(1);
+	spSetAlphaTest(1);
+	drawSnow(camerax,cameray);
 	spSetZSet(1);
 	spSetZTest(1);
 	spSetAlphaTest(0);
@@ -793,6 +797,7 @@ int calc_game(Uint32 steps)
 	sum=0;
 	for (i=3-ballcount;i<3;i++)
 		sum+=ballsize[i]*2;
+	calcSnow(steps);
 	return 0;
 }
 
@@ -882,6 +887,7 @@ int main(int argc, char **argv)
 	screen = spCreateDefaultWindow();
 	resize( screen->w, screen->h );
 	#endif
+	run_splashscreen(resize);
 	intro();
 	init_snowman();
 	if (argc < 2)
