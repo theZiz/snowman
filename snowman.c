@@ -325,14 +325,7 @@ void draw_game(void)
 		int part_text_length = spFontWidth("Small Belly: 18/18		 Big Belly: ",font);
 		spFontDraw((screen->w - whole_text_length>>1)+part_text_length,screen->h-font->maxheight*2,-1,buffer,font);
 	}
-	spSetPattern8(170,//0b10101010, //0b doesn't work with older gcc versions
-				   85,//0b01010101,
-				  170,//0b10101010,
-				   85,//0b01010101,
-				  170,//0b10101010,
-				   85,//0b01010101,
-				  170,//0b10101010,
-				   85);//0b01010101);
+	spSetAlphaPattern4x4(196,0);
 	spRotozoomSurface(screen->w-spFixedToInt(level->mini_map->w*spGetSizeFactor()),screen->h-spFixedToInt(level->mini_map->h*spGetSizeFactor()),0,level->mini_map,spGetSizeFactor()*2,spGetSizeFactor()*2,0);
 	spDeactivatePattern();
 	if (fade)
