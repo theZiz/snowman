@@ -341,6 +341,7 @@ void playerEnemyInteraction()
 		}
 		else
 		{
+			sum = 0;
 			for (i=3-ballcount;i<3;i++)
 				sum+=ballsize[i]*2;
 			biggest=getBiggest();

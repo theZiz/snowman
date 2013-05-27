@@ -39,6 +39,7 @@ failback        = ./levels/level3.slvl
   '|'    ./data/tree_crown.obj           (31 ,255, 31) quad   (-3.0,-1.0, 3.0, 3.0) none
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
   '*'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) snow
+  'o'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) easysnow
   'O'    ./data/door.obj                 (  0,  0,  0) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level3_3.slvl),-33
   '<'    ./data/arrow_left.obj           ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) left
   '>'    ./data/arrow_right.obj          ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) right

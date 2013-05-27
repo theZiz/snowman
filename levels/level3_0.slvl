@@ -27,6 +27,7 @@ failback        = ./levels/level3.slvl
   '|'    ./data/tree_crown.obj           (31 ,255, 31) quad   (-3.0,-1.0, 3.0, 3.0) none
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
   '*'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) snow
+  'o'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) easysnow
   'O'    ./data/door.obj                 (  0,  0,  0) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level3_1.slvl),-31
   'Z'    ./data/door.obj                 (  0,  0,  0) none   (-1.0,-1.0, 1.0, 1.0) loadr(./levels/play.slvl)
   '<'    ./data/arrow_left.obj           ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) left
@@ -87,7 +88,7 @@ failback        = ./levels/level3.slvl
 '                              '
 '                              '
 '     * * * * * * * * * * * *  '
-'    * * * * * * * * * * * *   '
+'    *o*o*o*o*o*o*o*o*o*o*o*o  '
 '  * [TTTTTTTTTTTTTTTTTTTTTT]  '
 ' *  %                         '
 '  * %f           f           f'
@@ -100,12 +101,12 @@ failback        = ./levels/level3.slvl
 ' *  %f           f           f'
 '  * %#           #           #'
 ' *  % * * * * * * * * * * *   '
-'  * %* * * * * * * * * * * *  '
+'  * %*o*o*o*o*o*o*o*o*o*o*o*  '
 ' *  %TTTTTTTTTTTTTTTTTTTTTT]  '
-'  * %     ***>      >****     '
-' *  %     ***>  e   >****  f  '
+'  * %     ***>      >****o   o'
+' *  %     ***>  e   >****o f o'
 '  * %     [TTTTTTTTTTTTTTTTTT]'
-' *  >     <   <       <       '
+' *  >     <ooo<       <oooooo '
 '  * >Oa   <***<   e   <****** '
 '[^^^^^^^^^^^^^^^^^^^^^^^^^^^^]'
 [layer2]

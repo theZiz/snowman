@@ -29,6 +29,15 @@ void addBorder( spFontPointer font, Uint16 fontColor,Uint16 backgroundColor)
 	printf("%i %i\n",spGetSizeFactor(),spGetSizeFactor() >> SP_ACCURACY);
 }
 
+//#define FONT "./data/LondrinaOutline-Regular.ttf"
+#define FONT "./data/Pompiere-Regular.ttf"
+//#define FONT "./data/Lemon-Regular.ttf"
+//#define FONT "./data/FugazOne-Regular.ttf"
+//#define FONT "./data/ChelaOne-Regular.ttf"
+//#define FONT "./data/BubblegumSans-Regular.ttf"
+#define FONT_SIZE 13
+
+
 void resize( Uint16 w, Uint16 h )
 {
 	#ifdef SCALE_UP
@@ -47,7 +56,7 @@ void resize( Uint16 w, Uint16 h )
 	//Font Loading
 	if ( font )
 		spFontDelete( font );
-	font = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
+	font = spFontLoad( FONT, FONT_SIZE * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font, SP_FONT_GROUP_ASCII, 65535 ); //whole ASCII
 	spFontAddButton( font, 'R', SP_BUTTON_START_NAME, 65535, SP_ALPHA_COLOR ); //Return == START
 	spFontAddButton( font, 'B', SP_BUTTON_SELECT_NAME, 65535, SP_ALPHA_COLOR ); //Backspace == SELECT
@@ -63,13 +72,13 @@ void resize( Uint16 w, Uint16 h )
 
 	if ( font_red )
 		spFontDelete( font_red );
-	font_red = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
+	font_red = spFontLoad( FONT, FONT_SIZE * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_red, SP_FONT_GROUP_ASCII, spGetRGB(255,128,128) ); //whole ASCII
 	addBorder( font_red, spGetRGB(255,128,128), spGetRGB(128,64,64) );
 	
 	if ( font_green )
 		spFontDelete( font_green );
-	font_green = spFontLoad( "./data/LondrinaOutline-Regular.ttf", 17 * spGetSizeFactor() >> SP_ACCURACY+scale );
+	font_green = spFontLoad( FONT, FONT_SIZE * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_green, SP_FONT_GROUP_ASCII, spGetRGB(128,255,128) ); //whole ASCII
 	addBorder( font_green, spGetRGB(128,255,128), spGetRGB(64,128,64) );
 
@@ -289,22 +298,23 @@ void draw_game(void)
 	drawBallBullet(camerax,cameray-(4<<SP_ACCURACY));
 	drawparticle(camerax,cameray-(4<<SP_ACCURACY),0,dx,dy);
 	SDL_UnlockSurface(level->mini_map);
+	spRotozoomSurface(screen->w-spFixedToInt(level->mini_map->w*spGetSizeFactor()),spFixedToInt(level->mini_map->h*spGetSizeFactor()),0,level->mini_map,spGetSizeFactor()*2,spGetSizeFactor()*2,0);
 	
 	char buffer[64];
 	sprintf(buffer,"Killed %i/%i (Objective: %i)",enemyKilled,level->enemycount,level->havetokill);
 	if (enemyKilled<level->havetokill)
-		spFontDraw(1,1,-1,buffer,font_red);
+		spFontDraw(1,1,0,buffer,font_red);
 	else
-		spFontDraw(1,1,-1,buffer,font_green);
+		spFontDraw(1,1,0,buffer,font_green);
 
 
 	sprintf(buffer,"%i",spGetFPS());
-	spFontDrawRight(screen->w-1,0,-1,buffer,font);
+	spFontDrawRight(screen->w-1,screen->h-font->maxheight,0,buffer,font);
 	sprintf(buffer,"Small Belly: %i/18		 Big Belly: %i/26",ballsize[1]>>(SP_ACCURACY-5),ballsize[0]>>(SP_ACCURACY-5));
 	if (ballsize[1]<=0)
-		spFontDraw(1,screen->h-font_red->maxheight,-1,buffer,font_red);
+		spFontDraw(1,screen->h-font_red->maxheight,0,buffer,font_red);
 	else
-		spFontDraw(1,screen->h-font_green->maxheight,-1,buffer,font_green);
+		spFontDraw(1,screen->h-font_green->maxheight,0,buffer,font_green);
 	int whole_text_length = spFontWidth("Small Belly: %i/18		 Big Belly: %i/26",font);
 		
 	if (gotchasmall)
@@ -314,7 +324,7 @@ void draw_game(void)
 		else
 			sprintf(buffer,"%i",valuesmall);
 		int part_text_length = spFontWidth("Small Belly: ",font);
-		spFontDraw((screen->w - whole_text_length>>1)+part_text_length,screen->h-font->maxheight*2,-1,buffer,font);
+		spFontDraw((screen->w - whole_text_length>>1)+part_text_length,screen->h-font->maxheight*2,0,buffer,font);
 	}
 	if (gotchabig)
 	{
@@ -323,11 +333,8 @@ void draw_game(void)
 		else
 			sprintf(buffer,"%i",valuebig);
 		int part_text_length = spFontWidth("Small Belly: 18/18		 Big Belly: ",font);
-		spFontDraw((screen->w - whole_text_length>>1)+part_text_length,screen->h-font->maxheight*2,-1,buffer,font);
+		spFontDraw((screen->w - whole_text_length>>1)+part_text_length,screen->h-font->maxheight*2,0,buffer,font);
 	}
-	spSetAlphaPattern4x4(196,0);
-	spRotozoomSurface(screen->w-spFixedToInt(level->mini_map->w*spGetSizeFactor()),screen->h-spFixedToInt(level->mini_map->h*spGetSizeFactor()),0,level->mini_map,spGetSizeFactor()*2,spGetSizeFactor()*2,0);
-	spDeactivatePattern();
 	if (fade)
 	{
 		if (fade>512)
