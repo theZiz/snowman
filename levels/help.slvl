@@ -42,7 +42,7 @@ havetokill      =  0
   'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[s]: Ball Attack - costs your big belly"
   'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Menu"
   'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Reload"
-  'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "(C) Ziz (ziz.delphigl.com)"
+  'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "(C) Ziz (ziz.gp2x.de)"
   'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Music: www.incompetech.com"
   'L'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Start: Pause and options"
   
