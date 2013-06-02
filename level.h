@@ -40,6 +40,7 @@ typedef struct slevel {
 	int enemycount;
 	int havetokill;
 	char failback[256];
+	char no_map;
 	SDL_Surface* mini_map;
 } tlevel;
 
@@ -153,6 +154,7 @@ plevel loadlevel(char* filename)
 	level->starty=0;
 	level->havetokill=0;
 	level->backgroundcolor=0;
+	level->no_map = 0;
 	sprintf(level->failback,"./levels/menu.slvl");
 //	level->startzoom=1<<SP_ACCURACY;
 	while (firstsign(readnextline(file,buffer,1024))!='[')
@@ -181,6 +183,11 @@ plevel loadlevel(char* filename)
 			level->starty=atoi(value);
 		if (strcmp_firstsign(word,"havetokill")==0)
 			level->havetokill=atoi(value);
+		if (strcmp_firstsign(word,"nomap")==0)
+		{
+			if (strcmp_firstsign(value,"true")==0)
+				level->no_map = 1;
+		}
 		if (strcmp_firstsign(word,"failback")==0)
 			sprintf(level->failback,"%s",value);
 /*	if (strcmp_firstsign(word,"startzoom")==0)

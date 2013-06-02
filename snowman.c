@@ -298,7 +298,8 @@ void draw_game(void)
 	drawBallBullet(camerax,cameray-(4<<SP_ACCURACY));
 	drawparticle(camerax,cameray-(4<<SP_ACCURACY),0,dx,dy);
 	SDL_UnlockSurface(level->mini_map);
-	spRotozoomSurface(screen->w-spFixedToInt(level->mini_map->w*spGetSizeFactor()),spFixedToInt(level->mini_map->h*spGetSizeFactor()),0,level->mini_map,spGetSizeFactor()*2,spGetSizeFactor()*2,0);
+	if (!level->no_map)
+		spRotozoomSurface(screen->w-spFixedToInt(level->mini_map->w*spGetSizeFactor()),spFixedToInt(level->mini_map->h*spGetSizeFactor()),0,level->mini_map,spGetSizeFactor()*2,spGetSizeFactor()*2,0);
 	
 	char buffer[64];
 	sprintf(buffer,"Killed %i/%i (Objective: %i)",enemyKilled,level->enemycount,level->havetokill);
@@ -908,9 +909,9 @@ void quit_snowman()
 int main(int argc, char **argv)
 {
 	int i;
-	for (i = 0; i < CLOUD_COUNT; i++)
+	for (i = 0; i 	< CLOUD_COUNT; i++)
 		cloud[i] = NULL;
-	//spSetDefaultWindowSize( 800, 480 );
+	spSetDefaultWindowSize( 800, 480 );
 	spInitCore();
 	//Setup
 	#ifdef SCALE_UP

@@ -1,28 +1,28 @@
 [head]
 # all coordinates are zero-based!
-width           = 10
-height          = 6
-startx          =  1
-starty          =  4
+width           = 212
+height          = 27
+startx          =  0
+starty          = 10
 backgroundcolor = (220,220,120)
 havetokill      =  0
 failback        = ./levels/level3.slvl
+nomap           = true
 #startzoom       =  20.0
 [symbols]
 # symbol object-file                     color         form   measures (l,b,r,t)   function
   '#'    ./data/cube.obj                 ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
   'T'    ./data/cube_nolrsites.obj       ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
-  't'    ./data/cube_nolrsites_small.obj ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
   '%'    ./data/cube_noudsites.obj       ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
   '!'    ./data/cube_nolrudsites.obj     ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
   '^'    ./data/cube_nolrusites.obj      ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
   '_'    ./data/cube_nolrdsites.obj      ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
-  '}'    ./data/cube_noludsites.obj      ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
   '{'    ./data/cube_norudsites.obj      ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '}'    ./data/cube_noludsites.obj      ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
   '|'    ./data/tree_stem.obj            (140,127,  0) quad   (-3.0,-1.0, 3.0, 3.0) none
   '|'    ./data/tree_crown.obj           (31 ,255, 31) quad   (-3.0,-1.0, 3.0, 3.0) none
-  ']'    ./data/cube_nolsites.obj      ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
   '['    ./data/cube_norsites.obj      ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
+  ']'    ./data/cube_nolsites.obj      ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
   'U'    ./data/cube_nousites.obj      ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
   '"'    ./data/cube_nodsites.obj      ( 64,192, 64) quad   (-1.0,-1.0, 1.0, 1.0) none
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
@@ -36,11 +36,43 @@ failback        = ./levels/level3.slvl
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Dummy Text"
 
+  '1'    ./data/cube_noudsites.obj       (190, 77,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '2'    ./data/cube_nolrudsites.obj     (190, 77,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '3'    ./data/cube_nolrusites.obj      (190, 77,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '4'    ./data/cube_nolrdsites.obj      (190, 77,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '5'    ./data/cube_norudsites.obj      (190, 77,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '6'    ./data/cube_noludsites.obj      (190, 77,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '7'    ./data/cube_norsites.obj      (190, 77,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '8'    ./data/cube_nolsites.obj      (190, 77,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '9'    ./data/cube.obj                 (190, 77,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+  't'    ./data/cube_nolrsites.obj       (190, 77,  0) quad   (-1.0,-1.0, 1.0, 1.0) none
+
 [layer1]
-'!________!'
-'}********{'
-'}********{'
-'}********{'
-'}***B***O{'
-'!^^^^^^^^!'
+'                     ***                                                                                                                                                                                            '
+'                     ***                                                                                                                                                                                            '
+'                     ***                                                                                                                                                                                            '
+'                      9                                                                                                                                                                                             '
+'               ***    ***                                                                                                                                                                                           '
+'               ***    ***                                       B                                                                                                                                                   '
+'               ***    ***                                       9                                                                                                                                                   '
+'                9   7ttt8                     []        "  "                  7t8                                                                                                                                   '
+'                                      []      {}        % [}                                                                                                                                                        '
+'                            []        {}      {}        %  %                                                                                                                                                        '
+'* * * * * * * *             {}        {}      {}        %  %                                                                                                                                                        '
+'733333333333333333333333333322333333332233333322333333336  53333333338  73333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333338'
+'744444444444444444444444444444444444444444444444444444248 744444444446  74444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444448'
+'                                                      6              1                                                                                                                                              '
+'                                                      6              1                                                                                                                                              '
+'                                                      6              1                                                                                                                                              '
+'                                                      6 #            1                                                                                                                                              '
+'                                                      6     #        1                                                                                                                                              '
+'                                                      6          #   1                                                                                                                                              '
+'                                                      6   *******    1                                                                                                                                              '
+'                                                      6   *******   [6                                                                                                                                              '
+'                                                      6   *******    1                                                                                                                                              '
+'                                                      6   7333338    1                                                                                                                                              '
+'                                                      6   5222226  [^}                                                                                                                                              '
+'                                                      6   5222226  {!}                                                                                                                                              '
+'                                                      2333222222233226                                                                                                                                              '
+'                                                      2222222222222226                                                                                                                                              '
 [end]

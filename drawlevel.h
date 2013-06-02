@@ -19,7 +19,7 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 				if (now->meshmask & 12)
 					mapPixel[x+y*mapLine] = spGetRGB(0,255,255);
 				else
-					mapPixel[x+y*mapLine] = level->symbollist['#']->color;
+					mapPixel[x+y*mapLine] = level->symbollist[level->layer[1][x+y*level->width]]->color;
 			}
 		}
 	Sint32 minx=-dx;
