@@ -339,20 +339,20 @@ void draw_game(void)
 	if (fade)
 	{
 		if (fade>512)
-			spAddWhiteLayer((1024-fade)>>1);
+			spAddColorToTarget(65535,((1024-fade)>>1)<<8);
 		else
-			spAddWhiteLayer(			fade >>1);
+			spAddColorToTarget(65535,(fade >>1)<<8);
 	}
 	if (fade2)
 	{
 		if (fade2>512)
-			spAddBlackLayer((1024-fade2)>>1);
+			spInterpolateTargetToColor(0,((1024-fade2)>>1)<<8);
 		else
-			spAddBlackLayer(			fade2 >>1);
+			spInterpolateTargetToColor(0,(fade2 >>1)<<8);
 	}
 	if (pausemode)
 	{
-		spAddBlackLayer(128);
+		spInterpolateTargetToColor(0,SP_ONE/2);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*7/2,-1,"Press [R] to unpause",font);
 
 		if (gameMode)
@@ -911,7 +911,7 @@ int main(int argc, char **argv)
 	int i;
 	for (i = 0; i 	< CLOUD_COUNT; i++)
 		cloud[i] = NULL;
-	spSetDefaultWindowSize( 800, 480 );
+	//spSetDefaultWindowSize( 800, 480 );
 	spInitCore();
 	//Setup
 	#ifdef SCALE_UP
