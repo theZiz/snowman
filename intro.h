@@ -26,9 +26,9 @@ int calc_intro(Uint32 steps)
   intro_pos-=steps;
   if (intro_pos<=0)
     return 1;
-  if (engineInput->button[SP_BUTTON_LEFT] || engineInput->button[SP_BUTTON_RIGHT] ||
-			engineInput->button[SP_BUTTON_DOWN] || engineInput->button[SP_BUTTON_UP] ||
-			engineInput->button[SP_BUTTON_START] || engineInput->button[SP_BUTTON_SELECT])
+  if (engineInput->button[SP_BUTTON_LEFT_NOWASD] || engineInput->button[SP_BUTTON_RIGHT_NOWASD] ||
+			engineInput->button[SP_BUTTON_DOWN_NOWASD] || engineInput->button[SP_BUTTON_UP_NOWASD] ||
+			engineInput->button[SP_BUTTON_START_NOWASD] || engineInput->button[SP_BUTTON_SELECT_NOWASD])
 	{
 		spResetButtonsState();
     return 1;

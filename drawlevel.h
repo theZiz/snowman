@@ -94,6 +94,20 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 						spSetAlphaTest(0);
 					}
 					else
+					if (now->meshmask & 32) //score
+					{
+						Sint32 tx,ty,tz,w;
+						spProjectPoint3D(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),&tx,&ty,&tz,&w,1);
+						spSetAlphaTest(1);
+						char buffer[256];
+						if ( now->score == 0.0f )
+							sprintf(buffer,"No time");
+						else
+							sprintf(buffer,"%.1f s",now->score);
+						spFontDrawMiddle(tx,ty-font->maxheight/2,tz,buffer,font);
+						spSetAlphaTest(0);
+					}
+					else
 					if (now->meshmask & 12)
 					{
 						if (now->meshmask & 4)

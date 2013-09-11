@@ -14,8 +14,10 @@
 	- 4-4: riesiger pissed snow
 + Finish -> DONE
 
-- Minimap
-- new font
 - cooler and new enemies
 	- enemy, which splits (new) - yellow "pissed" snow
 - Compo4all compatibility
+	- global score is the whole TIME you need for all levels
+	- new room
+		- when profile file exists: Show global score and possibility to sync score
+		- when profile file doesn't exist: Show, how to create on

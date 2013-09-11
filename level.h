@@ -9,6 +9,7 @@ typedef struct ssymbol {
 	Sint32 measures[4];
 	int functionmask; //1 snow, 2 teleport, 4 left, 8 right, 256 waywalker
 	char function[512];
+	float score;
 	int needed_level;
 	int enemy_kind;
 	psymbol next;
@@ -314,6 +315,13 @@ plevel loadlevel(char* filename)
 			newsymbol->meshmask|=2;
 		}
 		else
+		if (strcmp("score",newsymbol->objectfile)==0)
+		{
+			printf("\tNo Objectfille\n");
+			newsymbol->mesh=NULL;
+			newsymbol->meshmask|=32;
+		}
+		else
 		if (strcmp("./data/door.obj",newsymbol->objectfile)==0 || strcmp("door",newsymbol->objectfile)==0)
 		{
 			printf("	No Objectfille\n");
@@ -352,13 +360,23 @@ plevel loadlevel(char* filename)
 																																	 ,newsymbol->measures[2]>>SP_ACCURACY,newsymbol->measures[2]-((newsymbol->measures[2]>>SP_ACCURACY)<<SP_ACCURACY),1<<SP_ACCURACY
 																																	 ,newsymbol->measures[3]>>SP_ACCURACY,newsymbol->measures[3]-((newsymbol->measures[3]>>SP_ACCURACY)<<SP_ACCURACY),1<<SP_ACCURACY);
 		//Reading function
-		if ((newsymbol->meshmask & 2)==2)
+		if (newsymbol->meshmask & 2)
 		{
 			newsymbol->functionmask=0;
 			pos = getNextWord(pos,buffer,word,1024,')','"');
 			pos = getNextWord(pos,buffer,word,1024,'"','"');
 			sprintf(newsymbol->function,"%s",word);
 			printf("	Text: %s\n",newsymbol->function);
+		}
+		else
+		if (newsymbol->meshmask & 32)
+		{
+			newsymbol->functionmask=0;
+			pos = getNextWord(pos,buffer,word,1024,')','"');
+			pos = getNextWord(pos,buffer,word,1024,'"','"');
+			sprintf(newsymbol->function,"%s",word);
+			newsymbol->score = 0.0f;
+			printf("	Score: %s = %.1f\n",newsymbol->function,newsymbol->score);
 		}
 		else
 		{
