@@ -59,14 +59,14 @@ void resize( Uint16 w, Uint16 h )
 		spFontDelete( font );
 	font = spFontLoad( FONT, FONT_SIZE * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font, SP_FONT_GROUP_ASCII, 65535 ); //whole ASCII
-	spFontAddButton( font, 'R', SP_BUTTON_START_NOWASD_NAME, 65535, SP_ALPHA_COLOR ); //Return == START
-	spFontAddButton( font, 'B', SP_BUTTON_SELECT_NOWASD_NAME, 65535, SP_ALPHA_COLOR ); //Backspace == SELECT
-	spFontAddButton( font, 'q', SP_BUTTON_L_NOWASD_NAME, 65535, SP_ALPHA_COLOR ); // q == L
-	spFontAddButton( font, 'e', SP_BUTTON_R_NOWASD_NAME, 65535, SP_ALPHA_COLOR ); // e == R
-	spFontAddButton( font, 'a', SP_BUTTON_LEFT_NOWASD_NAME, 65535, SP_ALPHA_COLOR ); //a == left button
-	spFontAddButton( font, 'd', SP_BUTTON_RIGHT_NOWASD_NAME, 65535, SP_ALPHA_COLOR ); // d == right button
-	spFontAddButton( font, 'w', SP_BUTTON_UP_NOWASD_NAME, 65535, SP_ALPHA_COLOR ); // w == up button
-	spFontAddButton( font, 's', SP_BUTTON_DOWN_NOWASD_NAME, 65535, SP_ALPHA_COLOR ); // s == down button
+	spFontAddButton( font, 'R', SP_BUTTON_START_NAME, 65535, SP_ALPHA_COLOR ); //Return == START
+	spFontAddButton( font, 'B', SP_BUTTON_SELECT_NAME, 65535, SP_ALPHA_COLOR ); //Backspace == SELECT
+	spFontAddButton( font, 'q', SP_BUTTON_L_NAME, 65535, SP_ALPHA_COLOR ); // q == L
+	spFontAddButton( font, 'e', SP_BUTTON_R_NAME, 65535, SP_ALPHA_COLOR ); // e == R
+	spFontAddButton( font, 'a', SP_BUTTON_LEFT_NAME, 65535, SP_ALPHA_COLOR ); //a == left button
+	spFontAddButton( font, 'd', SP_BUTTON_RIGHT_NAME, 65535, SP_ALPHA_COLOR ); // d == right button
+	spFontAddButton( font, 'w', SP_BUTTON_UP_NAME, 65535, SP_ALPHA_COLOR ); // w == up button
+	spFontAddButton( font, 's', SP_BUTTON_DOWN_NAME, 65535, SP_ALPHA_COLOR ); // s == down button
 	
 	addBorder( font, 65535, spGetRGB(128,128,128) );
 
@@ -205,6 +205,10 @@ int getBiggest()
 
 void init_game(plevel level,char complete)
 {
+	//loading the score
+	if (level->scoreName[0] != 0)
+		level->topScore = loadtime(level->scoreName);
+	level->score = 0.0f;
 	jump_min_time = 0;
 	angle=0;
 	resetallparticle();
@@ -310,8 +314,13 @@ void draw_game(void)
 		spFontDraw(1,1,0,buffer,font_green);
 
 
-	sprintf(buffer,"%i",spGetFPS());
-	spFontDrawRight(screen->w-1,screen->h-font->maxheight,0,buffer,font);
+	if (level->scoreName[0] != 0)
+	{
+		sprintf(buffer,"(Best: %.1f)",level->topScore);
+		spFontDrawRight(screen->w-1,screen->h-font->maxheight,0,buffer,font);
+		sprintf(buffer,"Time: %.1f",level->score);
+		spFontDrawRight(screen->w-1,screen->h-font->maxheight*2,0,buffer,font);
+	}
 	sprintf(buffer,"Small Belly: %i/18		 Big Belly: %i/26",ballsize[1]>>(SP_ACCURACY-5),ballsize[0]>>(SP_ACCURACY-5));
 	if (ballsize[1]<=0)
 		spFontDraw(1,screen->h-font_red->maxheight,0,buffer,font_red);
@@ -378,7 +387,7 @@ void draw_game(void)
 int calc_game(Uint32 steps)
 {
 	PspInput engineInput = spGetInput();
-	if (engineInput->button[SP_BUTTON_L_NOWASD])
+	if (engineInput->button[SP_BUTTON_L])
 	{
 		volume-=steps;
 		if (volume<0)
@@ -387,7 +396,7 @@ int calc_game(Uint32 steps)
 		spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
 		savelevelcount();
 	}
-	if (engineInput->button[SP_BUTTON_R_NOWASD])
+	if (engineInput->button[SP_BUTTON_R])
 	{
 		volume+=steps;
 		if (volume>(128<<4))
@@ -407,31 +416,31 @@ int calc_game(Uint32 steps)
 		savelevelcount();
 		engineSetMuteKey(0);
 	}*/
-	if (engineInput->button[SP_BUTTON_START_NOWASD])
+	if (engineInput->button[SP_BUTTON_START])
 	{
-		engineInput->button[SP_BUTTON_START_NOWASD]=0;
+		engineInput->button[SP_BUTTON_START]=0;
 		pausemode=1-pausemode;
 		jump_min_time = 0;
 	}
-	if (engineInput->button[SP_BUTTON_SELECT_NOWASD])
+	if (engineInput->button[SP_BUTTON_SELECT])
 		return 1;
 	if (pausemode)
 	{
-		if (engineInput->button[SP_BUTTON_DOWN_NOWASD])
+		if (engineInput->button[SP_BUTTON_DOWN])
 		{
-			engineInput->button[SP_BUTTON_DOWN_NOWASD]=0;
+			engineInput->button[SP_BUTTON_DOWN]=0;
 			fade2=1024;
 			pausemode=0;
 		}
-		if (engineInput->button[SP_BUTTON_LEFT_NOWASD] && engineInput->button[SP_BUTTON_RIGHT_NOWASD] && engineInput->button[SP_BUTTON_DOWN_NOWASD] && engineInput->button[SP_BUTTON_UP_NOWASD])
+		if (engineInput->button[SP_BUTTON_LEFT] && engineInput->button[SP_BUTTON_RIGHT] && engineInput->button[SP_BUTTON_DOWN] && engineInput->button[SP_BUTTON_UP])
 		{
-			engineInput->button[SP_BUTTON_LEFT_NOWASD]=0;
-			engineInput->button[SP_BUTTON_RIGHT_NOWASD]=0;
-			engineInput->button[SP_BUTTON_DOWN_NOWASD]=0;
-			engineInput->button[SP_BUTTON_UP_NOWASD]=0;
+			engineInput->button[SP_BUTTON_LEFT]=0;
+			engineInput->button[SP_BUTTON_RIGHT]=0;
+			engineInput->button[SP_BUTTON_DOWN]=0;
+			engineInput->button[SP_BUTTON_UP]=0;
 			return 1;
 		}
-		if (engineInput->button[SP_BUTTON_LEFT_NOWASD])
+		if (engineInput->button[SP_BUTTON_LEFT])
 		{
 			volumefactor-=steps;
 			if (volumefactor<0)
@@ -439,7 +448,7 @@ int calc_game(Uint32 steps)
 			spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
 			savelevelcount();
 		}
-		if (engineInput->button[SP_BUTTON_RIGHT_NOWASD])
+		if (engineInput->button[SP_BUTTON_RIGHT])
 		{
 			volumefactor+=steps;
 			if (volumefactor>(128<<4))
@@ -447,9 +456,9 @@ int calc_game(Uint32 steps)
 			spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
 			savelevelcount();
 		}
-		if (engineInput->button[SP_BUTTON_UP_NOWASD])
+		if (engineInput->button[SP_BUTTON_UP])
 		{
-			engineInput->button[SP_BUTTON_UP_NOWASD] = 0;
+			engineInput->button[SP_BUTTON_UP] = 0;
 			gameMode = 1-gameMode;
 			savelevelcount();
 		}
@@ -463,7 +472,7 @@ int calc_game(Uint32 steps)
 			fade--;
 			if (fade==511)
 			{
-				if (level,(level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->functionmask & 64) == 64)
+				if (level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->functionmask & 64)
 					return 1;
 				printf("Sprich Freund und tritt ein!\n");
 				char buffer[256];
@@ -509,6 +518,7 @@ int calc_game(Uint32 steps)
 		if (gotchabig<0)
 			gotchabig=0;
 	}
+	level->score+=(float)steps/1000.0f;
 
 	w+=(steps*256)%(2*SP_PI);
 	//Time based movement
@@ -539,7 +549,7 @@ int calc_game(Uint32 steps)
 		bulletPlayerInteraction();
 		bulletEnvironmentInteraction();
 
-		if (broom_exist && in_hit<=0 && engineInput->button[SP_BUTTON_RIGHT_NOWASD])
+		if (broom_exist && in_hit<=0 && engineInput->button[SP_BUTTON_RIGHT])
 			in_hit=864;
 		if (in_hit==768)
 			broomEnemyInteraction(facedir);
@@ -761,7 +771,7 @@ int calc_game(Uint32 steps)
 		playerEnemyInteraction();
 	}
 	//Jump
-	if (engineInput->button[SP_BUTTON_UP_NOWASD] && jump_min_time <= 0)
+	if (engineInput->button[SP_BUTTON_UP] && jump_min_time <= 0)
 	{
 		jump_min_time = TIME_BETWEEN_TWO_JUMPS;
 		int biggest=getBiggest();
@@ -783,18 +793,18 @@ int calc_game(Uint32 steps)
 	}
 
 	//Shooting
-	if (engineInput->button[SP_BUTTON_LEFT_NOWASD])
+	if (engineInput->button[SP_BUTTON_LEFT])
 	{
-		engineInput->button[SP_BUTTON_LEFT_NOWASD]=0;
+		engineInput->button[SP_BUTTON_LEFT]=0;
 		int sum=0;
 		int i;
 		for (i=3-ballcount;i<3;i++)
 			sum+=ballsize[i]*2;
 		newBullet(x,y-(sum>>1),(facedir)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,1,spGetRGB(255,255,255));
 	}
-	if (engineInput->button[SP_BUTTON_DOWN_NOWASD])
+	if (engineInput->button[SP_BUTTON_DOWN])
 	{
-		engineInput->button[SP_BUTTON_DOWN_NOWASD]=0;
+		engineInput->button[SP_BUTTON_DOWN]=0;
 		fireBallBullet();
 	}
 
@@ -824,6 +834,11 @@ int calc_game(Uint32 steps)
 						if (levelcount<-level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->needed_level)
 							levelcount=-level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->needed_level;
 						savelevelcount();
+					}
+					if (level->score < level->topScore)
+					{
+						level->topScore = level->score;
+						savetime(level->scoreName,level->topScore);
 					}
 					fade=1024;
 					return 0;

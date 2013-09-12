@@ -32,6 +32,10 @@ typedef struct senemy {
 
 typedef struct slevel *plevel;
 typedef struct slevel {
+	char name[256];
+	char scoreName[32];
+	float score;
+	float topScore;
 	int width,height,startx,starty;
 //	Sint32 startzoom;
 	psymbol symbollist[256];
@@ -124,6 +128,8 @@ void freeLevel(plevel level)
 	free(level);
 }
 
+float loadtime(char* level);
+
 plevel loadlevel(char* filename)
 {
 	SDL_RWops *file=SDL_RWFromFile(filename,"rb");
@@ -148,6 +154,17 @@ plevel loadlevel(char* filename)
 	}
 	//Reading head until another [Statement] is detected
 	plevel level = (plevel)malloc(sizeof(tlevel));
+	sprintf(level->name,"%s",filename);
+	char* found;
+	if (found = strchr(level->name,'_'))
+	{
+		if (gameMode == 0)
+			sprintf(level->scoreName,"%c-%c.easy",found[-1],found[1]);
+		else
+			sprintf(level->scoreName,"%c-%c.hard",found[-1],found[1]);
+	}
+	else
+		level->scoreName[0] = 0;
 	level->firstenemy=NULL;
 	level->width=0;
 	level->height=0;
@@ -375,7 +392,7 @@ plevel loadlevel(char* filename)
 			pos = getNextWord(pos,buffer,word,1024,')','"');
 			pos = getNextWord(pos,buffer,word,1024,'"','"');
 			sprintf(newsymbol->function,"%s",word);
-			newsymbol->score = 0.0f;
+			newsymbol->score = loadtime(newsymbol->function);
 			printf("	Score: %s = %.1f\n",newsymbol->function,newsymbol->score);
 		}
 		else

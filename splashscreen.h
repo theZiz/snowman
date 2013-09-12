@@ -49,15 +49,15 @@ int calc_splash(Uint32 steps)
   if (splash_counter <=0)
     return 1;
   PspInput engineInput = spGetInput();
-  if ((engineInput->button[SP_BUTTON_START_NOWASD] ||
-      engineInput->button[SP_BUTTON_A_NOWASD] || engineInput->button[SP_BUTTON_B_NOWASD] ||
-      engineInput->button[SP_BUTTON_X_NOWASD] || engineInput->button[SP_BUTTON_Y_NOWASD]))
+  if ((engineInput->button[SP_BUTTON_START] ||
+      engineInput->button[SP_BUTTON_A] || engineInput->button[SP_BUTTON_B] ||
+      engineInput->button[SP_BUTTON_X] || engineInput->button[SP_BUTTON_Y]))
   {
-    engineInput->button[SP_BUTTON_START_NOWASD] = 0;
-    engineInput->button[SP_BUTTON_A_NOWASD] = 0;
-    engineInput->button[SP_BUTTON_B_NOWASD] = 0;
-    engineInput->button[SP_BUTTON_X_NOWASD] = 0;
-    engineInput->button[SP_BUTTON_Y_NOWASD] = 0;
+    engineInput->button[SP_BUTTON_START] = 0;
+    engineInput->button[SP_BUTTON_A] = 0;
+    engineInput->button[SP_BUTTON_B] = 0;
+    engineInput->button[SP_BUTTON_X] = 0;
+    engineInput->button[SP_BUTTON_Y] = 0;
     return 1;
   }
   //Update Rotation

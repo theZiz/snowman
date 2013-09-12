@@ -426,9 +426,25 @@ void broomEnemyInteraction(char right)
 	}
 }
 
+#if defined GCW || (defined X86CPU && !defined WIN32)
+char* get_path(char* buffer,char* file)
+{
+	sprintf(buffer,"%s/.config/snowman/%s",getenv("HOME"),file);
+	return buffer;
+}
+#else
+char* get_path(char* buffer,char* file)
+{
+	sprintf(buffer,"./%s",file);
+	return buffer;
+}
+#endif
+
 void savelevelcount()
 {
-	SDL_RWops *file=SDL_RWFromFile("./levelcount.dat","wb");
+	char buffer[256];
+	spCreateDirectoryChain(get_path(buffer,""));
+	SDL_RWops *file=SDL_RWFromFile(get_path(buffer,"levelcount.dat"),"wb");
 	levelcount^=1337;
 	SDL_RWwrite(file,&levelcount,sizeof(int),1);
 	SDL_RWwrite(file,&volume,sizeof(int),1);
@@ -440,11 +456,13 @@ void savelevelcount()
 
 void loadlevelcount()
 {
-	SDL_RWops *file=SDL_RWFromFile("./levelcount.dat","rb");
-	if (file==NULL)
+	char buffer[256];
+	SDL_RWops *file=SDL_RWFromFile(get_path(buffer,"levelcount.dat"),"rb");
+	if (file==NULL) //Compatibility
 	{
-		//Compatibility
 		file=SDL_RWFromFile("./data/levelcount.dat","rb");
+		if (file==NULL)
+			file=SDL_RWFromFile("./levelcount.dat","rb");
 		if (file==NULL)
 			return;
 	}
@@ -454,4 +472,25 @@ void loadlevelcount()
 	SDL_RWread(file,&gameMode,sizeof(int),1);
 	levelcount^=1337;
 	SDL_RWclose(file);
+}
+
+void savetime(char* level,float t)
+{
+	char buffer[256];
+	spCreateDirectoryChain(get_path(buffer,""));
+	SDL_RWops *file=SDL_RWFromFile(get_path(buffer,level),"wb");
+	SDL_RWwrite(file,&t,sizeof(float),1);
+	SDL_RWclose(file);
+}
+
+float loadtime(char* level)
+{
+	char buffer[256];
+	SDL_RWops *file=SDL_RWFromFile(get_path(buffer,level),"rb");
+	if (file==NULL) //Compatibility
+		return 300.0f; //5 minutes
+	float t;
+	SDL_RWread(file,&t,sizeof(float),1);
+	SDL_RWclose(file);
+	return t;
 }
