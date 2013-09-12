@@ -25,7 +25,7 @@ havetokill      =  0
   'O'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadr(./levels/play.slvl)
   'P'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/help.slvl)
   'Q'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) quit
-  'Y'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadc(./levels/c4a.slvl)
+  'Y'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadc(./levels/c4a.slvl,./levels/c4a_error.slvl)
   '<'    ./data/arrow_left.obj           (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) left
   '>'    ./data/arrow_right.obj          (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) right
   'a'    badcoin                         (255,  0,  0) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1
@@ -36,26 +36,19 @@ havetokill      =  0
   'f'    badcoin                         (  0,255,255) none   (-1.0,-1.0, 1.0, 1.5) waywalker,weapon=2,health=3,shotfq=1000
   'g'    badcoin                         (  0,  0,  0) none   (-1.0,-1.0, 2.0, 2.0) waywalker,weapon=1,health=30,shotfq=500
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
-  'A'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Snowman"
-  'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Press Start for Pause & Options"
-  'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "More in Help"
-  'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Play"
-  'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Help"
-  'Z'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "C4A"
-  'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Exit"
-  'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Music from Kevin MacLeod"
+  'A'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Normal"
 
 [layer0]
 # best viewed with a font, where width=height
 # 1 of 3 layers
 # in the background
 '                   '
-'       A           '
-'       C           '
-'       D           '
-'       H           '
 '                   '
-'   E   F   Z   G   '
+'                   '
+'                   '
+'                   '
+'                   '
+'                   '
 '                   '
 '                   '
 '                   '
@@ -63,13 +56,13 @@ havetokill      =  0
 # 2 of 3 layers
 # the "game"-layer. With collision!
 '!_________________!'
-'}*****       *****{'
 '}                 {'
-'}**             **{'
-'}**             **{'
-'}******#**********{'
-'}*   *   *   *   *{'
-'}*   *   *   *   *{'
-'}* O * P * Y * Q *{'
+'}      A          {'
+'}                 {'
+'}                 {'
+'}      #          {'
+'}                 {'
+'}                 {'
+'}                 {'
 '!^^^^^^^^^^^^^^^^^!'
 [end]

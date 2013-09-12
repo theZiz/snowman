@@ -19,6 +19,8 @@ int gameMode = 0; //easy
 Uint16* mapPixel;
 int mapLine;
 
+spNetC4AProfilePointer profile;
+
 void addBorder( spFontPointer font, Uint16 fontColor,Uint16 backgroundColor)
 {
 	int i;
@@ -476,7 +478,10 @@ int calc_game(Uint32 steps)
 					return 1;
 				printf("Sprich Freund und tritt ein!\n");
 				char buffer[256];
-				sprintf(buffer,"%s",level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->function);
+				if ((level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->functionmask & 128) && profile==NULL)
+					sprintf(buffer,"%s.error",level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->function);
+				else
+					sprintf(buffer,"%s",level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->function);
 				char reset=(level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->functionmask & 32) == 32;
 				freeLevel(level);
 				level=loadlevel(buffer);
@@ -929,6 +934,8 @@ int main(int argc, char **argv)
 		cloud[i] = NULL;
 	//spSetDefaultWindowSize( 800, 480 );
 	spInitCore();
+	spInitNet();
+	profile = spNetC4AGetProfile();
 	//Setup
 	#ifdef SCALE_UP
 	real_screen = spCreateDefaultWindow();
@@ -955,6 +962,7 @@ int main(int argc, char **argv)
 	spDeleteSurface(screen);
 	#endif
 	quit_snowman();
+	spQuitNet();
 	spQuitCore();
 	return 0;
 }

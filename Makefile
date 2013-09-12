@@ -20,7 +20,7 @@ BUILD = .
 SPARROW_LIB = $(SPARROW_FOLDER)
 endif
 LIB += -L$(SPARROW_LIB)
-DYNAMIC += -lsparrow3d -lsparrowSound
+DYNAMIC += -lsparrow3d -lsparrowSound -lsparrowNet
 
 all: snowman
 	@echo "=== Built for Target "$(TARGET)" ==="
@@ -31,6 +31,7 @@ targets:
 snowman: ballbullet.h bullet_new.h drawlevel.h intro.h  particle.h bullet.h drawcharacter.h enemy.h level.h splashscreen.h snow.h snowman.c makeBuildDir
 	cp $(SPARROW_LIB)/libsparrow3d.so $(BUILD)
 	cp $(SPARROW_LIB)/libsparrowSound.so $(BUILD)
+	cp $(SPARROW_LIB)/libsparrowNet.so $(BUILD)
 	$(CPP) $(CFLAGS) snowman.c $(SDL) $(INCLUDE) -I$(SPARROW_FOLDER) $(LIB) $(SDL_LIB) $(STATIC) $(DYNAMIC) -o $(BUILD)/snowman
 
 makeBuildDir:

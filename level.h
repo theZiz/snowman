@@ -416,6 +416,11 @@ plevel loadlevel(char* filename)
 					newsymbol->functionmask|=32; 
 					pos++;
 				} 
+				if (newsymbol->function[pos]=='c')
+				{
+					newsymbol->functionmask|=128;
+					pos++;
+				} 
 				int pos2=getNextWord(0,&(meow[pos]),newlevel,256,'(',')');
 				sprintf(newsymbol->function,"%s",newlevel);
 				pos2++;
