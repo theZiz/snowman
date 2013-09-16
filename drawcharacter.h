@@ -494,3 +494,33 @@ float loadtime(char* level)
 	SDL_RWclose(file);
 	return t;
 }
+
+float loadall(char* kind)
+{
+	int i,j;
+	float all = 0.0f;
+	for (i = 1; i < 6; i++)
+		for (j = 0; j < 5; j++)
+		{
+			char buffer[256];
+			char filename[256];
+			sprintf(filename,"%i-%i.%s",i,j,kind);
+			SDL_RWops *file=SDL_RWFromFile(get_path(buffer,filename),"rb");
+			float t;
+			if (file==NULL) //Compatibility
+				t = 300.0f; //5 minutes
+			else
+			{
+				SDL_RWread(file,&t,sizeof(float),1);
+				SDL_RWclose(file);
+			}
+			all+=t;
+		}
+	return all;
+}
+
+float loadall_i(char* kind)
+{
+	//TODO: Implement!
+	return 3000.0f;
+}

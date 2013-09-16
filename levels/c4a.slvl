@@ -1,8 +1,8 @@
 [head]
 # all coordinates are zero-based!
 width           = 19
-height          = 10
-startx          = 7
+height          = 16
+startx          = 9
 starty          = 3
 backgroundcolor = (63,127,255)
 havetokill      =  0
@@ -22,10 +22,9 @@ havetokill      =  0
   '|'    ./data/tree_crown.obj           (31 ,255, 31) quad   (-3.0,-1.0, 3.0, 3.0) none
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
   '*'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) snow
-  'O'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadr(./levels/play.slvl)
-  'P'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/help.slvl)
-  'Q'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) quit
-  'Y'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadc(./levels/c4a.slvl,./levels/c4a_error.slvl)
+  'O'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadr(./levels/menu.slvl)
+  'P'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadr(./levels/success.slvl)
+  'Q'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadr(./levels/success.slvl)
   '<'    ./data/arrow_left.obj           (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) left
   '>'    ./data/arrow_right.obj          (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) right
   'a'    badcoin                         (255,  0,  0) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1
@@ -35,20 +34,37 @@ havetokill      =  0
   'e'    enemy4                          (127,127,127) none   (-1.5,-1.0, 1.5, 1.0) waywalker,weapon=2,health=1,shotfq=1500
   'f'    badcoin                         (  0,255,255) none   (-1.0,-1.0, 1.0, 1.5) waywalker,weapon=2,health=3,shotfq=1000
   'g'    badcoin                         (  0,  0,  0) none   (-1.0,-1.0, 2.0, 2.0) waywalker,weapon=1,health=30,shotfq=500
-  'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
-  'A'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Normal"
+  'A'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Compo4all"
+  'B'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Here you can submit your super scores to the"
+  'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "C4A server. A super score is the sum of all"
+  'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "your times you needed for a level."
+  'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "You have one for the easy mode and one for the hard one."
+  'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Your super scores are (smaller is better):"
+  'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Easy mode:"
+  'H'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "easy"
+  'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Hard mode:"
+  'J'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "hard"
+  'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Enter the doors below to submit the scores."
+  'M'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Best"
+  'X'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "i_easy"
+  'Y'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "i_hard"
+  'Z'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Back"
 
 [layer0]
-# best viewed with a font, where width=height
 # 1 of 3 layers
-# in the background
 '                   '
+'         A         '
+'         B         '
+'         C         '
+'         D         '
+'         E         '
 '                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
+'         F         '
+'      G     I      '
+'      H     J      '
+'      M     M      '
+'      X     Y      '
+'        K      Z   '
 '                   '
 '                   '
 '                   '
@@ -56,13 +72,19 @@ havetokill      =  0
 # 2 of 3 layers
 # the "game"-layer. With collision!
 '!_________________!'
+'}*               *{'
+'}*               *{'
+'}*               *{'
+'}*               *{'
+'}*               *{'
+'}*  #****#****#  *{'
+'}*               *{'
+'!}               {!'
+'}***           ***{'
+'}***#****#****#***{'
 '}                 {'
-'}      A          {'
-'}                 {'
-'}                 {'
-'}      #          {'
-'}                 {'
-'}                 {'
-'}                 {'
+'!}               {!'
+'}               **{'
+'}*****P*****Q**O**{'
 '!^^^^^^^^^^^^^^^^^!'
 [end]

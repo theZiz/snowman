@@ -69,6 +69,7 @@ void resize( Uint16 w, Uint16 h )
 	spFontAddButton( font, 'd', SP_BUTTON_RIGHT_NAME, 65535, SP_ALPHA_COLOR ); // d == right button
 	spFontAddButton( font, 'w', SP_BUTTON_UP_NAME, 65535, SP_ALPHA_COLOR ); // w == up button
 	spFontAddButton( font, 's', SP_BUTTON_DOWN_NAME, 65535, SP_ALPHA_COLOR ); // s == down button
+	spFontMulWidth( font, spFloatToFixed(0.9f));
 	
 	addBorder( font, 65535, spGetRGB(128,128,128) );
 
@@ -78,12 +79,14 @@ void resize( Uint16 w, Uint16 h )
 	font_red = spFontLoad( FONT, FONT_SIZE * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_red, SP_FONT_GROUP_ASCII, spGetRGB(255,128,128) ); //whole ASCII
 	addBorder( font_red, spGetRGB(255,128,128), spGetRGB(128,64,64) );
+	spFontMulWidth( font_red, spFloatToFixed(0.9f));
 	
 	if ( font_green )
 		spFontDelete( font_green );
 	font_green = spFontLoad( FONT, FONT_SIZE * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_green, SP_FONT_GROUP_ASCII, spGetRGB(128,255,128) ); //whole ASCII
 	addBorder( font_green, spGetRGB(128,255,128), spGetRGB(64,128,64) );
+	spFontMulWidth( font_green, spFloatToFixed(0.9f));
 
 	//Creating Clouds
 	int i;

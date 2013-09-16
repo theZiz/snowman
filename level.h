@@ -129,6 +129,8 @@ void freeLevel(plevel level)
 }
 
 float loadtime(char* level);
+float loadall(char* kind);
+float loadall_i(char* kind);
 
 plevel loadlevel(char* filename)
 {
@@ -392,6 +394,21 @@ plevel loadlevel(char* filename)
 			pos = getNextWord(pos,buffer,word,1024,')','"');
 			pos = getNextWord(pos,buffer,word,1024,'"','"');
 			sprintf(newsymbol->function,"%s",word);
+			if (strstr(newsymbol->function,"i_"))
+			{
+				if (strstr(newsymbol->function,"easy"))
+					newsymbol->score = loadall_i("easy");
+				else
+				if (strstr(newsymbol->function,"hard"))
+					newsymbol->score = loadall_i("hard");
+			}
+			else
+			if (strstr(newsymbol->function,"easy"))
+				newsymbol->score = loadall("easy");
+			else
+			if (strstr(newsymbol->function,"hard"))
+				newsymbol->score = loadall("hard");
+			else
 			newsymbol->score = loadtime(newsymbol->function);
 			printf("	Score: %s = %.1f\n",newsymbol->function,newsymbol->score);
 		}
