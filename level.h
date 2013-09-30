@@ -164,6 +164,8 @@ plevel loadlevel(char* filename)
 			sprintf(level->scoreName,"%c-%c.easy",found[-1],found[1]);
 		else
 			sprintf(level->scoreName,"%c-%c.hard",found[-1],found[1]);
+		printf("Score is saved in %s\n",level->scoreName);
+		level->topScore = loadtime(level->scoreName);
 	}
 	else
 		level->scoreName[0] = 0;
@@ -403,13 +405,16 @@ plevel loadlevel(char* filename)
 					newsymbol->score = loadall_i("hard");
 			}
 			else
+			if (strchr(newsymbol->function,'.'))
+				newsymbol->score = loadtime(newsymbol->function);
+			else
 			if (strstr(newsymbol->function,"easy"))
 				newsymbol->score = loadall("easy");
 			else
 			if (strstr(newsymbol->function,"hard"))
 				newsymbol->score = loadall("hard");
-			else
-			newsymbol->score = loadtime(newsymbol->function);
+			else //shouldn't happen
+				newsymbol->score = 1234.0f;
 			printf("	Score: %s = %.1f\n",newsymbol->function,newsymbol->score);
 		}
 		else

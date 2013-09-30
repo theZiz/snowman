@@ -1,7 +1,7 @@
 [head]
 # all coordinates are zero-based!
 width           = 19
-height          = 16
+height          = 15
 startx          = 9
 starty          = 3
 backgroundcolor = (63,127,255)
@@ -33,19 +33,22 @@ havetokill      =  0
   'f'    badcoin                         (  0,255,255) none   (-1.0,-1.0, 1.0, 1.5) waywalker,weapon=2,health=3,shotfq=1000
   'g'    badcoin                         (  0,  0,  0) none   (-1.0,-1.0, 2.0, 2.0) waywalker,weapon=1,health=30,shotfq=500
   'A'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Compo4all"
-  'B'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "No C4A profile was found on your device!"
-  'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Install the Sparrow C4A Manager to create"
-  'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "an profile. Afterwards you can submit your"
-  'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "super score to the C4A server. A super score"
-  'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "is the sum of all your times you needed for a"
-  'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "level. You have two super scores: One for the"
-  'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "easy mode and one for the hard one."
-  'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Your super scores are (smaller is better):"
-  'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Easy mode:"
-  'K'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "easy"
-  'L'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Hard mode:"
-  'M'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "hard"
-  'Z'    text                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Back"
+  'B'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Here you can submit your super scores to the"
+  'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "C4A server. A super score is the sum of all"
+  'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "your times you needed for a level."
+  'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "You have one for the easy mode and one for the hard one."
+  'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "The super scores are (smaller is better):"
+  'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Easy mode:"
+  'H'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "easy"
+  'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Hard mode:"
+  'J'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "hard"
+  'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Please install the (Sparrow)"
+  'P'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Compo4All Manager to submit scores"
+  'M'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "<- Yours ->"
+  'N'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "<- Best ->"
+  'X'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "i_easy"
+  'Y'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "i_hard"
+  'Z'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Back"
 
 [layer0]
 # 1 of 3 layers
@@ -57,12 +60,11 @@ havetokill      =  0
 '         E         '
 '                   '
 '         F         '
-'         G         '
-'         H         '
-'                   '
-'       I           '
-'    J     L    Z   '
-'    K     M        '
+'      G     I      '
+'      H  M  J      '
+'      X  N  Y      '
+'         K     Z   '
+'         P         '
 '                   '
 '                   '
 [layer1]
@@ -78,10 +80,9 @@ havetokill      =  0
 '}*               *{'
 '!}               {!'
 '}***           ***{'
-'}***#    #    #***{'
+'}***#         #***{'
 '}                 {'
 '!}               {!'
-'}               **{'
 '}**************O**{'
 '!^^^^^^^^^^^^^^^^^!'
 [end]

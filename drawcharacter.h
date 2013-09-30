@@ -488,7 +488,7 @@ float loadtime(char* level)
 	char buffer[256];
 	SDL_RWops *file=SDL_RWFromFile(get_path(buffer,level),"rb");
 	if (file==NULL) //Compatibility
-		return 300.0f; //5 minutes
+		return 120.0f; //2 minutes
 	float t;
 	SDL_RWread(file,&t,sizeof(float),1);
 	SDL_RWclose(file);
@@ -508,7 +508,7 @@ float loadall(char* kind)
 			SDL_RWops *file=SDL_RWFromFile(get_path(buffer,filename),"rb");
 			float t;
 			if (file==NULL) //Compatibility
-				t = 300.0f; //5 minutes
+				t = 120.0f; //5 minutes
 			else
 			{
 				SDL_RWread(file,&t,sizeof(float),1);

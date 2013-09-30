@@ -100,10 +100,15 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 						spProjectPoint3D(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1),&tx,&ty,&tz,&w,1);
 						spSetAlphaTest(1);
 						char buffer[256];
-						if (strchr(now->function,'e')) //'e' in "easy" found
-							sprintf(buffer,"E-%.1f",now->score);
+						if (strchr(now->function,'.')) //'.' in filename found
+						{
+							if (strchr(now->function,'e')) //'e' in "easy" found
+								sprintf(buffer,"E-%.1f",now->score);
+							else
+								sprintf(buffer,"H-%.1f",now->score);
+						}
 						else
-							sprintf(buffer,"H-%.1f",now->score);
+							sprintf(buffer,"%.1f",now->score);
 						spFontDrawMiddle(tx,ty-font->maxheight/2,tz,buffer,font);
 						spSetAlphaTest(0);
 					}

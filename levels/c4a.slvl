@@ -1,7 +1,7 @@
 [head]
 # all coordinates are zero-based!
 width           = 19
-height          = 16
+height          = 15
 startx          = 9
 starty          = 3
 backgroundcolor = (63,127,255)
@@ -39,13 +39,14 @@ havetokill      =  0
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "C4A server. A super score is the sum of all"
   'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "your times you needed for a level."
   'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "You have one for the easy mode and one for the hard one."
-  'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Your super scores are (smaller is better):"
+  'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "The super scores are (smaller is better):"
   'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Easy mode:"
   'H'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "easy"
   'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Hard mode:"
   'J'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "hard"
   'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Enter the doors below to submit the scores."
-  'M'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Best"
+  'M'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "<- Yours ->"
+  'N'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "<- Best ->"
   'X'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "i_easy"
   'Y'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "i_hard"
   'Z'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Back"
@@ -61,9 +62,8 @@ havetokill      =  0
 '                   '
 '         F         '
 '      G     I      '
-'      H     J      '
-'      M     M      '
-'      X     Y      '
+'      H  M  J      '
+'      X  N  Y      '
 '        K      Z   '
 '                   '
 '                   '
@@ -81,10 +81,9 @@ havetokill      =  0
 '}*               *{'
 '!}               {!'
 '}***           ***{'
-'}***#****#****#***{'
+'}***#         #***{'
 '}                 {'
 '!}               {!'
-'}               **{'
 '}*****P*****Q**O**{'
 '!^^^^^^^^^^^^^^^^^!'
 [end]
