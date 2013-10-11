@@ -54,6 +54,8 @@ havetokill      =  0
   '8'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "2-2.hard"
   '9'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "2-3.hard"
   '0'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "2-4.hard"
+  'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "You can change the game mode"
+  'L'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "to hard/easy in the pause menu"
 
 [layer0]
 # best viewed with a font, where width=height
@@ -62,8 +64,8 @@ havetokill      =  0
 '                    '
 '     A              '
 '     C              '
-'                    '
-'                    '
+'            K       '
+'            L       '
 '  1  2  3  4  5     '
 '  6  7  8  9  0     '
 '  E  F  G  H  I  J  '
