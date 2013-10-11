@@ -376,7 +376,7 @@ void draw_game(void)
 	}
 	if (pausemode)
 	{
-		spInterpolateTargetToColor(0,SP_ONE/2);
+		spInterpolateTargetToColor(0,SP_ONE*3/4);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*7/2,-1,"Press [R] to unpause",font);
 
 		if (gameMode)
