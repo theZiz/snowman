@@ -476,6 +476,8 @@ void loadlevelcount()
 
 void savetime(char* level,float t)
 {
+	if (level == NULL || level[0] == 0)
+		return;
 	char buffer[256];
 	spCreateDirectoryChain(get_path(buffer,""));
 	SDL_RWops *file=SDL_RWFromFile(get_path(buffer,level),"wb");

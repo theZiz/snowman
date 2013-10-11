@@ -118,7 +118,6 @@ void resize( Uint16 w, Uint16 h )
 	spSelectRenderTarget(screen);
 	initSnow();
 }
-#include "intro.h"
 #include "level.h"
 #include "particle.h"
 
@@ -948,7 +947,6 @@ int main(int argc, char **argv)
 	resize( screen->w, screen->h );
 	#endif
 	run_splashscreen(resize);
-	intro();
 	init_snowman();
 	if (argc < 2)
 		level=loadlevel("./levels/menu.slvl");
