@@ -330,25 +330,35 @@ void draw_game(void)
 		spFontDraw(1,screen->h-font_red->maxheight,0,buffer,font_red);
 	else
 		spFontDraw(1,screen->h-font_green->maxheight,0,buffer,font_green);
-	int whole_text_length = spFontWidth("Small Belly: %i/18		 Big Belly: %i/26",font);
-		
 	if (gotchasmall)
 	{
-		if (valuesmall>=0)
+		int part_text_length = spFontWidth("Small Belly:",font);
+		if (valuesmall>0)
+		{
 			sprintf(buffer,"+%i",valuesmall);
+			spFontDraw(1+part_text_length,screen->h-font->maxheight*2,0,buffer,font_green);
+		}
 		else
+		if (valuesmall<0)
+		{
 			sprintf(buffer,"%i",valuesmall);
-		int part_text_length = spFontWidth("Small Belly: ",font);
-		spFontDraw((screen->w - whole_text_length>>1)+part_text_length,screen->h-font->maxheight*2,0,buffer,font);
+			spFontDraw(1+part_text_length,screen->h-font->maxheight*2,0,buffer,font_red);
+		}
 	}
 	if (gotchabig)
 	{
-		if (valuebig>=0)
+		int part_text_length = spFontWidth("Small Belly: 18/18		 Big Belly:",font);
+		if (valuebig>0)
+		{
 			sprintf(buffer,"+%i",valuebig);
+			spFontDraw(1+part_text_length,screen->h-font->maxheight*2,0,buffer,font_green);
+		}
 		else
+		if (valuebig<0)
+		{
 			sprintf(buffer,"%i",valuebig);
-		int part_text_length = spFontWidth("Small Belly: 18/18		 Big Belly: ",font);
-		spFontDraw((screen->w - whole_text_length>>1)+part_text_length,screen->h-font->maxheight*2,0,buffer,font);
+			spFontDraw(1+part_text_length,screen->h-font->maxheight*2,0,buffer,font_red);
+		}
 	}
 	if (fade)
 	{

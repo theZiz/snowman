@@ -9,7 +9,7 @@ void fireBallBullet()
 	if (ballcount<3)
 		return;
 	ballBulletSize=ballsize[0];
-	ballsize[0]=0;
+	removesnow(ballsize[0]>>SP_ACCURACY-5);
 	ballBulletExists=1;
 	ballbullet.color=spGetRGB(255,255,255);
 	ballbullet.dx=(facedir)?(1<<(SP_ACCURACY-7)):(-1<<(SP_ACCURACY-7));
