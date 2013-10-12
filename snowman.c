@@ -37,7 +37,8 @@ void addBorder( spFontPointer font, Uint16 fontColor,Uint16 backgroundColor)
 //#define FONT "./data/FugazOne-Regular.ttf"
 //#define FONT "./data/ChelaOne-Regular.ttf"
 //#define FONT "./data/BubblegumSans-Regular.ttf"
-#define FONT_SIZE 13
+#define FONT_SIZE 12
+#define FONT_MUL 0.65f
 
 void initSnow();
 
@@ -69,7 +70,7 @@ void resize( Uint16 w, Uint16 h )
 	spFontAddButton( font, 'd', SP_BUTTON_RIGHT_NAME, 65535, SP_ALPHA_COLOR ); // d == right button
 	spFontAddButton( font, 'w', SP_BUTTON_UP_NAME, 65535, SP_ALPHA_COLOR ); // w == up button
 	spFontAddButton( font, 's', SP_BUTTON_DOWN_NAME, 65535, SP_ALPHA_COLOR ); // s == down button
-	spFontMulWidth( font, spFloatToFixed(0.9f));
+	spFontMulWidth( font, spFloatToFixed(FONT_MUL));
 	
 	addBorder( font, 65535, spGetRGB(128,128,128) );
 
@@ -79,14 +80,14 @@ void resize( Uint16 w, Uint16 h )
 	font_red = spFontLoad( FONT, FONT_SIZE * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_red, SP_FONT_GROUP_ASCII, spGetRGB(255,128,128) ); //whole ASCII
 	addBorder( font_red, spGetRGB(255,128,128), spGetRGB(128,64,64) );
-	spFontMulWidth( font_red, spFloatToFixed(0.9f));
+	spFontMulWidth( font_red, spFloatToFixed(FONT_MUL));
 	
 	if ( font_green )
 		spFontDelete( font_green );
 	font_green = spFontLoad( FONT, FONT_SIZE * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_green, SP_FONT_GROUP_ASCII, spGetRGB(128,255,128) ); //whole ASCII
 	addBorder( font_green, spGetRGB(128,255,128), spGetRGB(64,128,64) );
-	spFontMulWidth( font_green, spFloatToFixed(0.9f));
+	spFontMulWidth( font_green, spFloatToFixed(FONT_MUL));
 
 	//Creating Clouds
 	int i;
@@ -325,14 +326,14 @@ void draw_game(void)
 		sprintf(buffer,"Time: %.1f",level->score);
 		spFontDrawRight(screen->w-1,screen->h-font->maxheight*2,0,buffer,font);
 	}
-	sprintf(buffer,"Small Belly: %i/18		 Big Belly: %i/26",ballsize[1]>>(SP_ACCURACY-5),ballsize[0]>>(SP_ACCURACY-5));
+	sprintf(buffer,"Small Belly: %i/18	     Big Belly: %i/26",ballsize[1]>>(SP_ACCURACY-5),ballsize[0]>>(SP_ACCURACY-5));
 	if (ballsize[1]<=0)
 		spFontDraw(1,screen->h-font_red->maxheight,0,buffer,font_red);
 	else
 		spFontDraw(1,screen->h-font_green->maxheight,0,buffer,font_green);
 	if (gotchasmall)
 	{
-		int part_text_length = spFontWidth("Small Belly:",font);
+		int part_text_length = spFontWidth("Small Belly:",font_green);
 		if (valuesmall>0)
 		{
 			sprintf(buffer,"+%i",valuesmall);
@@ -347,7 +348,7 @@ void draw_game(void)
 	}
 	if (gotchabig)
 	{
-		int part_text_length = spFontWidth("Small Belly: 18/18		 Big Belly:",font);
+		int part_text_length = spFontWidth("Small Belly: 18/18	     Big Belly:",font_green);
 		if (valuebig>0)
 		{
 			sprintf(buffer,"+%i",valuebig);

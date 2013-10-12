@@ -2,7 +2,7 @@
 # all coordinates are zero-based!
 width           = 19
 height          = 10
-startx          = 7
+startx          = 9
 starty          = 3
 backgroundcolor = (63,127,255)
 havetokill      =  0
@@ -50,10 +50,10 @@ havetokill      =  0
 # 1 of 3 layers
 # in the background
 '                   '
-'       A           '
-'       C           '
-'       D           '
-'       H           '
+'         A         '
+'         C         '
+'         D         '
+'         H         '
 '                   '
 '   E   F   Z   G   '
 '                   '
@@ -67,7 +67,7 @@ havetokill      =  0
 '}                 {'
 '}**             **{'
 '}**             **{'
-'}******#**********{'
+'}********#********{'
 '}*   *   *   *   *{'
 '}*   *   *   *   *{'
 '}* O * P * Y * Q *{'
