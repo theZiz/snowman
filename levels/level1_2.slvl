@@ -41,6 +41,9 @@ failback        = ./levels/level1.slvl
   'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "you lose your"
   'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "big belly and"
   'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "your broom."
+  'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "These coals have"
+  'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "more health."
+  'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Be careful!"
 
 [layer0]
 # best viewed with a font, where width=height
@@ -54,9 +57,9 @@ failback        = ./levels/level1.slvl
 '                                        '
 '                                        '
 '                                        '
-'                                        '
-'                                        '
-'                                        '
+'                 H                      '
+'                 I                      '
+'                 J                      '
 '                                        '
 '                                        '
 '                                        '

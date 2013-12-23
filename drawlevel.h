@@ -103,9 +103,9 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 						if (strchr(now->function,'.')) //'.' in filename found
 						{
 							if (strchr(now->function,'e')) //'e' in "easy" found
-								sprintf(buffer,"E-%.1f",now->score);
+								sprintf(buffer,"E:%.1f",now->score);
 							else
-								sprintf(buffer,"H-%.1f",now->score);
+								sprintf(buffer,"H:%.1f",now->score);
 						}
 						else
 							sprintf(buffer,"%.1f",now->score);

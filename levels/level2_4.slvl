@@ -34,14 +34,14 @@ failback        = ./levels/level2.slvl
   'e'    enemy4                          ( 63, 63, 63) none   (-4.5,-3.0, 4.5, 3.0) waywalker,weapon=2,health=70,shotfq=500
   'h'    enemy4                          ( 63, 63, 63) none   (-4.5,-3.0, 4.5, 3.0) standing,weapon=2,health=70,shotfq=200
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
-  'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Dummy Text"
+  'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Be fast!"
 
 [layer1]
 '                                                             '
 '                          oooo oooo                          '
 '**********oo  h     oo    ooooOoooo    oo     h  oo**********'
 '**********oo        oo    [TTTTTTT]    oo        oo**********'
-'**********[TTTT]    []    <       >    []    [TTTT]**********'
+'**********[TTTT]    []    <   C   >    []    [TTTT]**********'
 '**********      **********<*******>**********      **********'
 '*****[TTTT]     **********<*******>**********     [TTTT]*****'
 '******************[TTTT]**<*******>**[TTTT]**          ******'

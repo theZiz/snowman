@@ -38,6 +38,9 @@ failback        = ./levels/level1.slvl
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "If you get"
   'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "hit you lose"
   'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "three snow"
+  'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Big water drops"
+  'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "shoot"
+  'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "small water drops"
 
 [layer0]
 # best viewed with a font, where width=height
@@ -52,9 +55,9 @@ failback        = ./levels/level1.slvl
 '                            '
 '                            '
 ' t                       tt '
-'                            '
-'                            '
-'                            '
+'                      F     '
+'                      G     '
+'                      H     '
 '   t                        '
 '                            '
 '                            '
