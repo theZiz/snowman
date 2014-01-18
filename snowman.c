@@ -31,14 +31,10 @@ void addBorder( spFontPointer font, Uint16 fontColor,Uint16 backgroundColor)
 	printf("%i %i\n",spGetSizeFactor(),spGetSizeFactor() >> SP_ACCURACY);
 }
 
-//#define FONT "./data/LondrinaOutline-Regular.ttf"
-#define FONT "./data/Pompiere-Regular.ttf"
-//#define FONT "./data/Lemon-Regular.ttf"
-//#define FONT "./data/FugazOne-Regular.ttf"
-//#define FONT "./data/ChelaOne-Regular.ttf"
-//#define FONT "./data/BubblegumSans-Regular.ttf"
-#define FONT_SIZE 12
-#define FONT_MUL 0.65f
+//#define FONT "./data/Pompiere-Regular.ttf"
+#define FONT "./data/Signika-Regular.ttf"
+#define FONT_SIZE 11
+#define FONT_MUL 0.8f
 
 void initSnow();
 
@@ -945,7 +941,7 @@ int main(int argc, char **argv)
 	int i;
 	for (i = 0; i 	< CLOUD_COUNT; i++)
 		cloud[i] = NULL;
-	spSetDefaultWindowSize( 800, 480 );
+	//spSetDefaultWindowSize( 800, 480 );
 	spInitCore();
 	spInitNet();
 	profile = spNetC4AGetProfile();
@@ -962,11 +958,7 @@ int main(int argc, char **argv)
 	if (argc < 2)
 		level=loadlevel("./levels/menu.slvl");
 	else
-	{
-		char buffer[256];
-		sprintf(buffer,"./levels/%s.slvl",argv[1]);
-		level=loadlevel(buffer);
-	}
+		level=loadlevel(argv[1]);
 	init_game(level,1);
 	spLoop(draw_game,calc_game,10,resize,NULL);
 	freeLevel(level);
