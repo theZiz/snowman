@@ -209,7 +209,7 @@ void init_game(plevel level,char complete)
 	//loading the score
 	if (level->scoreName[0] != 0)
 		level->topScore = loadtime(level->scoreName);
-	level->score = 0.0f;
+	level->score = 120.0f;
 	jump_min_time = 0;
 	angle=0;
 	resetallparticle();
@@ -320,7 +320,10 @@ void draw_game(void)
 		sprintf(buffer,"(Best: %.1f)",level->topScore);
 		spFontDrawRight(screen->w-1,screen->h-font->maxheight,0,buffer,font);
 		sprintf(buffer,"Time: %.1f",level->score);
-		spFontDrawRight(screen->w-1,screen->h-font->maxheight*2,0,buffer,font);
+		if (level->score != 0.0f)
+			spFontDrawRight(screen->w-1,screen->h-font->maxheight*2,0,buffer,font);
+		else
+			spFontDrawRight(screen->w-1,screen->h-font->maxheight*2,0,buffer,font_red);
 	}
 	sprintf(buffer,"Small Belly: %i/18	     Big Belly: %i/26",ballsize[1]>>(SP_ACCURACY-5),ballsize[0]>>(SP_ACCURACY-5));
 	if (ballsize[1]<=0)
@@ -532,7 +535,9 @@ int calc_game(Uint32 steps)
 		if (gotchabig<0)
 			gotchabig=0;
 	}
-	level->score+=(float)steps/1000.0f;
+	level->score-=(float)steps/1000.0f;
+	if (level->score < 0.0f)
+		level->score = 0.0f;
 
 	w+=(steps*256)%(2*SP_PI);
 	//Time based movement
@@ -849,7 +854,7 @@ int calc_game(Uint32 steps)
 							levelcount=-level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->needed_level;
 						savelevelcount();
 					}
-					if (level->score < level->topScore)
+					if (level->score > level->topScore)
 					{
 						level->topScore = level->score;
 						savetime(level->scoreName,level->topScore);

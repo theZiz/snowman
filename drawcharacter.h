@@ -459,13 +459,7 @@ void loadlevelcount()
 	char buffer[256];
 	SDL_RWops *file=SDL_RWFromFile(get_path(buffer,"levelcount.dat"),"rb");
 	if (file==NULL) //Compatibility
-	{
-		file=SDL_RWFromFile("./data/levelcount.dat","rb");
-		if (file==NULL)
-			file=SDL_RWFromFile("./levelcount.dat","rb");
-		if (file==NULL)
 			return;
-	}
 	SDL_RWread(file,&levelcount,sizeof(int),1);
 	SDL_RWread(file,&volume,sizeof(int),1);
 	SDL_RWread(file,&volumefactor,sizeof(int),1);
@@ -489,8 +483,8 @@ float loadtime(char* level)
 {
 	char buffer[256];
 	SDL_RWops *file=SDL_RWFromFile(get_path(buffer,level),"rb");
-	if (file==NULL) //Compatibility
-		return 120.0f; //2 minutes
+	if (file==NULL)
+		return 0.0f; //2 minutes
 	float t;
 	SDL_RWread(file,&t,sizeof(float),1);
 	SDL_RWclose(file);
@@ -509,8 +503,8 @@ float loadall(char* kind)
 			sprintf(filename,"%i-%i.%s",i,j,kind);
 			SDL_RWops *file=SDL_RWFromFile(get_path(buffer,filename),"rb");
 			float t;
-			if (file==NULL) //Compatibility
-				t = 120.0f; //5 minutes
+			if (file==NULL)
+				t = 0.0f;
 			else
 			{
 				SDL_RWread(file,&t,sizeof(float),1);
@@ -524,5 +518,5 @@ float loadall(char* kind)
 float loadall_i(char* kind)
 {
 	//TODO: Implement!
-	return 3000.0f;
+	return 1000.0f;
 }

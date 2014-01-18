@@ -414,7 +414,7 @@ plevel loadlevel(char* filename)
 			if (strstr(newsymbol->function,"hard"))
 				newsymbol->score = loadall("hard");
 			else //shouldn't happen
-				newsymbol->score = 1234.0f;
+				newsymbol->score = 0.0f;
 			printf("	Score: %s = %.1f\n",newsymbol->function,newsymbol->score);
 		}
 		else
