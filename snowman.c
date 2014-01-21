@@ -115,6 +115,11 @@ void resize( Uint16 w, Uint16 h )
 	spSelectRenderTarget(screen);
 	initSnow();
 }
+
+#define TRIPLE_SHOOT_TIME 100
+int triple_shoot_pos = 0;
+int triple_shoot_time = 0;
+
 #include "level.h"
 #include "particle.h"
 
@@ -187,6 +192,8 @@ Sint32 angle;
 int levelcount;
 
 char pausemode;
+char helpmode;
+char exitmode;
 
 int getBiggest()
 {
@@ -374,23 +381,50 @@ void draw_game(void)
 		else
 			spInterpolateTargetToColor(0,(fade2 >>1)<<8);
 	}
+	if (helpmode)
+	{
+		spInterpolateTargetToColor(0,SP_ONE/2);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*8,-1,"Controls:",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*7,-1,"Move with the D-Pad",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*6,-1,"[a]: Shot (costs 2 snow) [s]: 3 shoots",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*5,-1,"[w]: Jump (costs 1 snow)",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*4,-1,"[d]: Broom Bash - 2x damage with a broom!",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*3,-1,"[e]: Ball Attack (costs your big belly)",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*2,-1,"[q]: (Un)show mini help",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*1,-1,"[R]: Pause and options",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*0,-1,"[B]: Exit",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*1,-1,"Kill as many enemies as sayed in the upper left",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*2,-1,"corner of the screen to be able to enter the next",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*3,-1,"level. But economize your snow, it is your health,",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*4,-1,"size and shoot energy at the same time!",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*5,-1,"If you pass a level in less than 2 minutes, the",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*6,-1,"rest time is added to your score, which you can",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*7,-1,"submit to the C4A online highscore in the main menu!",font);
+	}
 	if (pausemode)
 	{
 		spInterpolateTargetToColor(0,SP_ONE*3/4);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*7/2,-1,"Press [R] to unpause",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*7*3/4,-1,"Press [R] to unpause",font);
 
 		if (gameMode)
-			spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*4/2,-1,"Mode: Hard[w]",font);
+			spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*4*3/4,-1,"Mode: Hard[w] (needs level restart)",font);
 		else
-			spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*4/2,-1,"Mode: Easy[w]",font);
+			spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*4*3/4,-1,"Mode: Easy[w] (needs level restart)",font);
 
 		sprintf(buffer,"Total volume: [q]%i %%[e]",volume*100/2048);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*1/2,-1,buffer,font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*1*3/4,-1,buffer,font);
 		sprintf(buffer,"Music volume: [a]%i %%[d] of total volume",volumefactor*100/2048);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*1/2,-1,buffer,font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*1*3/4,-1,buffer,font);
 		
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*4/2,-1,"Press [s] to return to sublevel",font);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*6/2,-1,"Press [B] to quit",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*4*3/4,-1,"Press [s] to return to sublevel",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*6*3/4,-1,"Press [B] to quit",font);
+	}
+	if (exitmode)
+	{
+		spInterpolateTargetToColor(0,SP_ONE*3/4);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*2,-1,"Do you really want to quit?",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)                  ,-1,"Press [R] to quit",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*2,-1,"Press [B] to cancel",font);
 	}
 	#ifdef SCALE_UP
 	spScale2XSmooth(screen,real_screen);
@@ -430,14 +464,27 @@ int calc_game(Uint32 steps)
 		savelevelcount();
 		engineSetMuteKey(0);
 	}*/
+	if (engineInput->button[SP_BUTTON_SELECT])
+	{
+		engineInput->button[SP_BUTTON_SELECT]=0;
+		exitmode=1-exitmode;
+		jump_min_time = 0;
+	}
+	if (exitmode)
+	{
+		if (engineInput->button[SP_BUTTON_START])
+		{
+			engineInput->button[SP_BUTTON_START] = 0;
+			return 1;
+		}
+		return 0;
+	}
 	if (engineInput->button[SP_BUTTON_START])
 	{
 		engineInput->button[SP_BUTTON_START]=0;
 		pausemode=1-pausemode;
 		jump_min_time = 0;
 	}
-	if (engineInput->button[SP_BUTTON_SELECT])
-		return 1;
 	if (pausemode)
 	{
 		if (engineInput->button[SP_BUTTON_DOWN])
@@ -477,6 +524,11 @@ int calc_game(Uint32 steps)
 			savelevelcount();
 		}
 		return 0;
+	}
+	if (engineInput->button[SP_BUTTON_L])
+	{
+		engineInput->button[SP_BUTTON_L]=0;
+		helpmode=1-helpmode;
 	}
 	if (fade)
 	{
@@ -821,9 +873,40 @@ int calc_game(Uint32 steps)
 			sum+=ballsize[i]*2;
 		newBullet(x,y-(sum>>1),(facedir)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,1,spGetRGB(255,255,255));
 	}
-	if (engineInput->button[SP_BUTTON_DOWN])
+	if (engineInput->button[SP_BUTTON_DOWN] && triple_shoot_pos == 0)
 	{
 		engineInput->button[SP_BUTTON_DOWN]=0;
+		triple_shoot_pos = 1;
+		triple_shoot_time = TRIPLE_SHOOT_TIME;
+		int sum=0;
+		int i;
+		for (i=3-ballcount;i<3;i++)
+			sum+=ballsize[i]*2;
+		newBullet(x,y-(sum>>1),(facedir)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,1,spGetRGB(255,255,255));
+	}
+	if (triple_shoot_pos)
+	{
+		triple_shoot_time -= steps;
+		while (triple_shoot_time < 0)
+		{
+			triple_shoot_time += TRIPLE_SHOOT_TIME;
+			int sum=0;
+			int i;
+			for (i=3-ballcount;i<3;i++)
+				sum+=ballsize[i]*2;
+			newBullet(x,y-(sum>>1),(facedir)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,1,spGetRGB(255,255,255));
+			triple_shoot_pos++;
+			if (triple_shoot_pos > 2)
+			{
+				triple_shoot_pos = 0;
+				triple_shoot_time = 0;
+				break;
+			}
+		}
+	}
+	if (engineInput->button[SP_BUTTON_R])
+	{
+		engineInput->button[SP_BUTTON_R]=0;
 		fireBallBullet();
 	}
 

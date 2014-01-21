@@ -34,18 +34,19 @@ havetokill      =  0
   'f'    badcoin                         (  0,255,255) none   (-1.0,-1.0, 1.0, 1.5) waywalker,weapon=2,health=3,shotfq=1000
   'g'    badcoin                         (  0,  0,  0) none   (-1.0,-1.0, 2.0, 2.0) waywalker,weapon=1,health=30,shotfq=500
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
-  'A'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Snowman"
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Move with the D-Pad"
-  'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[a]: Shot - every shot costs 2 snow"
-  'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[w]: Jump - every jump costs 1 snow"
+  'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[a]: Shot (costs 2 snow) [s]: 3 shoots"
+  'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[w]: Jump (costs 1 snow)"
   'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[d]: Broom Bash - 2x damage with a broom!"
-  'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[s]: Ball Attack - costs your big belly"
+  'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[e]: Ball Attack (costs your big belly)"
+  'Y'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[q]: (Un)show mini help"
   'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Menu"
   'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Reload"
   'M'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Licensed under GPLv2+"
-  'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "(C) Ziz (ziz.gp2x.de)"
+  'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Snowman by Ziz (ziz.gp2x.de)"
   'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Music: www.incompetech.com"
-  'L'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Start: Pause and options"
+  'L'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[R]: Pause and options"
+  'Z'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[B]: Exit"
   
 
 [layer0]
@@ -53,14 +54,14 @@ havetokill      =  0
 # 1 of 3 layers
 # in the background
 '                   '
-'         A         '
 '         C         '
 '         D         '
 '         E         '
 '         F         '
 '         G         '
+'         Y         '
 '         L         '
-'                   '
+'         Z         '
 '                   '
 '  H      M      I  '
 '         J         '
@@ -83,21 +84,4 @@ havetokill      =  0
 '}   ***********   {'
 '} O *********** Q {'
 '!^^^^^^^^^^^^^^^^^!'
-[layer2]
-# 3 of 3 layers
-# in the foreground
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
-'                   '
 [end]

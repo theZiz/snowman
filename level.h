@@ -134,6 +134,8 @@ float loadall_i(char* kind);
 
 plevel loadlevel(char* filename)
 {
+	triple_shoot_pos = 0;
+	triple_shoot_time = 0;
 	SDL_RWops *file=SDL_RWFromFile(filename,"rb");
 	if (file==NULL)
 	{
