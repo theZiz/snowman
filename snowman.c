@@ -58,14 +58,16 @@ void resize( Uint16 w, Uint16 h )
 		spFontDelete( font );
 	font = spFontLoad( FONT, FONT_SIZE * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font, SP_FONT_GROUP_ASCII, 65535 ); //whole ASCII
-	spFontAddButton( font, 'R', SP_BUTTON_START_NAME, 65535, SP_ALPHA_COLOR ); //Return == START
-	spFontAddButton( font, 'B', SP_BUTTON_SELECT_NAME, 65535, SP_ALPHA_COLOR ); //Backspace == SELECT
-	spFontAddButton( font, 'q', SP_BUTTON_L_NAME, 65535, SP_ALPHA_COLOR ); // q == L
-	spFontAddButton( font, 'e', SP_BUTTON_R_NAME, 65535, SP_ALPHA_COLOR ); // e == R
-	spFontAddButton( font, 'a', SP_BUTTON_LEFT_NAME, 65535, SP_ALPHA_COLOR ); //a == left button
-	spFontAddButton( font, 'd', SP_BUTTON_RIGHT_NAME, 65535, SP_ALPHA_COLOR ); // d == right button
-	spFontAddButton( font, 'w', SP_BUTTON_UP_NAME, 65535, SP_ALPHA_COLOR ); // w == up button
-	spFontAddButton( font, 's', SP_BUTTON_DOWN_NAME, 65535, SP_ALPHA_COLOR ); // s == down button
+	spFontSetButtonStrategy(SP_FONT_INTELLIGENT);
+	spFontAddButton( font, 'R', SP_BUTTON_START_NAME, spGetRGB(32,32,32), 65535 ); //Return == START
+	spFontAddButton( font, 'B', SP_BUTTON_SELECT_NAME, spGetRGB(32,32,32), 65535 ); //Backspace == SELECT
+	spFontSetButtonStrategy(SP_FONT_BUTTON);
+	spFontAddButton( font, 'q', SP_BUTTON_L_NAME, spGetRGB(32,32,32), 65535 ); // q == L
+	spFontAddButton( font, 'e', SP_BUTTON_R_NAME, spGetRGB(32,32,32), 65535 ); // e == R
+	spFontAddButton( font, 'a', SP_BUTTON_LEFT_NAME, spGetRGB(32,32,32), 65535 ); //a == left button
+	spFontAddButton( font, 'd', SP_BUTTON_RIGHT_NAME, spGetRGB(32,32,32), 65535 ); // d == right button
+	spFontAddButton( font, 'w', SP_BUTTON_UP_NAME, spGetRGB(32,32,32), 65535 ); // w == up button
+	spFontAddButton( font, 's', SP_BUTTON_DOWN_NAME, spGetRGB(32,32,32), 65535 ); // s == down button
 	spFontMulWidth( font, spFloatToFixed(FONT_MUL));
 	
 	addBorder( font, 65535, spGetRGB(128,128,128) );
