@@ -58,6 +58,7 @@ void resize( Uint16 w, Uint16 h )
 		spFontDelete( font );
 	font = spFontLoad( FONT, FONT_SIZE * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font, SP_FONT_GROUP_ASCII, 65535 ); //whole ASCII
+	addBorder( font, 65535, spGetRGB(128,128,128) );
 	spFontSetButtonStrategy(SP_FONT_INTELLIGENT);
 	spFontAddButton( font, 'R', SP_BUTTON_START_NAME, spGetRGB(32,32,32), 65535 ); //Return == START
 	spFontAddButton( font, 'B', SP_BUTTON_SELECT_NAME, spGetRGB(32,32,32), 65535 ); //Backspace == SELECT
@@ -70,7 +71,6 @@ void resize( Uint16 w, Uint16 h )
 	spFontAddButton( font, 's', SP_BUTTON_DOWN_NAME, spGetRGB(32,32,32), 65535 ); // s == down button
 	spFontMulWidth( font, spFloatToFixed(FONT_MUL));
 	
-	addBorder( font, 65535, spGetRGB(128,128,128) );
 
 
 	if ( font_red )
