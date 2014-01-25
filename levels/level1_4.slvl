@@ -35,7 +35,7 @@ failback        = ./levels/level1.slvl
   'b'    enemy1                          (  0,  0,255) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1,weapon=1,shotfq=1000
   'c'    enemy2                          (255,230,  0) none   (-1.5,-1.5, 1.5, 1.5) waywalker,health=3
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
-  'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Press [s] for "
+  'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Press [e] for "
   'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "a very powerful"
   'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "snow ball."
   'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "You lose your"
