@@ -21,6 +21,8 @@ int mapLine;
 
 spNetC4AProfilePointer profile;
 
+char music_name[512] = "";
+
 void addBorder( spFontPointer font, Uint16 fontColor,Uint16 backgroundColor)
 {
 	int i;
@@ -537,6 +539,12 @@ int calc_game(Uint32 steps)
 		int i;
 		for (i=0;i<steps && fade>0;i++)
 		{
+			int new_volume;
+			if (fade > 511)
+				new_volume = (((volumefactor*volume)/(128<<4))>>5)*(fade-512)/512;
+			else
+				new_volume = (((volumefactor*volume)/(128<<4))>>5)*(512-fade)/512;
+			spSoundSetMusicVolume(new_volume);
 			fade--;
 			if (fade==511)
 			{
@@ -567,6 +575,10 @@ int calc_game(Uint32 steps)
 			fade2--;
 			if (fade2==511)
 			{
+				if (fade2 > 511)
+					spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5*(fade2-512)/512);
+				else
+					spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5*(512-fade2)/512);
 				printf("Sprich Freund und tritt ein!\n");
 				char buffer[256];
 				sprintf(buffer,"%s",level->failback);
@@ -984,8 +996,6 @@ void init_snowman()
 	spSoundSetChannels(32);
 	spSoundSetVolume(volume>>4);
 	spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
-	spSoundSetMusic("./sounds/Cold Funk.ogg");
-	spSoundPlayMusic(0, -1);
 	shot_chunk=spSoundLoad("./sounds/plop.wav");
 	ballshot_chunk=spSoundLoad("./sounds/plop2.wav");
 	jump_chunk=spSoundLoad("./sounds/shot.wav");
@@ -1005,6 +1015,7 @@ void quit_snowman()
 	spSoundDelete(jump_chunk);
 	spSoundDelete(negative_chunk);
 	spSoundDelete(hu_chunk);
+	spSoundStopMusic(0);
 	printf("Deleted Sounds\n");
 	spSoundQuit();
 	printf("Quit Sound\n");

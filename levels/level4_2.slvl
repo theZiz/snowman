@@ -1,5 +1,6 @@
 [head]
 # all coordinates are zero-based!
+music           = ./sounds/Stringed Disco.ogg
 width           = 8
 height          = 100
 startx          = 3

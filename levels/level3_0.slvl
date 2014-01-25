@@ -1,5 +1,6 @@
 [head]
 # all coordinates are zero-based!
+music           = ./sounds/RetroFuture Clean.ogg
 width           = 30
 height          = 30
 startx          =  29

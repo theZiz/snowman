@@ -197,6 +197,13 @@ plevel loadlevel(char* filename)
 			return NULL;
 		}
 		pos = getNextWord(pos,buffer,value,1024,' ','\n');
+		if (strcmp_firstsign(word,"music")==0 && strcmp(value,music_name))
+		{
+			sprintf(music_name,"%s",value);
+			spSoundStopMusic(0);
+			spSoundSetMusic(music_name);
+			spSoundPlayMusic(0, -1);
+		}
 		if (strcmp_firstsign(word,"width")==0)
 			level->width=atoi(value);
 		if (strcmp_firstsign(word,"height")==0)

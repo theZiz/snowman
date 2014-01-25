@@ -1,5 +1,6 @@
 [head]
 # all coordinates are zero-based!
+music           = ./sounds/Cold Funk.ogg
 width           = 28
 height          = 52
 startx          = 2

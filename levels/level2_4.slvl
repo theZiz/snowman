@@ -1,5 +1,6 @@
 [head]
 # all coordinates are zero-based!
+music           = ./sounds/Funkorama.ogg
 width           = 61
 height          = 14
 startx          = 30
