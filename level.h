@@ -46,6 +46,7 @@ typedef struct slevel {
 	int havetokill;
 	char failback[256];
 	char no_map;
+	char music[256];
 	SDL_Surface* mini_map;
 } tlevel;
 
@@ -197,12 +198,26 @@ plevel loadlevel(char* filename)
 			return NULL;
 		}
 		pos = getNextWord(pos,buffer,value,1024,' ','\n');
-		if (strcmp_firstsign(word,"music")==0 && strcmp(value,music_name))
+		if (strcmp_firstsign(word,"music")==0)
 		{
-			sprintf(music_name,"%s",value);
-			spSoundStopMusic(0);
-			spSoundSetMusic(music_name);
-			spSoundPlayMusic(0, -1);
+			if (strcmp(value,music_name))
+			{
+				sprintf(music_name,"%s",value);
+				spSoundStopMusic(0);
+				spSoundSetMusic(music_name);
+				spSoundPlayMusic(0, -1);
+			}
+			int i;
+			for (i = strlen(value)-1;i >= 0; i--)
+				if (value[i] == '/')
+					break;
+			i++;
+			int j;
+			for (j = i; j < strlen(value); j++)
+				if (value[j] == '.')
+					break;
+			memcpy(level->music,&value[i],j-i);
+			level->music[j-i] = 0;
 		}
 		if (strcmp_firstsign(word,"width")==0)
 			level->width=atoi(value);

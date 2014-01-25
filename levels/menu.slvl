@@ -44,7 +44,7 @@ havetokill      =  0
   'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Help"
   'Z'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "C4A"
   'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Exit"
-  'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Music from Kevin MacLeod"
+  'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "All Music from Kevin MacLeod"
 
 [layer0]
 # best viewed with a font, where width=height

@@ -318,6 +318,15 @@ void draw_game(void)
 	if (!level->no_map)
 		spRotozoomSurface(screen->w-spFixedToInt(level->mini_map->w*spGetSizeFactor()),spFixedToInt(level->mini_map->h*spGetSizeFactor()),0,level->mini_map,spGetSizeFactor()*2,spGetSizeFactor()*2,0);
 	
+	if (level->music[0] && (level->score > 115.0f))
+	{
+		char buffer[256];
+		sprintf(buffer,"Title: %s",level->music);
+		spSetBlending(spFloatToFixed(level->score-115.0f)/5);
+		spFontDraw(1,screen->h-font->maxheight*2,0,buffer,font);
+		spSetBlending(SP_ONE);
+	}
+	
 	char buffer[64];
 	sprintf(buffer,"Killed %i/%i (Objective: %i)",enemyKilled,level->enemycount,level->havetokill);
 	if (enemyKilled<level->havetokill)
