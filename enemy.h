@@ -38,11 +38,6 @@ void drawenemies(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy)
 			int b=( enemy->symbol->color		 & 31)*8;
 			spEllipse3D(enemy->x-x,y-enemy->y,0,(abs(spSin(w*4))>>SP_HALF_ACCURACY)*(enemy->symbol->measures[2]>>SP_HALF_ACCURACY),enemy->symbol->measures[3],
 										spGetRGB((r*c)>>8,(g*c)>>8,(b*c)>>8));
-			Sint32 to=enemy->x-x-enemy->symbol->measures[2]+(2*enemy->symbol->measures[2])*enemy->health/enemy->maxhealth;
-			spQuad3D(enemy->x-x-enemy->symbol->measures[2],y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,
-							 enemy->x-x-enemy->symbol->measures[2],y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
-																									to,y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
-																									to,y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,enemy->symbol->color);
 		}
 		else
 		if ((enemy->symbol->meshmask & 16)) //enemy with sprite
@@ -71,12 +66,48 @@ void drawenemies(Sint32 x,Sint32 y,Sint32 dx,Sint32 dy)
 									enemy->symbol->measures[2],enemy->symbol->measures[1],0,right,enemySur[enemy->symbol->enemy_kind]->h-1,
 									enemy->symbol->measures[2],enemy->symbol->measures[3],0,right,	0,65535);
 			memcpy( spGetMatrix(), matrix, 16 * sizeof( Sint32 ) ); //glPop()
-			Sint32 to=enemy->x-x-enemy->symbol->measures[2]+(2*enemy->symbol->measures[2])*enemy->health/enemy->maxhealth;
-			spQuad3D(enemy->x-x-enemy->symbol->measures[2],y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,
-							 enemy->x-x-enemy->symbol->measures[2],y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
-																									to,y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
-																									to,y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,enemy->symbol->color);
-		}		
+		}
+		Sint32 from=enemy->x-x-enemy->symbol->measures[2];
+		Sint32 size = (2*enemy->symbol->measures[2])/enemy->maxhealth+1;
+		Uint16 color[2];
+		color[0] = enemy->symbol->color;
+		int R = spGetRFromColor(enemy->symbol->color);
+		int G = spGetGFromColor(enemy->symbol->color);
+		int B = spGetBFromColor(enemy->symbol->color);
+		if (R > 128 || G > 128 || B > 128)
+		{
+			R -= 64;
+			if (R < 0)
+				R = 0;
+			G -= 64;
+			if (G < 0)
+				G = 0;
+			B -= 64;
+			if (B < 0)
+				B = 0;
+		}
+		else
+		{
+			R += 64;
+			if (R > 255)
+				R = 255;
+			G += 64;
+			if (G > 255)
+				G = 255;
+			B += 64;
+			if (B > 255)
+				B = 255;
+		}
+		color[1] = spGetRGB(R,G,B);
+		int i;
+		for (i = 0; i < enemy->health; i++)
+		{
+			spQuad3D(from     ,y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,
+							 from     ,y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
+							 from+size,y-enemy->y+enemy->symbol->measures[3]-(3<<(SP_ACCURACY-5)),0,
+							 from+size,y-enemy->y+enemy->symbol->measures[3]+(3<<(SP_ACCURACY-5)),0,color[i&1]);
+			from+=size;
+		}
 		enemy=enemy->next; 
 	}
 	spSetLight(1);

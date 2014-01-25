@@ -329,8 +329,8 @@ void playerEnemyInteraction()
 				//Squared distance:
 				if (spMax(x-enemy->x,Y-enemy->y) < (1 << SP_ACCURACY+3))
 				{
-					Sint32 d2 = spSquare(x-enemy->x)+spSquare(Y-enemy->y);
-					if (d2 > 0 && d2 <= spSquare(enemy->symbol->measures[2]+ballsize[i]))
+					Sint32 d2 = spSquare(x-enemy->x >> 4)+spSquare(Y-enemy->y >> 4);
+					if (d2 <= spSquare(enemy->symbol->measures[2]+ballsize[i] >> 4))
 					{
 						hit = 1;
 						break;

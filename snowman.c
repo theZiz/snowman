@@ -315,7 +315,9 @@ void draw_game(void)
 	drawBallBullet(camerax,cameray-(4<<SP_ACCURACY));
 	drawparticle(camerax,cameray-(4<<SP_ACCURACY),0,dx,dy);
 	SDL_UnlockSurface(level->mini_map);
-	if (!level->no_map)
+	if (level->no_map)
+		spFontDrawRight(screen->w,0,0,"No map",font_red);
+	else
 		spRotozoomSurface(screen->w-spFixedToInt(level->mini_map->w*spGetSizeFactor()),spFixedToInt(level->mini_map->h*spGetSizeFactor()),0,level->mini_map,spGetSizeFactor()*2,spGetSizeFactor()*2,0);
 	
 	if (level->music[0] && (level->score > 115.0f))
@@ -1051,7 +1053,7 @@ int main(int argc, char **argv)
 	int i;
 	for (i = 0; i 	< CLOUD_COUNT; i++)
 		cloud[i] = NULL;
-	//spSetDefaultWindowSize( 800, 480 );
+	spSetDefaultWindowSize( 400, 300 );
 	spInitCore();
 	spInitNet();
 	profile = spNetC4AGetProfile();
