@@ -573,7 +573,10 @@ int calc_game(Uint32 steps)
 				init_game(level,reset);
 				ballsize[0] = 0;
 				if (gameMode != 0)
+				{
+					ballcount = 1;
 					ballsize[1] = 0;
+				}
 			}
 		}
 		return 0;
