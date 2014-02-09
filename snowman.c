@@ -124,6 +124,9 @@ void resize( Uint16 w, Uint16 h )
 int triple_shoot_pos = 0;
 int triple_shoot_time = 0;
 
+int volume;
+int volumefactor;
+
 #include "level.h"
 #include "particle.h"
 
@@ -189,8 +192,6 @@ spSound* negative_chunk;
 spSound* hu_chunk;
 char broom_exist;
 
-int volume;
-int volumefactor;
 Sint32 angle;
 
 int levelcount;
@@ -279,7 +280,7 @@ void draw_game(void)
 	//	Sint32 dx=25<<SP_ACCURACY;
 	//	Sint32 dy=15<<SP_ACCURACY;
 	//#else
-		Sint32 dy=16<<SP_ACCURACY;
+		Sint32 dy=20<<SP_ACCURACY;
 		Sint32 dx=dy*screen->w/screen->h;
 	//#endif
 	spSetZSet(0);
@@ -450,35 +451,7 @@ void draw_game(void)
 int calc_game(Uint32 steps)
 {
 	PspInput engineInput = spGetInput();
-	if (engineInput->button[SP_BUTTON_L])
-	{
-		volume-=steps;
-		if (volume<0)
-			volume=0;
-		spSoundSetVolume(volume>>4);
-		spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
-		savelevelcount();
-	}
-	if (engineInput->button[SP_BUTTON_R])
-	{
-		volume+=steps;
-		if (volume>(128<<4))
-			volume=128<<4;
-		spSoundSetVolume(volume>>4);
-		spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
-		savelevelcount();
-	}
-	/*if (engineGetMuteKey())
-	{
-		printf("teenage MUTEnt ninja turtles\n");
-		if (volumefactor>0)
-			volumefactor=0;
-		else
-			volumefactor=128<<4;
-		spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
-		savelevelcount();
-		engineSetMuteKey(0);
-	}*/
+
 	if (engineInput->button[SP_BUTTON_SELECT])
 	{
 		engineInput->button[SP_BUTTON_SELECT]=0;
@@ -502,6 +475,24 @@ int calc_game(Uint32 steps)
 	}
 	if (pausemode)
 	{
+		if (engineInput->button[SP_BUTTON_L])
+		{
+			volume-=steps;
+			if (volume<0)
+				volume=0;
+			spSoundSetVolume(volume>>4);
+			spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
+			savelevelcount();
+		}
+		if (engineInput->button[SP_BUTTON_R])
+		{
+			volume+=steps;
+			if (volume>(128<<4))
+				volume=128<<4;
+			spSoundSetVolume(volume>>4);
+			spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
+			savelevelcount();
+		}
 		if (engineInput->button[SP_BUTTON_DOWN])
 		{
 			engineInput->button[SP_BUTTON_DOWN]=0;
@@ -590,9 +581,9 @@ int calc_game(Uint32 steps)
 			if (fade2==511)
 			{
 				if (fade2 > 511)
-					spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5*(fade2-512)/512);
+					spSoundSetMusicVolume((((volumefactor*volume)/(128<<4))>>5)*(fade2-512)/512);
 				else
-					spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5*(512-fade2)/512);
+					spSoundSetMusicVolume((((volumefactor*volume)/(128<<4))>>5)*(512-fade2)/512);
 				printf("Sprich Freund und tritt ein!\n");
 				char buffer[256];
 				sprintf(buffer,"%s",level->failback);

@@ -27,6 +27,7 @@ typedef struct senemy {
 	int weapon; //0 noweapon, 1 weapon1, 2 weapon2 ...
 	int lastshot;
 	int shotfq;
+	int split_counter;
 	penemy next;
 } tenemy;
 
@@ -133,8 +134,63 @@ float loadtime(char* level);
 float loadall(char* kind);
 float loadall_i(char* kind);
 
-plevel loadlevel(char* filename)
+plevel loadlevel(char* filename__)
 {
+	char filename[512];
+	sprintf(filename,"%s",filename__);
+	if (strstr(filename,"commit_") == filename)
+	{
+		char game_name[256];
+		float score;
+		if (strcmp(filename,"commit_easy") == 0)
+		{
+			sprintf(game_name,"snowman_easy");
+			score = loadall("easy");
+		}
+		else
+		{
+			sprintf(game_name,"snowman_hard");
+			score = loadall("hard");
+		}
+		spNetC4AScorePointer c4a_score = NULL;
+		if (spNetC4AGetScore(&c4a_score,profile,game_name,10000) == 0)
+		{
+			while (spNetC4AGetStatus() == SP_C4A_PROGRESS)
+			{
+				spClearTarget(65535);
+				char buffer[256];
+				int t = spNetC4AGetTimeOut();
+				sprintf(buffer,"Loading scores of\n%s (%i.%is)...",game_name,t/1000,t/100%10);
+				spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*2>>1,-1,buffer,font_green);
+				spFlip();
+			}
+			if (spNetC4AGetTaskResult() == 0)
+			{
+				if (spNetC4ACommitScore(profile,game_name,(int)(score*10.0f),&c4a_score,10000) == 0)
+				{
+					while (spNetC4AGetStatus() == SP_C4A_PROGRESS)
+					{
+						spClearTarget(65535);
+						char buffer[256];
+						int t = spNetC4AGetTimeOut();
+						sprintf(buffer,"Commiting score of\n%s (%i.%is)...",game_name,t/1000,t/100%10);
+						spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*2>>1,-1,buffer,font_green);
+						spFlip();
+					}
+					if (spNetC4AGetTaskResult() == 0)
+						sprintf(filename,"./levels/success.slvl");
+					else
+						sprintf(filename,"./levels/error.slvl");
+				}
+				else
+					sprintf(filename,"./levels/error_2.slvl");
+			}
+			else
+				sprintf(filename,"./levels/error.slvl");
+		}
+		else
+			sprintf(filename,"./levels/error.slvl");
+	}
 	triple_shoot_pos = 0;
 	triple_shoot_time = 0;
 	SDL_RWops *file=SDL_RWFromFile(filename,"rb");
@@ -626,7 +682,6 @@ plevel loadlevel(char* filename)
 		if (level->symbollist[level->layer[1][i]]!=NULL && level->symbollist[level->layer[1][i]]->functionmask>255)
 		{
 			printf("Found Enemy \"%c\" at position %i:%i\n",level->symbollist[level->layer[1][i]]->symbol,i%level->width,i/level->width);
-			level->enemycount++;
 			penemy newenemy = (penemy)malloc(sizeof(tenemy));
 			newenemy->next = NULL;
 			newenemy->health = 1;
@@ -634,6 +689,7 @@ plevel loadlevel(char* filename)
 			newenemy->weapon = 0;
 			newenemy->shotfq = 1000;
 			newenemy->lastshot = 0;
+			newenemy->split_counter = 1;
 			//Parsing symbol->function
 			if (lastenemy==NULL)
 				level->firstenemy=newenemy;
@@ -653,6 +709,12 @@ plevel loadlevel(char* filename)
 					newenemy->maxhealth=newenemy->health;
 					printf("Setting health to %i (%s)\n",newenemy->health,value);
 				}				
+				if (strcmp(value,"pissed")==0)
+				{
+					pos2 = getNextWord(pos2,word,value,256,'=','=');
+					newenemy->split_counter=atoi(value);
+					printf("Setting split counter to %i (%s)\n",newenemy->split_counter,value);
+				}				
 				if (strcmp(value,"weapon")==0)
 				{
 					pos2 = getNextWord(pos2,word,value,256,'=','=');
@@ -671,6 +733,11 @@ plevel loadlevel(char* filename)
 			newenemy-> y = ((i/level->width*2+1)<<(SP_ACCURACY))-newenemy->symbol->measures[3];
 			level->layer[1][i]=' ';
 			lastenemy=newenemy;
+			int count = 1;
+			int j;
+			for (j = 0; j < newenemy->split_counter; j++)
+				count <<= 1;
+			level->enemycount += count - 1;
 		}
 	SDL_RWclose(file);
 	level->mini_map = spCreateSurface(level->width,level->height);

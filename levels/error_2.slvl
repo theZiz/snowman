@@ -1,9 +1,9 @@
 [head]
 # all coordinates are zero-based!
 music           = ./sounds/Cold Funk.ogg
-width           = 9
+width           = 13
 height          = 5 
-startx          = 5
+startx          = 7
 starty          = 2
 backgroundcolor = (63,127,255)
 havetokill      =  0
@@ -34,23 +34,24 @@ havetokill      =  0
   'e'    enemy4                          (127,127,127) none   (-1.5,-1.0, 1.5, 1.0) waywalker,weapon=2,health=1,shotfq=1500
   'f'    badcoin                         (  0,255,255) none   (-1.0,-1.0, 1.0, 1.5) waywalker,weapon=2,health=3,shotfq=1000
   'g'    badcoin                         (  0,  0,  0) none   (-1.0,-1.0, 2.0, 2.0) waywalker,weapon=1,health=30,shotfq=500
-  'A'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Success!"
+  'A'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Error..."
+  'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Score already commited?"
   'Z'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Menu"
   'Y'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "C4A"
 
 [layer0]
 # 1 of 3 layers
-'         '
-'  Y   Z  '
-'    A    '
-'         '
-'         '
+'             '
+'  Y       Z  '
+'      A      '
+'      C      '
+'             '
 [layer1]
 # 2 of 3 layers
 # the "game"-layer. With collision!
-'!_______!'
-'}       {'
-'}       {'
-'} P   O {'
-'!^^^^^^^!'
+'!___________!'
+'}           {'
+'}           {'
+'} P       O {'
+'!^^^^^^^^^^^!'
 [end]

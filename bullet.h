@@ -139,6 +139,30 @@ void bulletEnemyInteraction()
 				enemy->health--;
 				if (enemy->health<=0)
 				{
+					enemy->split_counter--;
+					if (enemy->split_counter > 0)
+					{
+						int i;
+						for (i = 0; i < 2; i++)
+						{
+							penemy newenemy = (penemy)malloc(sizeof(tenemy));
+							newenemy->next = NULL;
+							newenemy->health = enemy->maxhealth-1;
+							newenemy->maxhealth=newenemy->health;
+							newenemy->weapon = enemy->weapon;
+							newenemy->shotfq = enemy->shotfq+200;
+							newenemy->lastshot = 0;
+							newenemy->split_counter = enemy->split_counter;
+							penemy lastenemy = level->firstenemy;
+							while (lastenemy->next)
+								lastenemy = lastenemy->next;
+							lastenemy->next=newenemy;
+							newenemy->symbol=level->symbollist[enemy->symbol->symbol-1];
+							newenemy->dx = (i%2 ? -1:1)<<(SP_ACCURACY-7);
+							newenemy-> x = enemy->x;
+							newenemy-> y = enemy->y + SP_ONE/2;
+						}				
+					}
 					enemyKilled++;
 					if (ebefore==NULL)
 						level->firstenemy=enemy->next;

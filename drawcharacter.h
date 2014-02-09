@@ -517,6 +517,25 @@ float loadall(char* kind)
 
 float loadall_i(char* kind)
 {
-	//TODO: Implement!
-	return 1000.0f;
+	char game_name[64];
+	sprintf(game_name,"snowman_%s",kind);
+	spNetC4AScorePointer score = NULL;
+	if (spNetC4AGetScore(&score,NULL,game_name,10000))
+		return -2.0f;
+	while (spNetC4AGetStatus() == SP_C4A_PROGRESS)
+	{
+		spClearTarget(65535);
+		char buffer[256];
+		int t = spNetC4AGetTimeOut();
+		sprintf(buffer,"Loading scores of\n%s (%i.%is)...",game_name,t/1000,t/100%10);
+		spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*2>>1,-1,buffer,font_green);
+		spFlip();
+	}
+	if (spNetC4AGetTaskResult() == 0)
+	{
+		if (score)
+			return (float)score->score/10.0f;
+		return -1.0f;
+	}
+	return -2.0f;
 }

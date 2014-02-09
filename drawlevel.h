@@ -108,7 +108,14 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 								sprintf(buffer,"H:%.1f",now->score);
 						}
 						else
+						if (now->score >= 0.0f)
 							sprintf(buffer,"%.1f",now->score);
+						else
+						switch ((int)now->score)
+						{
+							case -2: sprintf(buffer,"no conn."); break;
+							default: sprintf(buffer,"no score"); break;
+						}
 						spFontDrawMiddle(tx,ty-font->maxheight/2,tz,buffer,font);
 						spSetAlphaTest(0);
 					}
