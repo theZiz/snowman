@@ -3,8 +3,8 @@
 music           = ./sounds/Stringed Disco.ogg
 width           = 40
 height          = 40
-startx          =  4
-starty          = 37
+startx          =  1
+starty          = 38
 backgroundcolor = (255,181,234)
 havetokill      =  0
 failback        = ./levels/level4.slvl
@@ -51,6 +51,47 @@ failback        = ./levels/level4.slvl
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Dummy Text"
 
+[layer0]
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                   t    '
+'                                        '
+'                           t            '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
+'                                        '
 [layer1]
 '                                        '
 '                                        '
@@ -83,13 +124,13 @@ failback        = ./levels/level4.slvl
 '                                        '
 '                                        '
 '                                        '
-'                                        '
-'                                        '
-' [TTT]                                  '
-'"     "                                 '
-'%     %                                 '
-'%     %                                 '
-'%     %                                 '
-'U     U                                 '
-' [TTT]                                  '
+'                                  # #   '
+'                                 #   #  '
+' [TTT]                    # #   #     # '
+'"*****"   *         []   "   " "   #   "'
+'%*****%  * *   #   "  "  %   % %  # #  %'
+'%*****U *   * # #  U  U  U   U U   #   U'
+'%      *     * #    []    [T]   #     # '
+'U*******  [TT]                   #   #  '
+' [TTTTT]                          [T]   '
 [end]

@@ -119,12 +119,12 @@ void calcBallBullet()
 			enemy=enemy->next;
 	}
 	
-	int bx =(( ballbullet.x								>>(SP_ACCURACY))+1)>>1;
+	int bx =(( ballbullet.x								 >>(SP_ACCURACY))+1)>>1;
 	int bxl=(((ballbullet.x-ballBulletSize)>>(SP_ACCURACY))+1)>>1;
 	int bxr=(((ballbullet.x+ballBulletSize)>>(SP_ACCURACY))+1)>>1;
 	int byb=(((ballbullet.y+ballBulletSize)>>(SP_ACCURACY))+1)>>1;
 	int byt=(((ballbullet.y-ballBulletSize)>>(SP_ACCURACY))+1)>>1;
-	int bym=(( ballbullet.y								>>(SP_ACCURACY))+1)>>1;
+	int bym=(( ballbullet.y								 >>(SP_ACCURACY))+1)>>1;
 	//Solid Block on the left?
 	if (bxl>=0 && bxl<level->width)
 	{
