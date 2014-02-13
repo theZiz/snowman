@@ -3,7 +3,7 @@
 music           = ./sounds/Cold Funk.ogg
 width           = 19
 height          = 11
-startx          = 1
+startx          = 9
 starty          = 2
 backgroundcolor = (63,127,255)
 havetokill      =  0
@@ -31,6 +31,7 @@ havetokill      =  0
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
   '*'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) snow
   'O'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadr(./levels/menu.slvl)
+  'P'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) loadc(./levels/c4a.slvl)
   '<'    ./data/arrow_left.obj           (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) left
   '>'    ./data/arrow_right.obj          (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) right
   'a'    badcoin                         (255,  0,  0) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1
@@ -44,11 +45,13 @@ havetokill      =  0
   'A'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Congratulations!"
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "You saved our all asses"
   'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Thx 4 Playing"
-  'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Press Start and try the"
-  'L'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "hard mode now maybe?"
+  'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Now upload your C4A score!"
+  'L'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Press Start and try the hard mode now maybe?"
   'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "All Music from Kevin MacLeod"
   'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "=== Ziz ==="
   'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "http://ziz.delphigl.com"
+  'M'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Menu"
+  'N'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "C4A"
 
 [layer0]
 # best viewed with a font, where width=height
@@ -61,7 +64,7 @@ havetokill      =  0
 '         I         '
 '         L         '
 '                   '
-'         H         '
+'  M      H      N  '
 '         J         '
 '         K         '
 '                   '
@@ -74,9 +77,9 @@ havetokill      =  0
 '}                 {'
 '}                 {'
 '!]               [!'
-'}***#         #***{'
+'}***#    #    #***{'
 '}***           ***{'
 '}* *           * *{'
-'}*O*           *O*{'
+'}*O*           *P*{'
 '!^^^^^^^^^^^^^^^^^!'
 [end]    
