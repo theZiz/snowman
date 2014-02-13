@@ -574,6 +574,12 @@ int calc_game(Uint32 steps)
 	}
 	if (fade2)
 	{
+		int new_volume;
+		if (fade2 > 511)
+			new_volume = (((volumefactor*volume)/(128<<4))>>5)*(fade2-512)/512;
+		else
+			new_volume = (((volumefactor*volume)/(128<<4))>>5)*(512-fade2)/512;
+		spSoundSetMusicVolume(new_volume);
 		int i;
 		for (i=0;i<steps && fade2>0;i++)
 		{

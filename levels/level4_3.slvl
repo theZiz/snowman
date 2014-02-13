@@ -6,7 +6,7 @@ height          = 40
 startx          =  1
 starty          = 38
 backgroundcolor = (255,181,234)
-havetokill      =  0
+havetokill      =  48
 failback        = ./levels/level4.slvl
 #startzoom       =  20.0
 [symbols]
@@ -28,6 +28,7 @@ failback        = ./levels/level4.slvl
   '"'    ./data/cube_nodsites.obj      (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) none
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
   '*'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) snow
+  '+'    none                            (255,255,255) none   (-1.0,-1.0, 1.0, 1.0) easysnow
   'O'    ./data/door.obj                 (114,125,130) none   (-1.0,-1.0, 1.0, 1.0) load(./levels/level4_4.slvl),-44
   '<'    ./data/arrow_left.obj           (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) left
   '>'    ./data/arrow_right.obj          (255,255, 84) quad   (-1.0,-1.0, 1.0, 1.0) right
@@ -40,40 +41,40 @@ failback        = ./levels/level4.slvl
   'h'    enemy4                          ( 63, 63, 63) none   (-1.5,-1.0, 1.5, 1.0) waywalker,weapon=2,health=1,shotfq=500
   'i'    enemy4                          ( 63, 63, 63) none   (-1.5,-1.0, 1.5, 1.0) standing,weapon=2,health=1,shotfq=1500
   'j'    enemy4                          ( 63, 63, 63) none   (-1.5,-1.0, 1.5, 1.0) standing,weapon=2,health=1,shotfq=500
-  'k'    enemy6                          (255,255,127) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1
-  'l'    enemy6                          (255,255,127) none   (-1.5,-1.5, 1.5, 1.5) waywalker,health=2,pissed=2
-  'm'    enemy6                          (255,255,127) none   (-2.0,-2.0, 2.0, 2.0) waywalker,health=3,pissed=3
-  'n'    enemy6                          (255,255,127) none   (-2.5,-2.5, 2.5, 2.5) waywalker,health=4,pissed=4
-  'o'    enemy6                          (255,255,127) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1,weapon=2,shotfq=1000
-  'p'    enemy6                          (255,255,127) none   (-1.5,-1.5, 1.5, 1.5) waywalker,health=2,weapon=2,shotfq=800,pissed=2
-  'q'    enemy6                          (255,255,127) none   (-2.0,-2.0, 2.0, 2.0) waywalker,health=3,weapon=2,shotfq=600,pissed=3
-  'r'    enemy6                          (255,255,127) none   (-2.5,-2.5, 2.5, 2.5) waywalker,health=4,weapon=2,shotfq=400,pissed=4
+  'k'    enemy6                          (255,255,127) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1,weapon=1,shotfq=1000
+  'l'    enemy6                          (255,255,127) none   (-1.5,-1.5, 1.5, 1.5) waywalker,health=2,weapon=1,shotfq=800,pissed=2
+  'm'    enemy6                          (255,255,127) none   (-2.0,-2.0, 2.0, 2.0) waywalker,health=3,weapon=1,shotfq=600,pissed=3
+  'n'    enemy6                          (255,255,127) none   (-2.5,-2.5, 2.5, 2.5) waywalker,health=4,weapon=1,shotfq=400,pissed=4
+  'o'    enemy6                          (255,255,127) none   (-1.0,-1.0, 1.0, 1.0) waywalker,health=1,weapon=2,shotfq=800 
+  'p'    enemy6                          (255,255,127) none   (-1.5,-1.5, 1.5, 1.5) waywalker,health=2,weapon=2,shotfq=600,pissed=2
+  'q'    enemy6                          (255,255,127) none   (-2.0,-2.0, 2.0, 2.0) waywalker,health=3,weapon=2,shotfq=400,pissed=3
+  'r'    enemy6                          (255,255,127) none   (-2.5,-2.5, 2.5, 2.5) waywalker,health=4,weapon=2,shotfq=200,pissed=4
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Dummy Text"
 
 [layer0]
 '                                        '
+'                              t         '
+'                                        '
+'          t                             '
+'                               t        '
+'                                        '
+'                                        '
+'        t                               '
+'                                        '
+'                                        '
+'         t                              '
+'                                        '
+'                                        '
+'                                        '
+'                               t        '
 '                                        '
 '                                        '
 '                                        '
 '                                        '
 '                                        '
 '                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
+'      t              t                  '
 '                                        '
 '                                        '
 '                                        '
@@ -93,44 +94,44 @@ failback        = ./levels/level4.slvl
 '                                        '
 '                                        '
 [layer1]
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                        '
-'                                  # #   '
-'                                 #   #  '
-' [TTT]                    # #   #     # '
-'"*****"   *         []   "   " "   #   "'
-'%*****%  * *   #   "  "  %   % %  # #  %'
-'%*****U *   * # #  U  U  U   U U   #   U'
-'%      *     * #    []    [T]   #     # '
-'U*******  [TT]                   #   #  '
+'  ******+++******                       '
+'  ******+++******       +***[] [T]      '
+'  ******q++******       +[T]      [T]   '
+'  ****[TT]*[]****       #    l       #  '
+'  *[T]    *  [T]*     *"     [] #     " '
+'  #       *     #     *%    #    #    % '
+' "   jj   * jj   " j  *U  *"      "*  U '
+' %     # [T]     %    "   *%**[]**%*   "'
+' U    #     #    U    %  j*%**[]**%*j  %'
+'"  * #       # +  "*  % # *U******U* # %'
+'%  *"   # #   "+  %*  %   * #****# *   %'
+'%  *%  "***"  %+  %*  %   *  [TT]  *   %'
+'%  *%  %***%  %+  {]  U   *        *   U'
+'%  *%  U***U  %+  % *  "  #  l     #  " '
+'%  *U+++[T]+++U+  % ** %     [] #     % '
+'U  * #*******# +  U ** U    #    #    U '
+' " *  #*****#  + "  #*  #  "      "  #  '
+' %     [TTT]     % # #   [T}**[]**{T]   '
+' U               U  #      %**[]**%     '
+'  #  j*******j  #          U******U *   '
+'   [T]*p***p*[T]            #****# +*   '
+'       [TTTT]      []*[]    *[TT]  +*  j'
+'"*****#*******"   #  *  #   *      +#   '
+'%*************%  "   *   " j*   *  # #  '
+'%*************%  %*  #  *%  #   *+  #   '
+'%*************%  %* # # *% # #  *+      '
+'U*************U  %*  #  *%  #   #+      '
+' "***********"   U*+++++*U     # #      '
+' U***********U    #++p++#       #       '
+'  #OO     OO#      [TTT]                '
+'   []  n  []                           j'
+'     [TTT]        ++              # #   '
+'                 +  +            #   #  '
+' [TTT]          +    +    # #   #     # '
+'"*****"   *    +    []   "*+*" "   #   "'
+'%*****%  * *   #   "  "  %+*+% %  # #  %'
+'%*****U *   * # #  U  U  U*o*U U **#** U'
+'%      *     * #    []    [T]   #*****# '
+'U*******  [TT]                   #***#  '
 ' [TTTTT]                          [T]   '
-[end]
+[end] 
