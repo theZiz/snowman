@@ -13,11 +13,19 @@
     </title>
     <descriptions>
       <description lang="en_US">
-       You are a snowman in a platformer at the last hope for your folk.
+       Snowman is an entry I originally made in just one week for the "Homebrew platforming competition" two years ago.
+       Now I participate again for the "Alive and Kicking Coding Competition" with new enemies, new levels, improved engine and c4a support!
+       It is an 2D jump and run with 3D graphics totally rendered with the cpu.
+       In Snowman you are a snowman with the task to kill a given number of enemies per level to unlock the next level. If you collect snow you grow, but nearly every action you do let's you loose snow again like jumping (1 snow), shooting (2 snow) or getting hit by an enemy (3 snow). So you have to economize your snow.
+       Try to solve levels as fast as possible to get a better score in c4a!
       </description>
     </descriptions>
     <description lang="en_US">
-      You are a snowman in a platformer at the last hope for your folk.
+       Snowman is an entry I originally made in just one week for the "Homebrew platforming competition" two years ago.
+       Now I participate again for the "Alive and Kicking Coding Competition" with new enemies, new levels, improved engine and c4a support!
+       It is an 2D jump and run with 3D graphics totally rendered with the cpu.
+       In Snowman you are a snowman with the task to kill a given number of enemies per level to unlock the next level. If you collect snow you grow, but nearly every action you do let's you loose snow again like jumping (1 snow), shooting (2 snow) or getting hit by an enemy (3 snow). So you have to economize your snow.
+       Try to solve levels as fast as possible to get a better score in c4a!
     </description>
     <icon src="./snowman.png"/>
   </package>
@@ -44,3 +52,4 @@
     </categories>
   </application>
 </PXML>
+
