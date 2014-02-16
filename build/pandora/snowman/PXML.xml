@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PXML xmlns="http://openpandora.org/namespaces/PXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PXML_schema.xsd">
   <package id="snowman-reloaded">
-    <version major="2" minor="0" release="0" build="0"/>
+    <version major="2" minor="0" release="1" build="0"/>
     <author name="Ziz" website="http://ziz.openhandhelds.org"/>
     <titles>
       <title lang="en_US">
@@ -33,8 +33,8 @@
     <exec command="./snowman.sh"/>
     <title lang="en_US">Snowman Reloaded</title>
     <author name="Ziz" website="http://ziz.openhandhelds.org"/>
-    <version major="2" minor="0" release="0" build="0"/>
-    <osversion major="1" minor="0" release="0" build="0"/>
+    <version major="2" minor="0" release="1" build="0"/>
+    <osversion major="1" minor="0" release="1" build="0"/>
     <description lang="en_US">A puzzle game. On a tube!</description>
     <icon src="./snowman.png"/>
     <previewpics>
