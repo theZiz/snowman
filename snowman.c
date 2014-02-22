@@ -315,12 +315,12 @@ void draw_game(void)
 	//updating mini map
 	int mx = (spFixedToInt(x)+1)/2;
 	int my = (spFixedToInt(y))/2;
-	if (mx >= 0 && mx < mapLine && my >= 0 && my<=level->mini_map->h)
+	if (mx >= 0 && mx < level->mini_map->w && my >= 0 && my < level->mini_map->h)
 		mapPixel[mx+my*mapLine] = spGetRGB(255,127,127);
 	if (ballsize[0]>0)
 	{
 		my--;
-		if (mx >= 0 && mx < mapLine && my >= 0 && my<=level->mini_map->h)
+		if (mx >= 0 && mx < level->mini_map->w && my >= 0 && my < level->mini_map->h)
 			mapPixel[mx+my*mapLine] = spGetRGB(255,127,127);		
 	}
 	drawcharacter(x-camerax,cameray-y-(4<<SP_ACCURACY),0,facedir);
