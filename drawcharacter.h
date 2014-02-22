@@ -537,7 +537,7 @@ float loadall_i(char* kind)
 	char game_name[64];
 	sprintf(game_name,"snowman_%s",kind);
 	spNetC4AScorePointer score = NULL;
-	if (spNetC4AGetScore(&score,NULL,game_name,10000))
+	if (spNetC4AGetScore(&score,NULL,game_name,15000))
 		return -2.0f;
 	while (spNetC4AGetStatus() == SP_C4A_PROGRESS)
 	{

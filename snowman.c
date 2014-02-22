@@ -558,13 +558,24 @@ int calc_game(Uint32 steps)
 		int i;
 		for (i=0;i<steps && fade>0;i++)
 		{
-			int new_volume;
-			if (fade > 511)
-				new_volume = (((volumefactor*volume)/(128<<4))>>5)*(fade-512)/512;
-			else
-				new_volume = (((volumefactor*volume)/(128<<4))>>5)*(512-fade)/512;
-			spSoundSetMusicVolume(new_volume);
 			fade--;
+			int new_volume;
+			if (level->music_change && fade < 512)
+			{
+				if (fade > 256)
+					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(fade-256)/256;
+				else
+				if (fade == 256)
+				{
+					spSoundStopMusic(0);
+					spSoundSetMusic(music_name);
+					spSoundPlayMusic(0, -1);
+					new_volume = 0;
+				}				
+				else
+					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(256-fade)/256;
+				spSoundSetMusicVolume(new_volume);
+			}
 			if (fade==511)
 			{
 				if (level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->functionmask & 64)
@@ -591,16 +602,27 @@ int calc_game(Uint32 steps)
 	}
 	if (fade2)
 	{
-		int new_volume;
-		if (fade2 > 511)
-			new_volume = (((volumefactor*volume)/(128<<4))>>5)*(fade2-512)/512;
-		else
-			new_volume = (((volumefactor*volume)/(128<<4))>>5)*(512-fade2)/512;
-		spSoundSetMusicVolume(new_volume);
 		int i;
 		for (i=0;i<steps && fade2>0;i++)
 		{
 			fade2--;
+			int new_volume;
+			if (level->music_change && fade2 < 512)
+			{
+				if (fade2 > 256)
+					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(fade2-256)/256;
+				else
+				if (fade2 == 256)
+				{
+					spSoundStopMusic(0);
+					spSoundSetMusic(music_name);
+					spSoundPlayMusic(0, -1);
+					new_volume = 0;
+				}				
+				else
+					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(256-fade2)/256;
+				spSoundSetMusicVolume(new_volume);
+			}
 			if (fade2==511)
 			{
 				if (fade2 > 511)
@@ -1084,6 +1106,7 @@ int main(int argc, char **argv)
 	#endif
 	run_splashscreen(resize);
 	init_snowman();
+	fade2 = 511;
 	if (argc < 2)
 		level=loadlevel("./levels/menu.slvl");
 	else

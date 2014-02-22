@@ -66,6 +66,7 @@ typedef struct slevel {
 	char no_map;
 	char music[256];
 	SDL_Surface* mini_map;
+	char music_change;
 } tlevel;
 
 int levelerrorline;
@@ -170,7 +171,7 @@ plevel loadlevel(char* filename__)
 			score = loadall("hard");
 		}
 		spNetC4AScorePointer c4a_score = NULL;
-		if (spNetC4AGetScore(&c4a_score,profile,game_name,10000) == 0)
+		if (spNetC4AGetScore(&c4a_score,profile,game_name,15000) == 0)
 		{
 			while (spNetC4AGetStatus() == SP_C4A_PROGRESS)
 			{
@@ -183,7 +184,7 @@ plevel loadlevel(char* filename__)
 			}
 			if (spNetC4AGetTaskResult() == 0)
 			{
-				if (spNetC4ACommitScore(profile,game_name,(int)(score*10.0f),&c4a_score,10000) == 0)
+				if (spNetC4ACommitScore(profile,game_name,(int)(score*10.0f),&c4a_score,15000) == 0)
 				{
 					while (spNetC4AGetStatus() == SP_C4A_PROGRESS)
 					{
@@ -253,6 +254,7 @@ plevel loadlevel(char* filename__)
 	level->havetokill=0;
 	level->backgroundcolor=0;
 	level->no_map = 0;
+	level->music_change = 0;
 	sprintf(level->failback,"./levels/menu.slvl");
 //	level->startzoom=1<<SP_ACCURACY;
 	while (firstsign(readnextline(file,buffer,1024))!='[')
@@ -275,10 +277,8 @@ plevel loadlevel(char* filename__)
 		{
 			if (strcmp(value,music_name))
 			{
+				level->music_change = 1;
 				sprintf(music_name,"%s",value);
-				spSoundStopMusic(0);
-				spSoundSetMusic(music_name);
-				spSoundPlayMusic(0, -1);
 			}
 			int i;
 			for (i = strlen(value)-1;i >= 0; i--)
