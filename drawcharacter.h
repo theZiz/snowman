@@ -544,9 +544,10 @@ float loadall_i(char* kind)
 		spClearTarget(65535);
 		char buffer[256];
 		int t = spNetC4AGetTimeOut();
-		sprintf(buffer,"Loading scores of\n%s (%i.%is)...",game_name,t/1000,t/100%10);
-		spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*2>>1,-1,buffer,font_green);
+		sprintf(buffer,"Loading scores of\n%s (%i.%is)...\n",game_name,t/1000,t/100%10);
+		spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*3>>1,-1,buffer,font_green);
 		spFlip();
+		spSleep(10);
 	}
 	if (spNetC4AGetTaskResult() == 0)
 	{

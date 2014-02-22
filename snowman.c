@@ -104,6 +104,7 @@ void resize( Uint16 w, Uint16 h )
 	font_green = spFontLoad( FONT, FONT_SIZE * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_green, SP_FONT_GROUP_ASCII, spGetRGB(128,255,128) ); //whole ASCII
 	addBorder( font_green, spGetRGB(128,255,128), spGetRGB(64,128,64) );
+	spFontAddButton( font_green, 'R', SP_BUTTON_START_NAME, spGetRGB(32,64,32), spGetRGB(192,255,192) ); //Return == START
 	spFontMulWidth( font_green, spFloatToFixed(FONT_MUL));
 
 	//Creating Clouds
