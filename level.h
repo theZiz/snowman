@@ -200,13 +200,19 @@ plevel loadlevel(char* filename__)
 					if (spNetC4AGetTaskResult() == 0)
 						sprintf(filename,"./levels/success.slvl");
 					else
-						sprintf(filename,"./levels/error.slvl");
+					if (strcmp(filename,"commit_easy") == 0)
+						sprintf(filename,"./levels/error-e.slvl");
+					else
+						sprintf(filename,"./levels/error-h.slvl");
 				}
 				else
-					sprintf(filename,"./levels/error_2.slvl");
+					sprintf(filename,"./levels/error-2.slvl");
 			}
 			else
-				sprintf(filename,"./levels/error.slvl");
+			if (strcmp(filename,"commit_easy") == 0)
+				sprintf(filename,"./levels/error-e.slvl");
+			else
+				sprintf(filename,"./levels/error-h.slvl");
 		}
 		else
 			sprintf(filename,"./levels/error.slvl");
@@ -524,8 +530,13 @@ plevel loadlevel(char* filename__)
 			printf("	Function: %s\n",newsymbol->function);
 			if (strcmp(newsymbol->function,"snow")==0)
 				newsymbol->functionmask|=1;
-			if (strcmp(newsymbol->function,"easysnow")==0 && gameMode==0)
-				newsymbol->functionmask|=1;
+			if (strcmp(newsymbol->function,"easysnow")==0)
+			{
+				if (gameMode==0)
+					newsymbol->functionmask|=1;
+				else
+					newsymbol->functionmask|=-1;
+			}
 			char* meow=strstr(newsymbol->function,"load");
 			if (meow)
 			{
