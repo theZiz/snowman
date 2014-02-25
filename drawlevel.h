@@ -23,7 +23,7 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 		for (y = 0; y < level->height; y++)
 		{
 			psymbol now=level->symbollist[level->layer[1][x+y*level->width]];
-			if (now && now->functionmask!=-1)
+			if (now && !now->no_map)
 			{
 				if (now->functionmask & 1)
 				{

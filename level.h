@@ -29,6 +29,7 @@ typedef struct ssymbol {
 	float score;
 	int needed_level;
 	int enemy_kind;
+	char no_map;
 	psymbol next;
 } tsymbol;
 
@@ -395,6 +396,7 @@ plevel loadlevel(char* filename__)
 		printf("New Symbol: %c\n",newsymbol->symbol);
 		
 		newsymbol->meshmask=0;
+		newsymbol->no_map = 0;
 		//Reading Objectfile
 		pos = getNextWord(pos,buffer,word,1024,' ',' ');
 		sprintf(newsymbol->objectfile,"%s",word);
@@ -535,7 +537,7 @@ plevel loadlevel(char* filename__)
 				if (gameMode==0)
 					newsymbol->functionmask|=1;
 				else
-					newsymbol->functionmask|=-1;
+					newsymbol->no_map = 1;
 			}
 			char* meow=strstr(newsymbol->function,"load");
 			if (meow)
