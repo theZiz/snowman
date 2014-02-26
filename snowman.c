@@ -560,23 +560,6 @@ int calc_game(Uint32 steps)
 		for (i=0;i<steps && fade>0;i++)
 		{
 			fade--;
-			int new_volume;
-			if (level->music_change && fade < 512)
-			{
-				if (fade > 256)
-					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(fade-256)/256;
-				else
-				if (fade == 256)
-				{
-					spSoundStopMusic(0);
-					spSoundSetMusic(music_name);
-					spSoundPlayMusic(0, -1);
-					new_volume = 0;
-				}				
-				else
-					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(256-fade)/256;
-				spSoundSetMusicVolume(new_volume);
-			}
 			if (fade==511)
 			{
 				if (level->symbollist[level->layer[1][bx+(byb-1)*level->width]]->functionmask & 64)
@@ -598,6 +581,23 @@ int calc_game(Uint32 steps)
 					ballsize[1] = 0;
 				}
 			}
+			int new_volume;
+			if (level->music_change && fade < 512)
+			{
+				if (fade > 256)
+					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(fade-256)/256;
+				else
+				if (fade == 256)
+				{
+					spSoundStopMusic(0);
+					spSoundSetMusic(music_name);
+					spSoundPlayMusic(0, -1);
+					new_volume = 0;
+				}				
+				else
+					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(256-fade)/256;
+				spSoundSetMusicVolume(new_volume);
+			}
 		}
 		return 0;
 	}
@@ -607,6 +607,15 @@ int calc_game(Uint32 steps)
 		for (i=0;i<steps && fade2>0;i++)
 		{
 			fade2--;
+			if (fade2==511)
+			{
+				printf("Sprich Freund und tritt ein!\n");
+				char buffer[256];
+				sprintf(buffer,"%s",level->failback);
+				freeLevel(level);
+				level=loadlevel(buffer);
+				init_game(level,1);
+			}
 			int new_volume;
 			if (level->music_change && fade2 < 512)
 			{
@@ -623,19 +632,6 @@ int calc_game(Uint32 steps)
 				else
 					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(256-fade2)/256;
 				spSoundSetMusicVolume(new_volume);
-			}
-			if (fade2==511)
-			{
-				if (fade2 > 511)
-					spSoundSetMusicVolume((((volumefactor*volume)/(128<<4))>>5)*(fade2-512)/512);
-				else
-					spSoundSetMusicVolume((((volumefactor*volume)/(128<<4))>>5)*(512-fade2)/512);
-				printf("Sprich Freund und tritt ein!\n");
-				char buffer[256];
-				sprintf(buffer,"%s",level->failback);
-				freeLevel(level);
-				level=loadlevel(buffer);
-				init_game(level,1);
 			}
 		}
 		return 0;
