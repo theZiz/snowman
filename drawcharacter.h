@@ -532,28 +532,50 @@ float loadall(char* kind)
 	return all;
 }
 
-float loadall_i(char* kind)
+float loadall_i(int kind,plevel level)
 {
-	char game_name[64];
-	sprintf(game_name,"snowman_%s",kind);
-	spNetC4AScorePointer score = NULL;
-	if (spNetC4AGetScore(&score,NULL,game_name,15000))
-		return -2.0f;
-	while (spNetC4AGetStatus() == SP_C4A_PROGRESS)
+	if (level->loaded_i_once == 0)
 	{
-		spClearTarget(65535);
-		char buffer[256];
-		int t = spNetC4AGetTimeOut();
-		sprintf(buffer,"Loading scores of\n%s (%i.%is)...\n",game_name,t/1000,t/100%10);
-		spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*3>>1,-1,buffer,font_green);
-		spFlip();
-		spSleep(10);
+		spNetC4AScorePointer score[2] =  {NULL,NULL};
+		spNetC4ATaskPointer task[2] = {NULL,NULL};
+		task[0] = spNetC4AGetScoreParallel(&(score[0]),NULL,"snowman_easy",15000);
+		task[1] = spNetC4AGetScoreParallel(&(score[1]),NULL,"snowman_hard",15000);
+		while (spNetC4AGetStatusParallel(task[0]) == SP_C4A_PROGRESS ||
+				spNetC4AGetStatusParallel(task[1]) == SP_C4A_PROGRESS)
+		{
+			spClearTarget(65535);
+			spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*2>>1,-1,"Loading scores of Snowman",font_green);
+			char buffer[256];
+			int t = spNetC4AGetTimeOutParallel(task[0]);
+			if (spNetC4AGetStatusParallel(task[0]) == SP_C4A_PROGRESS)
+				sprintf(buffer,"Easy: (%i.%is)...",t/1000,t/100%10);
+			else
+				sprintf(buffer,"Easy: Done...");
+			spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*0>>1,-1,buffer,font_green);
+			t = spNetC4AGetTimeOutParallel(task[1]);
+			if (spNetC4AGetStatusParallel(task[1]) == SP_C4A_PROGRESS)
+				sprintf(buffer,"Hard: (%i.%is)...",t/1000,t/100%10);
+			else
+				sprintf(buffer,"Hard: Done...");
+			spFontDrawMiddle(screen->w>>1,screen->h+font->maxheight*2>>1,-1,buffer,font_green);
+			spFlip();
+			spSleep(10);
+		}
+		int i;
+		for (i = 0; i < 2; i++)
+		{
+			if (spNetC4AGetTaskResultParallel(task[i]) == 0)
+			{
+				if (score[i])
+					level->cached_i[i] = (float)score[i]->score/10.0f;
+				else
+					level->cached_i[i] = -1.0f;
+			}
+			else
+				level->cached_i[i] = -2.0f;
+			spNetC4ADeleteTask(task[i]);
+		}
+		level->loaded_i_once = 1;
 	}
-	if (spNetC4AGetTaskResult() == 0)
-	{
-		if (score)
-			return (float)score->score/10.0f;
-		return -1.0f;
-	}
-	return -2.0f;
+	return level->cached_i[kind];
 }

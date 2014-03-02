@@ -68,6 +68,8 @@ typedef struct slevel {
 	char music[256];
 	SDL_Surface* mini_map;
 	char music_change;
+	char loaded_i_once;
+	float cached_i[2];
 } tlevel;
 
 int levelerrorline;
@@ -151,7 +153,7 @@ void freeLevel(plevel level)
 
 float loadtime(char* level);
 float loadall(char* kind);
-float loadall_i(char* kind);
+float loadall_i(int kind,plevel level);
 
 plevel loadlevel(char* filename__)
 {
@@ -264,6 +266,7 @@ plevel loadlevel(char* filename__)
 	level->backgroundcolor=0;
 	level->no_map = 0;
 	level->music_change = 0;
+	level->loaded_i_once = 0;
 	sprintf(level->failback,"./levels/menu.slvl");
 //	level->startzoom=1<<SP_ACCURACY;
 	while (firstsign(readnextline(file,buffer,1024))!='[')
@@ -506,10 +509,10 @@ plevel loadlevel(char* filename__)
 			if (strstr(newsymbol->function,"i_"))
 			{
 				if (strstr(newsymbol->function,"easy"))
-					newsymbol->score = loadall_i("easy");
+					newsymbol->score = loadall_i(0,level);
 				else
 				if (strstr(newsymbol->function,"hard"))
-					newsymbol->score = loadall_i("hard");
+					newsymbol->score = loadall_i(1,level);
 			}
 			else
 			if (strchr(newsymbol->function,'.'))
