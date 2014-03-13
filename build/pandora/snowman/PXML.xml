@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PXML xmlns="http://openpandora.org/namespaces/PXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PXML_schema.xsd">
   <package id="snowman-reloaded">
-    <version major="2" minor="0" release="6" build="0"/>
+    <version major="2" minor="0" release="10" build="0"/>
     <author name="Ziz" website="http://ziz.openhandhelds.org"/>
     <titles>
       <title lang="en_US">
@@ -22,6 +22,10 @@
        Change for version 2.0.0.4: Fixed a little bug, that my crashed the whole game at level change. Maybe the bug CCF mentioned? However, thanks to Foxblock for his great reproducible bugreport!
        Change for version 2.0.0.5: Higher timeout (15s instead of 10s) as people have problems commiting the c4a scores. I hope this helps.
        Change for version 2.0.0.6: Cooler music change + no music break at loading c4a scores.
+       Change for version 2.0.0.7: Fixed an error in the map for hard mode. Furthermore add a "Try again" entry if the c4a submit fails.
+       Change for version 2.0.0.8: Fixed an error since version 2.0.0.7, which broke the hard mode.
+       Change for version 2.0.0.9: Fixed another sound bug. Snowman is now officially bug free. :P
+       Change for version 2.0.0.10: Downloading the two scores now parallel
       </description>
     </descriptions>
     <description lang="en_US">
@@ -34,6 +38,10 @@
        Change for version 2.0.0.4: Fixed a little bug, that my crashed the whole game at level change. Maybe the bug CCF mentioned? However, thanks to Foxblock for his great reproducible bugreport!
        Change for version 2.0.0.5: Higher timeout (15s instead of 10s) as people have problems commiting the c4a scores. I hope this helps.
        Change for version 2.0.0.6: Cooler music change + no music break at loading c4a scores.
+       Change for version 2.0.0.7: Fixed an error in the map for hard mode. Furthermore add a "Try again" entry if the c4a submit fails.
+       Change for version 2.0.0.8: Fixed an error since version 2.0.0.7, which broke the hard mode.
+       Change for version 2.0.0.9: Fixed another sound bug. Snowman is now officially bug free. :P
+       Change for version 2.0.0.10: Downloading the two scores now parallel
     </description>
     <icon src="./snowman.png"/>
   </package>
@@ -41,7 +49,7 @@
     <exec command="./snowman.sh"/>
     <title lang="en_US">Snowman Reloaded</title>
     <author name="Ziz" website="http://ziz.openhandhelds.org"/>
-    <version major="2" minor="0" release="6" build="0"/>
+    <version major="2" minor="0" release="10" build="0"/>
     <osversion major="1" minor="0" release="0" build="0"/>
       <description lang="en_US">
        Snowman is an entry I originally made in just one week for the "Homebrew platforming competition" two years ago.
@@ -53,6 +61,10 @@
        Change for version 2.0.0.4: Fixed a little bug, that my crashed the whole game at level change. Maybe the bug CCF mentioned? However, thanks to Foxblock for his great reproducible bugreport!
        Change for version 2.0.0.5: Higher timeout (15s instead of 10s) as people have problems commiting the c4a scores. I hope this helps.
        Change for version 2.0.0.6: Cooler music change + no music break at loading c4a scores.
+       Change for version 2.0.0.7: Fixed an error in the map for hard mode. Furthermore add a "Try again" entry if the c4a submit fails.
+       Change for version 2.0.0.8: Fixed an error since version 2.0.0.7, which broke the hard mode.
+       Change for version 2.0.0.9: Fixed another sound bug. Snowman is now officially bug free. :P
+       Change for version 2.0.0.10: Downloading the two scores now parallel
       </description>
     <icon src="./snowman.png"/>
     <previewpics>
