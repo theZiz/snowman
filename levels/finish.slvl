@@ -49,7 +49,7 @@ havetokill      =  0
   'L'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Press Start and try the hard mode now maybe?"
   'H'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "All Music from Kevin MacLeod"
   'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "=== Ziz ==="
-  'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "http://ziz.delphigl.com"
+  'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "http://ziz.gp2x.de"
   'M'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Menu"
   'N'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "C4A"
 
