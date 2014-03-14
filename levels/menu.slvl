@@ -38,7 +38,7 @@ havetokill      =  0
   'g'    badcoin                         (  0,  0,  0) none   (-1.0,-1.0, 2.0, 2.0) waywalker,weapon=1,health=30,shotfq=500
   'B'    ./data/broom.obj                (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) broom
   'A'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Snowman"
-  'X'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Entry of the Alive and Kicking Coding Competition"
+  'X'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Reloaded 2014"
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Press Start for Pause & Options"
   'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "More in Help"
   'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Play"
