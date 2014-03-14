@@ -902,6 +902,8 @@ int calc_game(Uint32 steps)
 															 level->symbollist[level->layer[1][bxr+by*level->width]]->form <= 0))	))
 		{
 			speedup+=1<<(SP_ACCURACY-13);
+			if (speedup > (3<<(SP_ACCURACY-5)))
+				speedup = (3<<(SP_ACCURACY-5));
 			y+=speedup;
 			by=((y>>(SP_ACCURACY))+1)>>1;
 		}
