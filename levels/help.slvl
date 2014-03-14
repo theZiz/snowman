@@ -46,8 +46,8 @@ havetokill      =  0
   'M'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Licensed under GPLv2+"
   'J'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Snowman by Ziz (ziz.gp2x.de)"
   'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "All Music: www.incompetech.com"
-  'L'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[R]: Pause and options"
-  'Z'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[B]: Exit"
+  'L'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[R]: Pause, options & exit"
+  'Z'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "[B]: Restart level"
   
 
 [layer0]
@@ -79,7 +79,7 @@ havetokill      =  0
 '}                 {'
 '}                 {'
 '}                 {'
-'}***B*********B***{'
+'}***B    *    B***{'
 '}***#****#****#***{'
 '}   ***********   {'
 '}   ***********   {'

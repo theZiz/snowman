@@ -427,8 +427,8 @@ void draw_game(void)
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*4,-1,"[d]: Broom Bash - 2x damage with a broom!",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*3,-1,"[e]: Ball Attack (costs your big belly)",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*2,-1,"[q]: (Un)show mini help",font);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*1,-1,"[R]: Pause and options",font);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*0,-1,"[B]: Exit",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*1,-1,"[R]: Pause, options & exit",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*0,-1,"[B]: Restart level",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*1,-1,"Kill as many enemies as sayed in the upper left",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*2,-1,"corner of the screen to be able to enter the next",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*3,-1,"level. But economize your snow, it is your health,",font);
@@ -472,12 +472,6 @@ int calc_game(Uint32 steps)
 {
 	PspInput engineInput = spGetInput();
 
-	if (engineInput->button[SP_BUTTON_SELECT])
-	{
-		engineInput->button[SP_BUTTON_SELECT]=0;
-		exitmode=1-exitmode;
-		jump_min_time = 0;
-	}
 	if (exitmode)
 	{
 		if (engineInput->button[SP_BUTTON_START])
@@ -495,6 +489,13 @@ int calc_game(Uint32 steps)
 	}
 	if (pausemode)
 	{
+		if (engineInput->button[SP_BUTTON_SELECT])
+		{
+			engineInput->button[SP_BUTTON_SELECT]=0;
+			exitmode=1-exitmode;
+			jump_min_time = 0;
+		}
+		
 		if (engineInput->button[SP_BUTTON_L])
 		{
 			volume-=steps;
@@ -551,6 +552,12 @@ int calc_game(Uint32 steps)
 		}
 		return 0;
 	}
+	if (engineInput->button[SP_BUTTON_SELECT]) //Reload
+	{
+		engineInput->button[SP_BUTTON_SELECT] = 0;
+		fade2=1024;
+		sprintf(level->failback,"%s",level->name);
+	}	
 	if (engineInput->button[SP_BUTTON_L])
 	{
 		engineInput->button[SP_BUTTON_L]=0;
