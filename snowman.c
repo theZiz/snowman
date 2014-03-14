@@ -930,6 +930,7 @@ int calc_game(Uint32 steps)
 					level->symbollist[level->layer[1][bxr+by*level->width]]->form <= 0)))) //opposite of gravitaion conditions
 		if (ballsize[1]>(0<<(SP_ACCURACY-5)))
 		{
+			engineInput->button[SP_BUTTON_UP] = 0;
 			removesnow(1);
 			newexplosion(PARTICLES,x,y,0,1024,spGetRGB(255,255,255));
 			speedup=-23<<(SP_ACCURACY-9);
