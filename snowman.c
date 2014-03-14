@@ -39,6 +39,7 @@ int mapLine;
 spNetC4AProfilePointer profile;
 
 char music_name[512] = "";
+int acceleration = 0;
 
 void addBorder( spFontPointer font, Uint16 fontColor,Uint16 backgroundColor)
 {
@@ -236,6 +237,7 @@ int getBiggest()
 
 void init_game(plevel level,char complete)
 {
+	acceleration = 0;
 	//loading the score
 	if (level->scoreName[0] != 0)
 		level->topScore = loadtime(level->scoreName);
@@ -826,20 +828,31 @@ int calc_game(Uint32 steps)
 		{
 			if (engineInput->axis[0]==-1)
 			{
-				x-=2<<(SP_ACCURACY-7);
+				acceleration+=2<<(SP_ACCURACY-14);
+				if (acceleration > (2<<(SP_ACCURACY-7)))
+					acceleration = 2<<(SP_ACCURACY-7);
+				//x-=2<<(SP_ACCURACY-7);
+				x-=acceleration;
 				angle+=2<<(SP_ACCURACY-8);
 				if (angle>=2*SP_PI)
 					angle-=2*SP_PI;
 				facedir=0;
 			}
+			else
 			if (engineInput->axis[0]== 1)
 			{
-				x+=2<<(SP_ACCURACY-7);
+				acceleration+=2<<(SP_ACCURACY-14);
+				if (acceleration > (2<<(SP_ACCURACY-7)))
+					acceleration = 2<<(SP_ACCURACY-7);
+				//x+=2<<(SP_ACCURACY-7);
+				x+=acceleration;
 				angle-=2<<(SP_ACCURACY-8);
 				if (angle<0)
 					angle+=2*SP_PI;
 				facedir=1;
 			}
+			else
+				acceleration = 0;
 			//Hm, where am I?
 
 			if (testX(x,ox))
