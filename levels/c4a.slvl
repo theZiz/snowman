@@ -45,9 +45,10 @@ havetokill      =  0
   'H'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "easy"
   'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Hard mode:"
   'J'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "hard"
-  'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Enter the doors to submit scores."
+  'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Enter the doors to submit scores!"
   'M'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "<-Yours->"
   'N'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "<-Best->"
+  'S'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "<-Submit->"
   'X'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "i_easy"
   'Y'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "i_hard"
   'Z'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Back"
@@ -67,7 +68,7 @@ havetokill      =  0
 '      X  N  Y      '
 '        K      Z   '
 '                   '
-'                   '
+'         S         '
 '                   '
 [layer1]
 # 2 of 3 layers
