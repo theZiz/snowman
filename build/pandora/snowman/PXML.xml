@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PXML xmlns="http://openpandora.org/namespaces/PXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PXML_schema.xsd">
   <package id="snowman-reloaded">
-    <version major="2" minor="0" release="10" build="0"/>
+    <version major="2" minor="0" release="11" build="0"/>
     <author name="Ziz" website="http://ziz.openhandhelds.org"/>
     <titles>
       <title lang="en_US">
@@ -42,6 +42,7 @@
        Change for version 2.0.0.8: Fixed an error since version 2.0.0.7, which broke the hard mode.
        Change for version 2.0.0.9: Fixed another sound bug. Snowman is now officially bug free. :P
        Change for version 2.0.0.10: Downloading the two scores now parallel
+       Change for version 2.0.0.11: Hopefully last version with some little improvements like acceleration when moving, maximized falling speed and level reset via select, 
     </description>
     <icon src="./snowman.png"/>
   </package>
@@ -49,7 +50,7 @@
     <exec command="./snowman.sh"/>
     <title lang="en_US">Snowman Reloaded</title>
     <author name="Ziz" website="http://ziz.openhandhelds.org"/>
-    <version major="2" minor="0" release="10" build="0"/>
+    <version major="2" minor="0" release="11" build="0"/>
     <osversion major="1" minor="0" release="0" build="0"/>
       <description lang="en_US">
        Snowman is an entry I originally made in just one week for the "Homebrew platforming competition" two years ago.
@@ -65,6 +66,7 @@
        Change for version 2.0.0.8: Fixed an error since version 2.0.0.7, which broke the hard mode.
        Change for version 2.0.0.9: Fixed another sound bug. Snowman is now officially bug free. :P
        Change for version 2.0.0.10: Downloading the two scores now parallel
+       Change for version 2.0.0.11: Hopefully last version with some little improvements like acceleration when moving, maximized falling speed and level reset via select, 
       </description>
     <icon src="./snowman.png"/>
     <previewpics>
