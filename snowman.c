@@ -479,6 +479,12 @@ int calc_game(Uint32 steps)
 			engineInput->button[SP_BUTTON_START] = 0;
 			return 1;
 		}
+		if (engineInput->button[SP_BUTTON_SELECT])
+		{
+			engineInput->button[SP_BUTTON_SELECT]=0;
+			exitmode=1-exitmode;
+			jump_min_time = 0;
+		}
 		return 0;
 	}
 	if (engineInput->button[SP_BUTTON_START])
