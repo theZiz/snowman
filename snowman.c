@@ -1,3 +1,20 @@
+ /* This file is part of snowman.
+  * Snowman is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 2 of the License, or
+  * (at your option) any later version.
+  * 
+  * Snowman is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  * 
+  * You should have received a copy of the GNU General Public License
+  * along with snowman.  If not, see <http://www.gnu.org/licenses/>
+  * 
+  * For feedback and questions about my Files and Projects please mail me,
+  * Alexander Matthes (Ziz) , zizsdl_at_googlemail.com */
+  
 #include <string.h>
 #include <sparrow3d.h>
 #include "splashscreen.h"
@@ -28,6 +45,7 @@ int mapLine;
 spNetC4AProfilePointer profile;
 
 char music_name[512] = "";
+int acceleration = 0;
 
 void addBorder( spFontPointer font, Uint16 fontColor,Uint16 backgroundColor)
 {
@@ -93,6 +111,7 @@ void resize( Uint16 w, Uint16 h )
 	font_green = spFontLoad( FONT, FONT_SIZE * spGetSizeFactor() >> SP_ACCURACY+scale );
 	spFontAdd( font_green, SP_FONT_GROUP_ASCII, spGetRGB(128,255,128) ); //whole ASCII
 	addBorder( font_green, spGetRGB(128,255,128), spGetRGB(64,128,64) );
+	spFontAddButton( font_green, 'R', SP_BUTTON_START_NAME, spGetRGB(32,64,32), spGetRGB(192,255,192) ); //Return == START
 	spFontMulWidth( font_green, spFloatToFixed(FONT_MUL));
 
 	//Creating Clouds
@@ -224,6 +243,7 @@ int getBiggest()
 
 void init_game(plevel level,char complete)
 {
+	acceleration = 0;
 	//loading the score
 	if (level->scoreName[0] != 0)
 		level->topScore = loadtime(level->scoreName);
@@ -304,12 +324,12 @@ void draw_game(void)
 	//updating mini map
 	int mx = (spFixedToInt(x)+1)/2;
 	int my = (spFixedToInt(y))/2;
-	if (mx >= 0 && mx < mapLine && my >= 0 && my<=level->mini_map->h)
+	if (mx >= 0 && mx < level->mini_map->w && my >= 0 && my < level->mini_map->h)
 		mapPixel[mx+my*mapLine] = spGetRGB(255,127,127);
 	if (ballsize[0]>0)
 	{
 		my--;
-		if (mx >= 0 && mx < mapLine && my >= 0 && my<=level->mini_map->h)
+		if (mx >= 0 && mx < level->mini_map->w && my >= 0 && my < level->mini_map->h)
 			mapPixel[mx+my*mapLine] = spGetRGB(255,127,127);		
 	}
 	drawcharacter(x-camerax,cameray-y-(4<<SP_ACCURACY),0,facedir);
@@ -458,18 +478,18 @@ int calc_game(Uint32 steps)
 {
 	PspInput engineInput = spGetInput();
 
-	if (engineInput->button[SP_BUTTON_SELECT])
-	{
-		engineInput->button[SP_BUTTON_SELECT]=0;
-		exitmode=1-exitmode;
-		jump_min_time = 0;
-	}
 	if (exitmode)
 	{
 		if (engineInput->button[SP_BUTTON_START])
 		{
 			engineInput->button[SP_BUTTON_START] = 0;
 			return 1;
+		}
+		if (engineInput->button[SP_BUTTON_SELECT])
+		{
+			engineInput->button[SP_BUTTON_SELECT]=0;
+			exitmode=1-exitmode;
+			jump_min_time = 0;
 		}
 		return 0;
 	}
@@ -481,6 +501,13 @@ int calc_game(Uint32 steps)
 	}
 	if (pausemode)
 	{
+		if (engineInput->button[SP_BUTTON_SELECT])
+		{
+			engineInput->button[SP_BUTTON_SELECT]=0;
+			exitmode=1-exitmode;
+			jump_min_time = 0;
+		}
+		
 		if (engineInput->button[SP_BUTTON_L])
 		{
 			volume-=steps;
@@ -537,6 +564,12 @@ int calc_game(Uint32 steps)
 		}
 		return 0;
 	}
+	if (engineInput->button[SP_BUTTON_SELECT]) //Reload
+	{
+		engineInput->button[SP_BUTTON_SELECT] = 0;
+		fade2=1024;
+		sprintf(level->failback,"%s",level->name);
+	}	
 	if (spMapGetByID(BUTTON_HELP))
 	{
 		spMapSetByID(BUTTON_HELP,0);
@@ -547,12 +580,6 @@ int calc_game(Uint32 steps)
 		int i;
 		for (i=0;i<steps && fade>0;i++)
 		{
-			int new_volume;
-			if (fade > 511)
-				new_volume = (((volumefactor*volume)/(128<<4))>>5)*(fade-512)/512;
-			else
-				new_volume = (((volumefactor*volume)/(128<<4))>>5)*(512-fade)/512;
-			spSoundSetMusicVolume(new_volume);
 			fade--;
 			if (fade==511)
 			{
@@ -575,33 +602,57 @@ int calc_game(Uint32 steps)
 					ballsize[1] = 0;
 				}
 			}
+			int new_volume;
+			if (level->music_change && fade < 512)
+			{
+				if (fade > 256)
+					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(fade-256)/256;
+				else
+				if (fade == 256)
+				{
+					spSoundStopMusic(0);
+					spSoundSetMusic(music_name);
+					spSoundPlayMusic(0, -1);
+					new_volume = 0;
+				}				
+				else
+					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(256-fade)/256;
+				spSoundSetMusicVolume(new_volume);
+			}
 		}
 		return 0;
 	}
 	if (fade2)
 	{
-		int new_volume;
-		if (fade2 > 511)
-			new_volume = (((volumefactor*volume)/(128<<4))>>5)*(fade2-512)/512;
-		else
-			new_volume = (((volumefactor*volume)/(128<<4))>>5)*(512-fade2)/512;
-		spSoundSetMusicVolume(new_volume);
 		int i;
 		for (i=0;i<steps && fade2>0;i++)
 		{
 			fade2--;
 			if (fade2==511)
 			{
-				if (fade2 > 511)
-					spSoundSetMusicVolume((((volumefactor*volume)/(128<<4))>>5)*(fade2-512)/512);
-				else
-					spSoundSetMusicVolume((((volumefactor*volume)/(128<<4))>>5)*(512-fade2)/512);
 				printf("Sprich Freund und tritt ein!\n");
 				char buffer[256];
 				sprintf(buffer,"%s",level->failback);
 				freeLevel(level);
 				level=loadlevel(buffer);
 				init_game(level,1);
+			}
+			int new_volume;
+			if (level->music_change && fade2 < 512)
+			{
+				if (fade2 > 256)
+					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(fade2-256)/256;
+				else
+				if (fade2 == 256)
+				{
+					spSoundStopMusic(0);
+					spSoundSetMusic(music_name);
+					spSoundPlayMusic(0, -1);
+					new_volume = 0;
+				}				
+				else
+					new_volume = (((volumefactor*volume)/(128<<4))>>5)*(256-fade2)/256;
+				spSoundSetMusicVolume(new_volume);
 			}
 		}
 		return 0;
@@ -796,20 +847,31 @@ int calc_game(Uint32 steps)
 		{
 			if (engineInput->axis[0]==-1)
 			{
-				x-=2<<(SP_ACCURACY-7);
+				acceleration+=2<<(SP_ACCURACY-14);
+				if (acceleration > (2<<(SP_ACCURACY-7)))
+					acceleration = 2<<(SP_ACCURACY-7);
+				//x-=2<<(SP_ACCURACY-7);
+				x-=acceleration;
 				angle+=2<<(SP_ACCURACY-8);
 				if (angle>=2*SP_PI)
 					angle-=2*SP_PI;
 				facedir=0;
 			}
+			else
 			if (engineInput->axis[0]== 1)
 			{
-				x+=2<<(SP_ACCURACY-7);
+				acceleration+=2<<(SP_ACCURACY-14);
+				if (acceleration > (2<<(SP_ACCURACY-7)))
+					acceleration = 2<<(SP_ACCURACY-7);
+				//x+=2<<(SP_ACCURACY-7);
+				x+=acceleration;
 				angle-=2<<(SP_ACCURACY-8);
 				if (angle<0)
 					angle+=2*SP_PI;
 				facedir=1;
 			}
+			else
+				acceleration = 0;
 			//Hm, where am I?
 
 			if (testX(x,ox))
@@ -859,6 +921,8 @@ int calc_game(Uint32 steps)
 															 level->symbollist[level->layer[1][bxr+by*level->width]]->form <= 0))	))
 		{
 			speedup+=1<<(SP_ACCURACY-13);
+			if (speedup > (3<<(SP_ACCURACY-5)))
+				speedup = (3<<(SP_ACCURACY-5));
 			y+=speedup;
 			by=((y>>(SP_ACCURACY))+1)>>1;
 		}
@@ -887,6 +951,7 @@ int calc_game(Uint32 steps)
 					level->symbollist[level->layer[1][bxr+by*level->width]]->form <= 0)))) //opposite of gravitaion conditions
 		if (ballsize[1]>(0<<(SP_ACCURACY-5)))
 		{
+			spMapSetByID(BUTTON_JUMP,0);
 			removesnow(1);
 			newexplosion(PARTICLES,x,y,0,1024,spGetRGB(255,255,255));
 			speedup=-23<<(SP_ACCURACY-9);
@@ -895,18 +960,18 @@ int calc_game(Uint32 steps)
 	}
 
 	//Shooting
-	if (engineInput->button[SP_BUTTON_LEFT])
+	if (spMapGetByID(BUTTON_SHOT))
 	{
-		engineInput->button[SP_BUTTON_LEFT]=0;
+		spMapSetByID(BUTTON_SHOT,0);
 		int sum=0;
 		int i;
 		for (i=3-ballcount;i<3;i++)
 			sum+=ballsize[i]*2;
 		newBullet(x,y-(sum>>1),(facedir)?(1<<(SP_ACCURACY-5)):(-1<<(SP_ACCURACY-5)),0,1000,1,spGetRGB(255,255,255));
 	}
-	if (engineInput->button[SP_BUTTON_DOWN] && triple_shoot_pos == 0)
+	if (spMapGetByID(BUTTON_TRIPPLE) && triple_shoot_pos == 0)
 	{
-		engineInput->button[SP_BUTTON_DOWN]=0;
+		spMapSetByID(BUTTON_TRIPPLE,0);
 		triple_shoot_pos = 1;
 		triple_shoot_time = TRIPLE_SHOOT_TIME;
 		int sum=0;
@@ -935,9 +1000,9 @@ int calc_game(Uint32 steps)
 			}
 		}
 	}
-	if (engineInput->button[SP_BUTTON_R])
+	if (spMapGetByID(BUTTON_BALL))
 	{
-		engineInput->button[SP_BUTTON_R]=0;
+		spMapSetByID(BUTTON_BALL,0);
 		fireBallBullet();
 	}
 
@@ -1037,6 +1102,7 @@ void init_snowman()
 	spMapButtonAdd(BUTTON_BALL,"ball","ball",SP_BUTTON_R);
 	spMapButtonAdd(BUTTON_HELP,"help","Help",SP_BUTTON_L);
 	spMapLoad("snowman","controls.cfg");
+	spMapSave("snowman","controls.cfg");
 }
 
 void quit_snowman()
@@ -1073,7 +1139,7 @@ int main(int argc, char **argv)
 	int i;
 	for (i = 0; i 	< CLOUD_COUNT; i++)
 		cloud[i] = NULL;
-	//spSetDefaultWindowSize( 800, 480 );
+	spSetDefaultWindowSize( 800, 480 );
 	spInitCore();
 	spInitNet();
 	profile = spNetC4AGetProfile();
@@ -1087,6 +1153,7 @@ int main(int argc, char **argv)
 	#endif
 	run_splashscreen(resize);
 	init_snowman();
+	fade2 = 511;
 	if (argc < 2)
 		level=loadlevel("./levels/menu.slvl");
 	else

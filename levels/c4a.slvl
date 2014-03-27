@@ -19,6 +19,8 @@ havetokill      =  0
   '_'    ./data/cube_nolrdsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
   '}'    ./data/cube_noludsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
   '{'    ./data/cube_norudsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  ']'    ./data/cube_nolsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
+  '['    ./data/cube_norsites.obj      (223,245,255) quad   (-1.0,-1.0, 1.0, 1.0) none
   '|'    ./data/tree_stem.obj            (140,127,  0) quad   (-3.0,-1.0, 3.0, 3.0) none
   '|'    ./data/tree_crown.obj           (31 ,255, 31) quad   (-3.0,-1.0, 3.0, 3.0) none
   '?'    none                            (31 ,255, 31) quad   (-1.0, 0.0, 1.0, 1.0) none
@@ -39,15 +41,16 @@ havetokill      =  0
   'B'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Here you can submit your super scores to the"
   'C'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "C4A server. A super score is the sum of all"
   'D'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "your times you needed for a level."
-  'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "You have one for the easy and one for the hard mode."  
+  'E'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "You have one for the easy and for the hard mode."  
   'F'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "The super scores are:"
   'G'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Easy mode:"
   'H'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "easy"
   'I'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Hard mode:"
   'J'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "hard"
-  'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Enter the doors to submit scores."
+  'K'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Enter the doors to submit scores!"
   'M'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "<-Yours->"
   'N'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "<-Best->"
+  'S'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "<-Submit->"
   'X'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "i_easy"
   'Y'    score                           (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "i_hard"
   'Z'    text                            (86,  22,  0) none   (-1.0,-1.0, 1.0, 1.0) "Back"
@@ -67,7 +70,7 @@ havetokill      =  0
 '      X  N  Y      '
 '        K      Z   '
 '                   '
-'                   '
+'         S         '
 '                   '
 [layer1]
 # 2 of 3 layers
@@ -80,11 +83,11 @@ havetokill      =  0
 '}*               *{'
 '}*  #****#****#  *{'
 '}*               *{'
-'!}               {!'
+'!]               [!'
 '}***           ***{'
 '}***#         #***{'
 '}                 {'
-'!}               {!'
+'!]               [!'
 '}*****P*****Q**O**{'
 '!^^^^^^^^^^^^^^^^^!'
 [end]

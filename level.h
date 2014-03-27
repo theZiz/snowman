@@ -1,3 +1,20 @@
+ /* This file is part of snowman.
+  * Snowman is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 2 of the License, or
+  * (at your option) any later version.
+  * 
+  * Snowman is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  * 
+  * You should have received a copy of the GNU General Public License
+  * along with snowman.  If not, see <http://www.gnu.org/licenses/>
+  * 
+  * For feedback and questions about my Files and Projects please mail me,
+  * Alexander Matthes (Ziz) , zizsdl_at_googlemail.com */
+  
 typedef struct ssymbol *psymbol;
 typedef struct ssymbol {
 	char symbol;
@@ -12,6 +29,7 @@ typedef struct ssymbol {
 	float score;
 	int needed_level;
 	int enemy_kind;
+	char no_map;
 	psymbol next;
 } tsymbol;
 
@@ -49,6 +67,9 @@ typedef struct slevel {
 	char no_map;
 	char music[256];
 	SDL_Surface* mini_map;
+	char music_change;
+	char loaded_i_once;
+	float cached_i[2];
 } tlevel;
 
 int levelerrorline;
@@ -132,7 +153,7 @@ void freeLevel(plevel level)
 
 float loadtime(char* level);
 float loadall(char* kind);
-float loadall_i(char* kind);
+float loadall_i(int kind,plevel level);
 
 plevel loadlevel(char* filename__)
 {
@@ -153,40 +174,48 @@ plevel loadlevel(char* filename__)
 			score = loadall("hard");
 		}
 		spNetC4AScorePointer c4a_score = NULL;
-		if (spNetC4AGetScore(&c4a_score,profile,game_name,10000) == 0)
+		if (spNetC4AGetScore(&c4a_score,profile,game_name,15000) == 0)
 		{
 			while (spNetC4AGetStatus() == SP_C4A_PROGRESS)
 			{
 				spClearTarget(65535);
 				char buffer[256];
 				int t = spNetC4AGetTimeOut();
-				sprintf(buffer,"Loading scores of\n%s (%i.%is)...",game_name,t/1000,t/100%10);
-				spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*2>>1,-1,buffer,font_green);
+				sprintf(buffer,"Loading scores of\n%s (%i.%is)...\n",game_name,t/1000,t/100%10);
+				spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*3>>1,-1,buffer,font_green);
 				spFlip();
+				spSleep(10);
 			}
 			if (spNetC4AGetTaskResult() == 0)
 			{
-				if (spNetC4ACommitScore(profile,game_name,(int)(score*10.0f),&c4a_score,10000) == 0)
+				if (spNetC4ACommitScore(profile,game_name,(int)(score*10.0f),&c4a_score,15000) == 0)
 				{
 					while (spNetC4AGetStatus() == SP_C4A_PROGRESS)
 					{
 						spClearTarget(65535);
 						char buffer[256];
 						int t = spNetC4AGetTimeOut();
-						sprintf(buffer,"Commiting score of\n%s (%i.%is)...",game_name,t/1000,t/100%10);
-						spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*2>>1,-1,buffer,font_green);
+						sprintf(buffer,"Commiting score of\n%s (%i.%is)...\n",game_name,t/1000,t/100%10);
+						spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*3>>1,-1,buffer,font_green);
 						spFlip();
+						spSleep(10);
 					}
 					if (spNetC4AGetTaskResult() == 0)
 						sprintf(filename,"./levels/success.slvl");
 					else
-						sprintf(filename,"./levels/error.slvl");
+					if (strcmp(filename,"commit_easy") == 0)
+						sprintf(filename,"./levels/error-e.slvl");
+					else
+						sprintf(filename,"./levels/error-h.slvl");
 				}
 				else
-					sprintf(filename,"./levels/error_2.slvl");
+					sprintf(filename,"./levels/error-2.slvl");
 			}
 			else
-				sprintf(filename,"./levels/error.slvl");
+			if (strcmp(filename,"commit_easy") == 0)
+				sprintf(filename,"./levels/error-e.slvl");
+			else
+				sprintf(filename,"./levels/error-h.slvl");
 		}
 		else
 			sprintf(filename,"./levels/error.slvl");
@@ -236,6 +265,8 @@ plevel loadlevel(char* filename__)
 	level->havetokill=0;
 	level->backgroundcolor=0;
 	level->no_map = 0;
+	level->music_change = 0;
+	level->loaded_i_once = 0;
 	sprintf(level->failback,"./levels/menu.slvl");
 //	level->startzoom=1<<SP_ACCURACY;
 	while (firstsign(readnextline(file,buffer,1024))!='[')
@@ -258,10 +289,8 @@ plevel loadlevel(char* filename__)
 		{
 			if (strcmp(value,music_name))
 			{
+				level->music_change = 1;
 				sprintf(music_name,"%s",value);
-				spSoundStopMusic(0);
-				spSoundSetMusic(music_name);
-				spSoundPlayMusic(0, -1);
 			}
 			int i;
 			for (i = strlen(value)-1;i >= 0; i--)
@@ -370,6 +399,7 @@ plevel loadlevel(char* filename__)
 		printf("New Symbol: %c\n",newsymbol->symbol);
 		
 		newsymbol->meshmask=0;
+		newsymbol->no_map = 0;
 		//Reading Objectfile
 		pos = getNextWord(pos,buffer,word,1024,' ',' ');
 		sprintf(newsymbol->objectfile,"%s",word);
@@ -479,10 +509,10 @@ plevel loadlevel(char* filename__)
 			if (strstr(newsymbol->function,"i_"))
 			{
 				if (strstr(newsymbol->function,"easy"))
-					newsymbol->score = loadall_i("easy");
+					newsymbol->score = loadall_i(0,level);
 				else
 				if (strstr(newsymbol->function,"hard"))
-					newsymbol->score = loadall_i("hard");
+					newsymbol->score = loadall_i(1,level);
 			}
 			else
 			if (strchr(newsymbol->function,'.'))
@@ -505,8 +535,13 @@ plevel loadlevel(char* filename__)
 			printf("	Function: %s\n",newsymbol->function);
 			if (strcmp(newsymbol->function,"snow")==0)
 				newsymbol->functionmask|=1;
-			if (strcmp(newsymbol->function,"easysnow")==0 && gameMode==0)
-				newsymbol->functionmask|=1;
+			if (strcmp(newsymbol->function,"easysnow")==0)
+			{
+				if (gameMode==0)
+					newsymbol->functionmask|=1;
+				else
+					newsymbol->no_map = 1;
+			}
 			char* meow=strstr(newsymbol->function,"load");
 			if (meow)
 			{

@@ -1,3 +1,20 @@
+ /* This file is part of snowman.
+  * Snowman is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 2 of the License, or
+  * (at your option) any later version.
+  * 
+  * Snowman is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  * 
+  * You should have received a copy of the GNU General Public License
+  * along with snowman.  If not, see <http://www.gnu.org/licenses/>
+  * 
+  * For feedback and questions about my Files and Projects please mail me,
+  * Alexander Matthes (Ziz) , zizsdl_at_googlemail.com */
+  
 char removesnow(int count)
 {
 	if (ballcount==1)
@@ -515,27 +532,50 @@ float loadall(char* kind)
 	return all;
 }
 
-float loadall_i(char* kind)
+float loadall_i(int kind,plevel level)
 {
-	char game_name[64];
-	sprintf(game_name,"snowman_%s",kind);
-	spNetC4AScorePointer score = NULL;
-	if (spNetC4AGetScore(&score,NULL,game_name,10000))
-		return -2.0f;
-	while (spNetC4AGetStatus() == SP_C4A_PROGRESS)
+	if (level->loaded_i_once == 0)
 	{
-		spClearTarget(65535);
-		char buffer[256];
-		int t = spNetC4AGetTimeOut();
-		sprintf(buffer,"Loading scores of\n%s (%i.%is)...",game_name,t/1000,t/100%10);
-		spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*2>>1,-1,buffer,font_green);
-		spFlip();
+		spNetC4AScorePointer score[2] =  {NULL,NULL};
+		spNetC4ATaskPointer task[2] = {NULL,NULL};
+		task[0] = spNetC4AGetScoreParallel(&(score[0]),NULL,"snowman_easy",15000);
+		task[1] = spNetC4AGetScoreParallel(&(score[1]),NULL,"snowman_hard",15000);
+		while (spNetC4AGetStatusParallel(task[0]) == SP_C4A_PROGRESS ||
+				spNetC4AGetStatusParallel(task[1]) == SP_C4A_PROGRESS)
+		{
+			spClearTarget(65535);
+			spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*2>>1,-1,"Loading scores of Snowman",font_green);
+			char buffer[256];
+			int t = spNetC4AGetTimeOutParallel(task[0]);
+			if (spNetC4AGetStatusParallel(task[0]) == SP_C4A_PROGRESS)
+				sprintf(buffer,"Easy: (%i.%is)...",t/1000,t/100%10);
+			else
+				sprintf(buffer,"Easy: Done...");
+			spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*0>>1,-1,buffer,font_green);
+			t = spNetC4AGetTimeOutParallel(task[1]);
+			if (spNetC4AGetStatusParallel(task[1]) == SP_C4A_PROGRESS)
+				sprintf(buffer,"Hard: (%i.%is)...",t/1000,t/100%10);
+			else
+				sprintf(buffer,"Hard: Done...");
+			spFontDrawMiddle(screen->w>>1,screen->h+font->maxheight*2>>1,-1,buffer,font_green);
+			spFlip();
+			spSleep(10);
+		}
+		int i;
+		for (i = 0; i < 2; i++)
+		{
+			if (spNetC4AGetTaskResultParallel(task[i]) == 0)
+			{
+				if (score[i])
+					level->cached_i[i] = (float)score[i]->score/10.0f;
+				else
+					level->cached_i[i] = -1.0f;
+			}
+			else
+				level->cached_i[i] = -2.0f;
+			spNetC4ADeleteTask(task[i]);
+		}
+		level->loaded_i_once = 1;
 	}
-	if (spNetC4AGetTaskResult() == 0)
-	{
-		if (score)
-			return (float)score->score/10.0f;
-		return -1.0f;
-	}
-	return -2.0f;
+	return level->cached_i[kind];
 }
