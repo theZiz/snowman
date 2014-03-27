@@ -13,11 +13,19 @@
     </title>
     <descriptions>
       <description lang="en_US">
-       You are a snowman in a platformer at the last hope for your folk.
+       Snowman is a game about a snowman fighting against coal, water drops and other archenemies of a man made of snow.
+       Snowman won a third price at the "Homebrew platforming competition" and is back now with better graphics, more levels, more enemies and C4A support!
+       Furthermore it is an entrant for the "Alive and Kicking Coding Compo".
+       
+       Because of the big change in the levels I decided to not load savegames from the old version of snowman. However Snowman Reloaded uses another appdata folder as the original snowman, so if you like the old version more, you can play with both parallel.
       </description>
     </descriptions>
     <description lang="en_US">
-      You are a snowman in a platformer at the last hope for your folk.
+       Snowman is a game about a snowman fighting against coal, water drops and other archenemies of a man made of snow.
+       Snowman won a third price at the "Homebrew platforming competition" and is back now with better graphics, more levels, more enemies and C4A support!
+       Furthermore it is an entrant for the "Alive and Kicking Coding Compo".
+
+       Because of the big change in the levels I decided to not load savegames from the old version of snowman. However Snowman Reloaded uses another appdata folder as the original snowman, so if you like the old version more, you can play with both parallel.
     </description>
     <icon src="./snowman.png"/>
   </package>

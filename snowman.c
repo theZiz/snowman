@@ -1,6 +1,12 @@
 #include <string.h>
 #include <sparrow3d.h>
 #include "splashscreen.h"
+#define BUTTON_SHOT 0
+#define BUTTON_TRIPPLE 1
+#define BUTTON_JUMP 2
+#define BUTTON_BROOM 3
+#define BUTTON_BALL 4
+#define BUTTON_HELP 5
 //#define SCALE_UP
 spFontPointer font = NULL;
 spFontPointer font_red = NULL;
@@ -402,11 +408,11 @@ void draw_game(void)
 		spInterpolateTargetToColor(0,SP_ONE/2);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*8,-1,"Controls:",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*7,-1,"Move with the D-Pad",font);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*6,-1,"[a]: Shot (costs 2 snow) [s]: 3 shoots",font);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*5,-1,"[w]: Jump (costs 1 snow)",font);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*4,-1,"[d]: Broom Bash - 2x damage with a broom!",font);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*3,-1,"[e]: Ball Attack (costs your big belly)",font);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*2,-1,"[q]: (Un)show mini help",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*6,-1,"{shot}: Shot (costs 2 snow) {triple}: 3 shoots",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*5,-1,"{jump}: Jump (costs 1 snow)",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*4,-1,"{broom}: Broom Bash - 2x damage with a broom!",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*3,-1,"{ball}: Ball Attack (costs your big belly)",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*2,-1,"{help}: (Un)show mini help",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*1,-1,"[R]: Pause and options",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*0,-1,"[B]: Exit",font);
 		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*1,-1,"Kill as many enemies as sayed in the upper left",font);
@@ -531,9 +537,9 @@ int calc_game(Uint32 steps)
 		}
 		return 0;
 	}
-	if (engineInput->button[SP_BUTTON_L])
+	if (spMapGetByID(BUTTON_HELP))
 	{
-		engineInput->button[SP_BUTTON_L]=0;
+		spMapSetByID(BUTTON_HELP,0);
 		helpmode=1-helpmode;
 	}
 	if (fade)
@@ -645,7 +651,7 @@ int calc_game(Uint32 steps)
 		bulletPlayerInteraction();
 		bulletEnvironmentInteraction();
 
-		if (broom_exist && in_hit<=0 && engineInput->button[SP_BUTTON_RIGHT])
+		if (broom_exist && in_hit<=0 && spMapGetByID(BUTTON_BROOM))
 			in_hit=864;
 		if (in_hit==768)
 			broomEnemyInteraction(facedir);
@@ -867,7 +873,7 @@ int calc_game(Uint32 steps)
 		playerEnemyInteraction();
 	}
 	//Jump
-	if (engineInput->button[SP_BUTTON_UP] && jump_min_time <= 0)
+	if (spMapGetByID(BUTTON_JUMP) && jump_min_time <= 0)
 	{
 		jump_min_time = TIME_BETWEEN_TWO_JUMPS;
 		int biggest=getBiggest();
@@ -1017,6 +1023,20 @@ void init_snowman()
 	spSetAmbientLightColor(1 << SP_ACCURACY-1,1 << SP_ACCURACY-1,1 << SP_ACCURACY-1);
 	spSetLightColor(1,1 << SP_ACCURACY,1 << SP_ACCURACY,1 << SP_ACCURACY);
 	spUsePrecalculatedNormals(1);
+	//Mapping
+	spMapPoolAdd(SP_BUTTON_LEFT ,"[a]");
+	spMapPoolAdd(SP_BUTTON_RIGHT,"[d]");
+	spMapPoolAdd(SP_BUTTON_UP   ,"[w]");
+	spMapPoolAdd(SP_BUTTON_DOWN ,"[s]");
+	spMapPoolAdd(SP_BUTTON_L    ,"[q]");
+	spMapPoolAdd(SP_BUTTON_R    ,"[e]");
+	spMapButtonAdd(BUTTON_SHOT,"shot","Shot",SP_BUTTON_LEFT);
+	spMapButtonAdd(BUTTON_TRIPPLE,"tripple","Tripple Shot",SP_BUTTON_DOWN);
+	spMapButtonAdd(BUTTON_JUMP,"jump","Jump",SP_BUTTON_UP);
+	spMapButtonAdd(BUTTON_BROOM,"broom","Broom",SP_BUTTON_RIGHT);
+	spMapButtonAdd(BUTTON_BALL,"ball","ball",SP_BUTTON_R);
+	spMapButtonAdd(BUTTON_HELP,"help","Help",SP_BUTTON_L);
+	spMapLoad("snowman","controls.cfg");
 }
 
 void quit_snowman()
