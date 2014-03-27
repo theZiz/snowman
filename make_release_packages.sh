@@ -1,7 +1,7 @@
 #!/bin/sh
 # Change the folder to YOUR sparrow3d folder!
 PROGRAM="snowman"
-VERSION="2.0.0.14"
+VERSION="2.0.0.16"
 DEST=./build/*
 echo "<html>" > index.htm
 echo "<head>" >> index.htm

@@ -88,7 +88,6 @@ void resize( Uint16 w, Uint16 h )
 	spFontSetButtonStrategy(SP_FONT_INTELLIGENT);
 	spFontAddButton( font, 'R', SP_BUTTON_START_NAME, spGetRGB(32,32,32), 65535 ); //Return == START
 	spFontAddButton( font, 'B', SP_BUTTON_SELECT_NAME, spGetRGB(32,32,32), 65535 ); //Backspace == SELECT
-	spFontSetButtonStrategy(SP_FONT_BUTTON);
 	spFontAddButton( font, 'q', SP_BUTTON_L_NAME, spGetRGB(32,32,32), 65535 ); // q == L
 	spFontAddButton( font, 'e', SP_BUTTON_R_NAME, spGetRGB(32,32,32), 65535 ); // e == R
 	spFontAddButton( font, 'a', SP_BUTTON_LEFT_NAME, spGetRGB(32,32,32), 65535 ); //a == left button
@@ -240,6 +239,8 @@ int getBiggest()
 #include "drawcharacter.h"
 #include "bullet.h"
 #include "ballbullet.h"
+
+int pause_sel = 0;
 
 void init_game(plevel level,char complete)
 {
@@ -446,20 +447,58 @@ void draw_game(void)
 	if (pausemode)
 	{
 		spInterpolateTargetToColor(0,SP_ONE*3/4);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*7*3/4,-1,"Press [R] to unpause",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*16/2,-1,"Press [R] to unpause",font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*13/2,-1,"Press [B] to quit",font);
+
+		if (pause_sel < 4)
+			spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*(9-2*pause_sel)/2,-1,">>                                                    <<",font);
+		else
+			spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*(8-2*pause_sel)/2,-1,">>                                     <<",font);
 
 		if (gameMode)
-			spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*4*3/4,-1,"Mode: Hard[w] (needs level restart)",font);
+			spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*9/2,-1,"Mode: Hard (needs level restart)",font);
 		else
-			spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*4*3/4,-1,"Mode: Easy[w] (needs level restart)",font);
-
-		sprintf(buffer,"Total volume: [q]%i %%[e]",volume*100/2048);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*1*3/4,-1,buffer,font);
-		sprintf(buffer,"Music volume: [a]%i %%[d] of total volume",volumefactor*100/2048);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*1*3/4,-1,buffer,font);
+			spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*9/2,-1,"Mode: Easy (needs level restart)",font);
+		sprintf(buffer,"Total volume: %i %%",volume*100/2048);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*7/2,-1,buffer,font);
+		sprintf(buffer,"Music volume: %i %% of total volume",volumefactor*100/2048);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*5/2,-1,buffer,font);
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)-font->maxheight*3/2,-1,"Return to sublevel",font);
 		
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*4*3/4,-1,"Press [s] to return to sublevel",font);
-		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*6*3/4,-1,"Press [B] to quit",font);
+		int continue_change = spMapContinueChange();
+		spFontDrawRight(screen->w*2/3,(screen->h>>1)+font->maxheight*0/2,-1,"Shooting button: ",font);
+		if (continue_change == 0 && pause_sel == 4)
+			spFontDraw(     screen->w*2/3,(screen->h>>1)+font->maxheight*0/2,-1,"???",font);
+		else
+			spFontDraw(     screen->w*2/3,(screen->h>>1)+font->maxheight*0/2,-1,spMapButtonByID(BUTTON_SHOT),font);
+		spFontDrawRight(screen->w*2/3,(screen->h>>1)+font->maxheight*2/2,-1,"Tripple Shot button: ",font);
+		if (continue_change == 0 && pause_sel == 5)
+			spFontDraw(     screen->w*2/3,(screen->h>>1)+font->maxheight*2/2,-1,"???",font);
+		else
+			spFontDraw(     screen->w*2/3,(screen->h>>1)+font->maxheight*2/2,-1,spMapButtonByID(BUTTON_TRIPPLE),font);
+		spFontDrawRight(screen->w*2/3,(screen->h>>1)+font->maxheight*4/2,-1,"Jump button: ",font);
+		if (continue_change == 0 && pause_sel == 6)
+			spFontDraw(     screen->w*2/3,(screen->h>>1)+font->maxheight*4/2,-1,"???",font);
+		else
+			spFontDraw(     screen->w*2/3,(screen->h>>1)+font->maxheight*4/2,-1,spMapButtonByID(BUTTON_JUMP),font);
+		spFontDrawRight(screen->w*2/3,(screen->h>>1)+font->maxheight*6/2,-1,"Broom button: ",font);
+		if (continue_change == 0 && pause_sel == 7)
+			spFontDraw(     screen->w*2/3,(screen->h>>1)+font->maxheight*6/2,-1,"???",font);
+		else
+			spFontDraw(     screen->w*2/3,(screen->h>>1)+font->maxheight*6/2,-1,spMapButtonByID(BUTTON_BROOM),font);
+		spFontDrawRight(screen->w*2/3,(screen->h>>1)+font->maxheight*8/2,-1,"Ball Attack button: ",font);
+		if (continue_change == 0 && pause_sel == 8)
+			spFontDraw(     screen->w*2/3,(screen->h>>1)+font->maxheight*8/2,-1,"???",font);
+		else
+			spFontDraw(     screen->w*2/3,(screen->h>>1)+font->maxheight*8/2,-1,spMapButtonByID(BUTTON_BALL),font);
+		spFontDrawRight(screen->w*2/3,(screen->h>>1)+font->maxheight*10/2,-1,"Help button: ",font);
+		if (continue_change == 0 && pause_sel == 9)
+			spFontDraw(     screen->w*2/3,(screen->h>>1)+font->maxheight*10/2,-1,"???",font);
+		else
+			spFontDraw(     screen->w*2/3,(screen->h>>1)+font->maxheight*10/2,-1,spMapButtonByID(BUTTON_HELP),font);
+		if (continue_change == 1)
+			spMapSave("snowman","controls.cfg");
+		spFontDrawMiddle(screen->w>>1,(screen->h>>1)+font->maxheight*14/2,-1,"Use the "SP_PAD_NAME" and [a] to select and change settings",font);
 	}
 	if (exitmode)
 	{
@@ -497,70 +536,143 @@ int calc_game(Uint32 steps)
 	{
 		engineInput->button[SP_BUTTON_START]=0;
 		pausemode=1-pausemode;
+		pause_sel = 0;
 		jump_min_time = 0;
 	}
 	if (pausemode)
 	{
+		switch (spMapContinueChange())
+		{
+			case 0:
+				return 0;
+			case 1:
+				spMapSave("snowman","controls.cfg");
+				break;
+		}
+
 		if (engineInput->button[SP_BUTTON_SELECT])
 		{
 			engineInput->button[SP_BUTTON_SELECT]=0;
 			exitmode=1-exitmode;
 			jump_min_time = 0;
 		}
-		
-		if (engineInput->button[SP_BUTTON_L])
+		if (engineInput->axis[1] < 0 && pause_sel > 0)
 		{
-			volume-=steps;
-			if (volume<0)
-				volume=0;
-			spSoundSetVolume(volume>>4);
-			spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
-			savelevelcount();
+			engineInput->axis[1] = 0;
+			pause_sel--;
 		}
-		if (engineInput->button[SP_BUTTON_R])
+		if (engineInput->axis[1] > 0 && pause_sel < 9)
 		{
-			volume+=steps;
-			if (volume>(128<<4))
-				volume=128<<4;
-			spSoundSetVolume(volume>>4);
-			spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
-			savelevelcount();
+			engineInput->axis[1] = 0;
+			pause_sel++;
 		}
-		if (engineInput->button[SP_BUTTON_DOWN])
+		switch (pause_sel)
 		{
-			engineInput->button[SP_BUTTON_DOWN]=0;
-			fade2=1024;
-			pausemode=0;
-		}
-		if (engineInput->button[SP_BUTTON_LEFT] && engineInput->button[SP_BUTTON_RIGHT] && engineInput->button[SP_BUTTON_DOWN] && engineInput->button[SP_BUTTON_UP])
-		{
-			engineInput->button[SP_BUTTON_LEFT]=0;
-			engineInput->button[SP_BUTTON_RIGHT]=0;
-			engineInput->button[SP_BUTTON_DOWN]=0;
-			engineInput->button[SP_BUTTON_UP]=0;
-			return 1;
-		}
-		if (engineInput->button[SP_BUTTON_LEFT])
-		{
-			volumefactor-=steps;
-			if (volumefactor<0)
-				volumefactor=0;
-			spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
-			savelevelcount();
-		}
-		if (engineInput->button[SP_BUTTON_RIGHT])
-		{
-			volumefactor+=steps;
-			if (volumefactor>(128<<4))
-				volumefactor=128<<4;
-			spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
-			savelevelcount();
-		}
-		if (engineInput->button[SP_BUTTON_UP])
-		{
-			engineInput->button[SP_BUTTON_UP] = 0;
-			gameMode = 1-gameMode;
-			savelevelcount();
+			case 0:
+				if (engineInput->axis[0] != 0 || engineInput->button[SP_BUTTON_LEFT])
+				{
+					engineInput->axis[0] = 0;
+					engineInput->button[SP_BUTTON_LEFT] = 0;
+					gameMode = 1-gameMode;
+					savelevelcount();
+				}
+				break;
+			case 1:
+				if (engineInput->axis[0] < 0)
+				{
+					volume-=steps;
+					if (volume<0)
+						volume=0;
+					spSoundSetVolume(volume>>4);
+					spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
+					savelevelcount();
+				}
+				if (engineInput->axis[0] > 0)
+				{
+					volume+=steps;
+					if (volume>(128<<4))
+						volume=128<<4;
+					spSoundSetVolume(volume>>4);
+					spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
+					savelevelcount();
+				}
+				break;
+			case 2:
+				if (engineInput->axis[0] < 0)
+				{
+					volumefactor-=steps;
+					if (volumefactor<0)
+						volumefactor=0;
+					spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
+					savelevelcount();
+				}
+				if (engineInput->axis[0] > 0)
+				{
+					volumefactor+=steps;
+					if (volumefactor>(128<<4))
+						volumefactor=128<<4;
+					spSoundSetMusicVolume(((volumefactor*volume)/(128<<4))>>5);
+					savelevelcount();
+				}
+				break;
+			case 3:
+				if (engineInput->axis[0] != 0 || engineInput->button[SP_BUTTON_LEFT])
+				{
+					engineInput->button[SP_BUTTON_LEFT] = 0;
+					engineInput->axis[0] = 0;
+					fade2=1024;
+					pausemode=0;
+				}
+				break;
+			case 4:
+				if (engineInput->axis[0] != 0 || engineInput->button[SP_BUTTON_LEFT])
+				{
+					engineInput->button[SP_BUTTON_LEFT] = 0;
+					engineInput->axis[0] = 0;
+					spMapStartChangeByID(BUTTON_SHOT);
+				}
+				break;
+			case 5:
+				if (engineInput->axis[0] != 0 || engineInput->button[SP_BUTTON_LEFT])
+				{
+					engineInput->button[SP_BUTTON_LEFT] = 0;
+					engineInput->axis[0] = 0;
+					spMapStartChangeByID(BUTTON_TRIPPLE);
+				}
+				break;
+			case 6:
+				if (engineInput->axis[0] != 0 || engineInput->button[SP_BUTTON_LEFT])
+				{
+					engineInput->button[SP_BUTTON_LEFT] = 0;
+					engineInput->axis[0] = 0;
+					spMapStartChangeByID(BUTTON_JUMP);
+				}
+				break;
+			case 7:
+				if (engineInput->axis[0] != 0 || engineInput->button[SP_BUTTON_LEFT])
+				{
+					engineInput->button[SP_BUTTON_LEFT] = 0;
+					engineInput->axis[0] = 0;
+					 spMapStartChangeByID(BUTTON_BROOM);
+				}
+				break;
+			case 8:
+				if (engineInput->axis[0] != 0 || engineInput->button[SP_BUTTON_LEFT])
+				{
+					engineInput->button[SP_BUTTON_LEFT] = 0;
+					engineInput->axis[0] = 0;
+					spMapStartChangeByID(BUTTON_BALL);
+				}
+				break;
+			case 9:
+				if (engineInput->axis[0] != 0 || engineInput->button[SP_BUTTON_LEFT])
+				{
+					engineInput->button[SP_BUTTON_LEFT] = 0;
+					engineInput->axis[0] = 0;
+					spMapStartChangeByID(BUTTON_HELP);
+				}
+				break;
+				
 		}
 		return 0;
 	}
@@ -1101,6 +1213,7 @@ void init_snowman()
 	spMapButtonAdd(BUTTON_BROOM,"broom","Broom",SP_BUTTON_RIGHT);
 	spMapButtonAdd(BUTTON_BALL,"ball","ball",SP_BUTTON_R);
 	spMapButtonAdd(BUTTON_HELP,"help","Help",SP_BUTTON_L);
+	spMapSetStrategy(SP_MAPPING_SWITCH);
 	spMapLoad("snowman","controls.cfg");
 	spMapSave("snowman","controls.cfg");
 }
