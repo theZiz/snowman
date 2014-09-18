@@ -19,6 +19,7 @@ do
 		cp -r data "$f/$PROGRAM"
 		cp -r levels "$f/$PROGRAM"
 		cp -r sounds "$f/$PROGRAM"
+		cp snowman_readme.txt "$f/$PROGRAM"
 		cd $f
 		echo "--> Create archive"
 		if [ $NAME = "pandora" ]; then
@@ -47,6 +48,7 @@ do
 		rm -r $PROGRAM/data
 		rm -r $PROGRAM/levels
 		rm -r $PROGRAM/sounds
+		rm $PROGRAM/snowman_readme.txt
 		cd ..
 		cd ..
 	fi
