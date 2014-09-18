@@ -548,18 +548,18 @@ float loadall_i(int kind,plevel level)
 			char buffer[256];
 			int t = spNetC4AGetTimeOutParallel(task[0]);
 			if (spNetC4AGetStatusParallel(task[0]) == SP_C4A_PROGRESS)
-				sprintf(buffer,"Easy: (%i.%is)...",t/1000,t/100%10);
+				sprintf(buffer,"Easy: (%is)...",t/1000);
 			else
 				sprintf(buffer,"Easy: Done...");
 			spFontDrawMiddle(screen->w>>1,screen->h-font->maxheight*0>>1,-1,buffer,font_green);
 			t = spNetC4AGetTimeOutParallel(task[1]);
 			if (spNetC4AGetStatusParallel(task[1]) == SP_C4A_PROGRESS)
-				sprintf(buffer,"Hard: (%i.%is)...",t/1000,t/100%10);
+				sprintf(buffer,"Hard: (%is)...",t/1000);
 			else
 				sprintf(buffer,"Hard: Done...");
 			spFontDrawMiddle(screen->w>>1,screen->h+font->maxheight*2>>1,-1,buffer,font_green);
 			spFlip();
-			spSleep(10);
+			spSleep(200000);
 		}
 		int i;
 		for (i = 0; i < 2; i++)

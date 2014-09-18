@@ -10,6 +10,10 @@ SDL = `sdl-config --cflags`
 
 SPARROW_FOLDER = ../sparrow3d
 
+SPARROW3D_LIB = libsparrow3d.so
+SPARROWNET_LIB = libsparrowNet.so
+SPARROWSOUND_LIB = libsparrowSound.so
+
 ifdef TARGET
 include $(SPARROW_FOLDER)/target-files/$(TARGET).mk
 BUILD = ./build/$(TARGET)/snowman
@@ -29,10 +33,10 @@ targets:
 	@echo "The targets are the same like for sparrow3d. :P"
 
 snowman: ballbullet.h bullet_new.h drawlevel.h particle.h bullet.h drawcharacter.h enemy.h level.h splashscreen.h snow.h snowman.c makeBuildDir
-	cp $(SPARROW_LIB)/libsparrow3d.so $(BUILD)
-	cp $(SPARROW_LIB)/libsparrowSound.so $(BUILD)
-	cp $(SPARROW_LIB)/libsparrowNet.so $(BUILD)
-	$(CPP) $(CFLAGS) snowman.c $(SDL) $(INCLUDE) -I$(SPARROW_FOLDER) $(LIB) $(SDL_LIB) $(STATIC) $(DYNAMIC) -o $(BUILD)/snowman
+	cp -u $(SPARROW_LIB)/$(SPARROW3D_LIB) $(BUILD)
+	cp -u $(SPARROW_LIB)/$(SPARROWNET_LIB) $(BUILD)
+	cp -u $(SPARROW_LIB)/$(SPARROWSOUND_LIB) $(BUILD)
+	$(CPP) $(CFLAGS) snowman.c $(SDL) $(INCLUDE) -I$(SPARROW_FOLDER) $(LIB) $(SDL_LIB) $(STATIC) $(DYNAMIC) -o $(BUILD)/snowman$(SUFFIX)
 
 makeBuildDir:
 	 @if [ ! -d $(BUILD:/snowman=/) ]; then mkdir $(BUILD:/snowman=/);fi
@@ -40,4 +44,4 @@ makeBuildDir:
 
 clean:
 	rm -f *.o
-	rm -f snowman
+	rm -f snowman$(SUFFX)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PXML xmlns="http://openpandora.org/namespaces/PXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PXML_schema.xsd">
   <package id="snowman-reloaded">
-    <version major="2" minor="0" release="16" build="0"/>
+    <version major="2" minor="0" release="17" build="0"/>
     <author name="Ziz" website="http://ziz.openhandhelds.org"/>
     <titles>
       <title lang="en_US">
@@ -32,6 +32,7 @@
        Change for version 2.0.0.14: I can count to potato!
        Change for version 2.0.0.15: Changeable button mapping. Just edit the controls.cfg in the appdata folder.
        Change for version 2.0.0.16: Control mapping changeable ingame.
+       Change for version 2.0.0.17: C4A should now work better
       </description>
     </descriptions>
     <description lang="en_US">
@@ -54,6 +55,7 @@
        Change for version 2.0.0.14: I can count to potato!
        Change for version 2.0.0.15: Changeable button mapping. Just edit the controls.cfg in the appdata folder.
        Change for version 2.0.0.16: Control mapping changeable ingame.
+       Change for version 2.0.0.17: C4A should now work better
     </description>
     <icon src="./snowman.png"/>
   </package>
@@ -61,7 +63,7 @@
     <exec command="./snowman.sh"/>
     <title lang="en_US">Snowman Reloaded</title>
     <author name="Ziz" website="http://ziz.openhandhelds.org"/>
-    <version major="2" minor="0" release="16" build="0"/>
+    <version major="2" minor="0" release="17" build="0"/>
     <osversion major="1" minor="0" release="0" build="0"/>
       <description lang="en_US">
        Snowman is an entry I originally made in just one week for the "Homebrew platforming competition" two years ago.
@@ -83,6 +85,7 @@
        Change for version 2.0.0.14: I can count to potato!
        Change for version 2.0.0.15: Changeable button mapping. Just edit the controls.cfg in the appdata folder.
        Change for version 2.0.0.16: Control mapping changeable ingame.
+       Change for version 2.0.0.17: C4A should now work better
       </description>
     <icon src="./snowman.png"/>
     <previewpics>
