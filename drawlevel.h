@@ -74,22 +74,35 @@ void drawlevel(plevel level,Sint32 mx,Sint32 my,Sint32 dx,Sint32 dy)
 					{
 						if (show_snow)
 						{
-							spBindTexture(flake);
 							spSetAlphaTest(1);
 							Sint32 matrix[16];
 							memcpy( matrix, spGetMatrix(), 16 * sizeof( Sint32 ) ); //glPush()
 							spTranslate(((2*x)<<SP_ACCURACY)-mx,((-2*y)<<SP_ACCURACY)+my,(l-1)<<(SP_ACCURACY+1));
 							spRotateY(w);
-							spQuadTex3D(-3 << SP_ACCURACY-2, 3 << SP_ACCURACY-2,0, 0, 0,
-													-3 << SP_ACCURACY-2,-3 << SP_ACCURACY-2,0, 0,63,
-													 3 << SP_ACCURACY-2,-3 << SP_ACCURACY-2,0,63,63,
-													 3 << SP_ACCURACY-2, 3 << SP_ACCURACY-2,0,63, 0,65535);
-							spQuadTex3D( 3 << SP_ACCURACY-2, 3 << SP_ACCURACY-2,0,63, 0,
-													 3 << SP_ACCURACY-2,-3 << SP_ACCURACY-2,0,63,63,
-													-3 << SP_ACCURACY-2,-3 << SP_ACCURACY-2,0, 0,63,
-													-3 << SP_ACCURACY-2, 3 << SP_ACCURACY-2,0, 0, 0,65535);
+							if (spGetFPS() < 20)
+							{
+								spQuad3D(-3 << SP_ACCURACY-2, 0 << SP_ACCURACY-2,0,
+										  0 << SP_ACCURACY-2,-3 << SP_ACCURACY-2,0,
+										  3 << SP_ACCURACY-2, 0 << SP_ACCURACY-2,0,
+										  0 << SP_ACCURACY-2, 3 << SP_ACCURACY-2,0,65535);
+								spQuad3D( 0 << SP_ACCURACY-2, 3 << SP_ACCURACY-2,0,
+										  3 << SP_ACCURACY-2, 0 << SP_ACCURACY-2,0,
+										  0 << SP_ACCURACY-2,-3 << SP_ACCURACY-2,0,
+										 -3 << SP_ACCURACY-2, 0 << SP_ACCURACY-2,0,65535);
+							}
+							else
+							{
+								spBindTexture(flake);
+								spQuadTex3D(-3 << SP_ACCURACY-2, 3 << SP_ACCURACY-2,0, 0, 0,
+											-3 << SP_ACCURACY-2,-3 << SP_ACCURACY-2,0, 0,63,
+											3 << SP_ACCURACY-2,-3 << SP_ACCURACY-2,0,63,63,
+											3 << SP_ACCURACY-2, 3 << SP_ACCURACY-2,0,63, 0,65535);
+								spQuadTex3D( 3 << SP_ACCURACY-2, 3 << SP_ACCURACY-2,0,63, 0,
+											 3 << SP_ACCURACY-2,-3 << SP_ACCURACY-2,0,63,63,
+											-3 << SP_ACCURACY-2,-3 << SP_ACCURACY-2,0, 0,63,
+											-3 << SP_ACCURACY-2, 3 << SP_ACCURACY-2,0, 0, 0,65535);
+							}
 							memcpy( spGetMatrix(), matrix, 16 * sizeof( Sint32 ) ); //glPop()
-							spSetAlphaTest(0);
 						}
 						else
 						{
