@@ -5,7 +5,7 @@ CFLAGS = -O3 -fsingle-precision-constant -fPIC
 # Testtweaks: -fgcse-lm -fgcse-sm -fsched-spec-load -fmodulo-sched -funsafe-loop-optimizations -Wunsafe-loop-optimizations -fgcse-las -fgcse-after-reload -fvariable-expansion-in-unroller -ftracer -fbranch-target-load-optimize
 GENERAL_TWEAKS =  -ffast-math
 #==PC==
-CPP = gcc -g -march=native -DX86CPU
+FLAGS = -g -march=native -DDESKTOP
 SDL = `sdl-config --cflags`
 
 SPARROW_FOLDER = ../sparrow3d
@@ -25,6 +25,8 @@ SPARROW_LIB = $(SPARROW_FOLDER)
 endif
 LIB += -L$(SPARROW_LIB)
 DYNAMIC += -lsparrow3d -lsparrowSound -lsparrowNet
+
+CFLAGS += $(PARAMETER) $(FLAGS)
 
 all: snowman
 	@echo "=== Built for Target "$(TARGET)" ==="

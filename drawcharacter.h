@@ -443,7 +443,7 @@ void broomEnemyInteraction(char right)
 	}
 }
 
-#if defined GCW || (defined X86CPU && !defined WIN32)
+#if defined GCW || (defined DESKTOP && !defined WIN32)
 char* get_path(char* buffer,char* file)
 {
 	sprintf(buffer,"%s/.config/snowman/%s",getenv("HOME"),file);
