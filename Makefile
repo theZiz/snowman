@@ -38,7 +38,7 @@ snowman: ballbullet.h bullet_new.h drawlevel.h particle.h bullet.h drawcharacter
 	cp -u $(SPARROW_LIB)/$(SPARROW3D_LIB) $(BUILD)
 	cp -u $(SPARROW_LIB)/$(SPARROWNET_LIB) $(BUILD)
 	cp -u $(SPARROW_LIB)/$(SPARROWSOUND_LIB) $(BUILD)
-	$(CPP) $(CFLAGS) snowman.c $(SDL) $(INCLUDE) -I$(SPARROW_FOLDER) $(LIB) $(SDL_LIB) $(STATIC) $(DYNAMIC) -o $(BUILD)/snowman$(SUFFIX)
+	$(CC) $(CFLAGS) snowman.c $(SDL) $(INCLUDE) -I$(SPARROW_FOLDER) $(LIB) $(SDL_LIB) $(STATIC) $(DYNAMIC) -o $(BUILD)/snowman$(SUFFIX)
 
 makeBuildDir:
 	 @if [ ! -d $(BUILD:/snowman=/) ]; then mkdir $(BUILD:/snowman=/);fi
