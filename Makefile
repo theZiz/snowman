@@ -5,7 +5,7 @@ CFLAGS = -O3 -fsingle-precision-constant -fPIC
 # Testtweaks: -fgcse-lm -fgcse-sm -fsched-spec-load -fmodulo-sched -funsafe-loop-optimizations -Wunsafe-loop-optimizations -fgcse-las -fgcse-after-reload -fvariable-expansion-in-unroller -ftracer -fbranch-target-load-optimize
 GENERAL_TWEAKS =  -ffast-math
 #==PC==
-FLAGS = -g -march=native -DDESKTOP
+FLAGS = -g -DDESKTOP
 SDL = `sdl-config --cflags`
 
 SPARROW_FOLDER = ../sparrow3d
