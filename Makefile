@@ -3,9 +3,9 @@ DYNAMIC = -lSDL_ttf -lSDL_mixer -lSDL_image -lSDL -lm
 #==global Flags. Even on the gp2x with 16 kb Cache, -O3 is much better then -Os
 CFLAGS = -O3 -fsingle-precision-constant -fPIC
 # Testtweaks: -fgcse-lm -fgcse-sm -fsched-spec-load -fmodulo-sched -funsafe-loop-optimizations -Wunsafe-loop-optimizations -fgcse-las -fgcse-after-reload -fvariable-expansion-in-unroller -ftracer -fbranch-target-load-optimize
-GENERAL_TWEAKS =  -ffast-math
+GENERAL_TWEAKS = -ffast-math
 #==PC==
-FLAGS = -g -DDESKTOP
+FLAGS = -g -DDESKTOP $(GENERAL_TWEAKS)
 SDL = `sdl-config --cflags`
 
 SPARROW_FOLDER = ../sparrow3d
@@ -24,6 +24,7 @@ BUILD = .
 SPARROW_LIB = $(SPARROW_FOLDER)
 endif
 LIB += -L$(SPARROW_LIB)
+INCLUDE += -I$(SPARROW_FOLDER)
 DYNAMIC += -lsparrow3d -lsparrowSound -lsparrowNet
 
 CFLAGS += $(PARAMETER) $(FLAGS)
@@ -38,7 +39,7 @@ snowman: ballbullet.h bullet_new.h drawlevel.h particle.h bullet.h drawcharacter
 	cp -u $(SPARROW_LIB)/$(SPARROW3D_LIB) $(BUILD)
 	cp -u $(SPARROW_LIB)/$(SPARROWNET_LIB) $(BUILD)
 	cp -u $(SPARROW_LIB)/$(SPARROWSOUND_LIB) $(BUILD)
-	$(CC) $(CFLAGS) snowman.c $(SDL) $(INCLUDE) -I$(SPARROW_FOLDER) $(LIB) $(SDL_LIB) $(STATIC) $(DYNAMIC) -o $(BUILD)/snowman$(SUFFIX)
+	$(CC) $(CFLAGS) $(LINK_FLAGS) snowman.c $(SDL) $(INCLUDE) $(LIB) $(SDL_LIB) $(STATIC) $(DYNAMIC) -o $(BUILD)/snowman$(SUFFIX)
 
 makeBuildDir:
 	 @if [ ! -d $(BUILD:/snowman=/) ]; then mkdir $(BUILD:/snowman=/);fi
