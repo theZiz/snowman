@@ -1,6 +1,6 @@
- / ____|                                          
-| (___  _ __   _____      ___ __ ___   __ _ _ __  
- \___ \| '_ \ / _ \ \ /\ / / '_ ` _ \ / _` | '_ \ 
+ / ____|
+| (___  _ __   _____      ___ __ ___   __ _ _ __
+ \___ \| '_ \ / _ \ \ /\ / / '_ ` _ \ / _` | '_ \
  ____) | | | | (_) \ V  V /| | | | | | (_| | | | |
 |_____/|_| |_|\___/ \_/\_/ |_| |_| |_|\__,_|_| |_|
                                     Version 2.0.18
@@ -11,7 +11,7 @@
 
 Your goal is to finish all levels. You finish a level if you killed
 a given amount of enemies. You need to collect snow-coins to get bigger,
-because you will loose 
+because you will loose
 3 snow-coins, if an enemy hits you,
 2 snow-coins, if you shot,
 1 snow-coin, if you jump, and
