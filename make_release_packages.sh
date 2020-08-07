@@ -8,6 +8,7 @@ echo "<head>" >> index.htm
 echo "</head>" >> index.htm
 echo "<body>" >> index.htm
 TIME=`date -u +"%d.%m.%Y %R"`
+echo "Version $VERSION" >> index.htm
 echo "Updated at the $TIME." >> index.htm
 echo "<h1>$PROGRAM download links:</h1>" >> index.htm
 for f in $DEST
@@ -38,9 +39,15 @@ do
 					mv "$PROGRAM.opk" ../..
 					echo "<a href=$PROGRAM.opk type=\"application/x-opk+squashfs\">$NAME</a></br>" >> ../../index.htm
 				else
-					zip -r "$PROGRAM-$NAME-$VERSION.zip" * > /dev/null
-					mv "$PROGRAM-$NAME-$VERSION.zip" ../..
-					echo "<a href=$PROGRAM-$NAME-$VERSION.zip>$NAME</a></br>" >> ../../index.htm
+					if [ $NAME = "rg350" ]; then
+						mksquashfs * "$PROGRAM-$NAME.opk" -all-root -noappend -no-exports -no-xattrs
+						mv "$PROGRAM-$NAME.opk" ../..
+						echo "<a href=$PROGRAM-$NAME.opk type=\"application/x-opk+squashfs\">$NAME</a></br>" >> ../../index.htm
+					else
+						zip -r "$PROGRAM-$NAME-$VERSION.zip" * > /dev/null
+						mv "$PROGRAM-$NAME-$VERSION.zip" ../..
+						echo "<a href=$PROGRAM-$NAME-$VERSION.zip>$NAME</a></br>" >> ../../index.htm
+					fi
 				fi
 			fi
 		fi
